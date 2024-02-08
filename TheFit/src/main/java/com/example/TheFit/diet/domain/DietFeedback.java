@@ -8,17 +8,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class diet {
+public class DietFeedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String imagePath;
-    private String type;
-    private String comment;
+    private String feedback;
+    @Column(nullable = false)
+    private String rating;
+
 
 
 }

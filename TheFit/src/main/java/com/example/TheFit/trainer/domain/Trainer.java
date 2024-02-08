@@ -1,9 +1,6 @@
 package com.example.TheFit.trainer.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,11 +8,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class trainer {
+public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,15 +19,20 @@ public class trainer {
     private String email;
     @Column(nullable = false)
     private String password;
+    private int cmHeight;
+    private int kgWeight;
+    @Column(nullable = false)
+    private String gender;
+    private String profileImage;
     @Column(unique = true, nullable = false)
     private String phoneNumber;
-    private String profileImage;
-    private String career;
-
+    @Builder.Default
+    private String delYn="N";
     @CreationTimestamp
-    private LocalDateTime createTime;
+    private LocalDateTime createdTime;
     @UpdateTimestamp
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedTime;
+
 
 
 }
