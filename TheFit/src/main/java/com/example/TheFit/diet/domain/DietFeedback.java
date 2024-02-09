@@ -16,6 +16,4 @@ public class DietFeedback {
     @Column(nullable = false)
     private String rating;
 
-
-
 }
