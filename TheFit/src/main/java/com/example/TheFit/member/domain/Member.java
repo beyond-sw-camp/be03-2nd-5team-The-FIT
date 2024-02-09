@@ -1,6 +1,10 @@
 package com.example.TheFit.member.domain;
 
+import com.example.TheFit.member.dto.MemberReqDto;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -8,7 +12,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +40,18 @@ public class Member {
     private LocalDateTime createdTime;
     @UpdateTimestamp
     private LocalDateTime updatedTime;
+
+
+    public void update(String name, String password, int cmHeight, int kgWeight, String profileImage, String phoneNumber) {
+        this.name = name;
+        this.password = password;
+        this.cmHeight = cmHeight;
+        this.kgWeight = kgWeight;
+        this.profileImage = profileImage;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void delete() {
+        this.delYn = "Y";
+    }
 }
