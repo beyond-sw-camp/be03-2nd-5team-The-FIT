@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 public class WorkOut {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     @Column(nullable = false)
-    private int set;
+    private int sets;
     @Column(nullable = false)
     private int weight;
     @Column(nullable = false)
