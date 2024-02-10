@@ -24,6 +24,7 @@ public class TrainerController {
         return "trainer create ok";
     }
 
+
     @GetMapping("/trainers")
     public List<TrainerResDto> trainers() {
         return trainerService.findAll();

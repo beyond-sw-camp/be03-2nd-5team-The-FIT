@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TotalWorkOuts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
