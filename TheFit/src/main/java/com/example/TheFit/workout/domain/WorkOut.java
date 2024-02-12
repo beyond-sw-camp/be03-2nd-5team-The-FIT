@@ -1,4 +1,4 @@
-package com.example.TheFit.member.domain;
+package com.example.TheFit.workout.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,27 +11,22 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class member {
+public class WorkOut {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
-    @Column(unique = true, nullable = false)
-    private String email;
+    private int sets;
     @Column(nullable = false)
-    private String password;
-    @Column(unique = true, nullable = false)
-    private String phoneNumber;
-    private String profileImage;
-
+    private int weight;
+    @Column(nullable = false)
+    private int reps;
+    private String restTime;
+    @Column(nullable = false)
+    private int performance;
     @CreationTimestamp
-    private LocalDateTime createTime;
+    private LocalDateTime createdTime;
     @UpdateTimestamp
-    private LocalDateTime updateTime;
-
+    private LocalDateTime updatedTime;
 }

@@ -1,4 +1,4 @@
-package com.example.TheFit.feedback.domain;
+package com.example.TheFit.diet.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,16 +8,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class trainingFeedback {
+public class DietFeedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String trainingFeedback;
-
-
+    private String feedback;
+    @Column(nullable = false)
+    private String rating;
 
 }

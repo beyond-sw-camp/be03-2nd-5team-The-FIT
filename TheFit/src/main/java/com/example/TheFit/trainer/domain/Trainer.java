@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class trainer {
+@AllArgsConstructor
+public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,15 +25,29 @@ public class trainer {
     private String email;
     @Column(nullable = false)
     private String password;
+    private int cmHeight;
+    private int kgWeight;
+    @Column
+    private Gender gender;
+    private String profileImage;
     @Column(unique = true, nullable = false)
     private String phoneNumber;
-    private String profileImage;
-    private String career;
-
+    @Builder.Default
+    private String delYn="N";
     @CreationTimestamp
-    private LocalDateTime createTime;
+    private LocalDateTime createdTime;
     @UpdateTimestamp
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedTime;
 
-
+    public void update(String name, String password, int cmHeight, int kgWeight, String profileImage, String phoneNumber) {
+        this.name = name;
+        this.password = password;
+        this.cmHeight = cmHeight;
+        this.kgWeight = kgWeight;
+        this.profileImage = profileImage;
+        this.phoneNumber = phoneNumber;
+    }
+    public void delete() {
+        this.delYn = "Y";
+    }
 }

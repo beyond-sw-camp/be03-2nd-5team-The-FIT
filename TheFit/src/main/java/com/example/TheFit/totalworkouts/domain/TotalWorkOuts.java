@@ -1,4 +1,4 @@
-package com.example.TheFit.diet.domain;
+package com.example.TheFit.totalworkouts.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,15 +10,14 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class diet {
+@AllArgsConstructor
+public class TotalWorkOuts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String imagePath;
-    private String type;
-    private String comment;
-
-
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
+    private String target;
 }
