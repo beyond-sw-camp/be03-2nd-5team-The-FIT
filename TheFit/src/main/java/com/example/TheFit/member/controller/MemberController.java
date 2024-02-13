@@ -30,7 +30,7 @@ public class MemberController {
         memberService.update(id, memberReqDto);
         return "member update Ok";
     }
-    @PatchMapping("/member/delete/{id}")
+    @DeleteMapping("/member/delete/{id}")
     public String delete(@PathVariable Long id) {
         memberService.delete(id);
         return "member delete Ok";

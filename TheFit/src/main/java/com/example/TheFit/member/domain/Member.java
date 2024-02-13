@@ -41,13 +41,13 @@ public class Member {
     private LocalDateTime updatedTime;
 
 
-    public void update(String name, String password, int cmHeight, int kgWeight, String profileImage, String phoneNumber) {
-        this.name = name;
-        this.password = password;
-        this.cmHeight = cmHeight;
-        this.kgWeight = kgWeight;
-        this.profileImage = profileImage;
-        this.phoneNumber = phoneNumber;
+    public void update(MemberReqDto memberReqDto) {
+        this.name = memberReqDto.getName();
+        this.password = memberReqDto.getPassword();
+        this.cmHeight = memberReqDto.getCmHeight();
+        this.kgWeight = memberReqDto.getKgWeight();
+        this.profileImage = memberReqDto.getProfileImage();
+        this.phoneNumber = memberReqDto.getPhoneNumber();
     }
 
     public void delete() {

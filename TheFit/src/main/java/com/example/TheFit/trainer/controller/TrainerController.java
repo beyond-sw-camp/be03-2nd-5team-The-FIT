@@ -36,7 +36,7 @@ public class TrainerController {
         return "trainer update Ok";
     }
 
-    @PatchMapping("/trainer/delete/{id}")
+    @DeleteMapping("/trainer/delete/{id}")
     public String delete(@PathVariable Long id) {
         trainerService.delete(id);
         return "trainer delete Ok";

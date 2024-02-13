@@ -50,18 +50,13 @@ public class TrainerService {
                         .build())
                 .collect(Collectors.toList());
     }
-
     public Trainer update(Long id, TrainerReqDto trainerReqDto) {
-        Trainer trainer = trainerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("not found trainer"));
-        trainer.update(
-                trainerReqDto.getName(),
-                trainerReqDto.getPassword(),
-                trainerReqDto.getCmHeight(),
-                trainerReqDto.getKgWeight(),
-                trainerReqDto.getProfileImage(),
-                trainerReqDto.getPhoneNumber());
+        Trainer trainer = trainerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("not found"));
+        trainer.update(trainerReqDto);
         return trainerRepository.save(trainer);
     }
+
 
     @Transactional
     public void delete(Long id) {

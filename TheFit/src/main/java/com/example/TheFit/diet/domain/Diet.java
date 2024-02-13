@@ -1,5 +1,6 @@
 package com.example.TheFit.diet.domain;
 
+import com.example.TheFit.diet.dto.DietDto;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,11 +30,11 @@ public class Diet {
     @UpdateTimestamp
     private LocalDateTime updatedTime;
 
-    public void update(String imagePath, String type, String comment, LocalDate dietDate){
-        this.imagePath = imagePath;
-        this.type = type;
-        this.comment = comment;
-        this.dietDate = dietDate;
+    public void update(DietDto dietDto){
+        this.imagePath = dietDto.getImagePath();
+        this.type = dietDto.getType();
+        this.comment = dietDto.getComment();
+        this.dietDate = dietDto.getDietDate();
     }
     public void delete() {
         this.delYn = "Y";
