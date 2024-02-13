@@ -1,19 +1,18 @@
 package com.example.TheFit.totalworkouts.service;
 
 
+import com.example.TheFit.member.domain.Member;
 import com.example.TheFit.totalworkouts.domain.TotalWorkOuts;
-import com.example.TheFit.totalworkouts.dto.TotalWorkOutsCreateDto;
-import com.example.TheFit.totalworkouts.dto.TotalWorkOutsResDto;
+import com.example.TheFit.totalworkouts.dto.TotalWorkOutsDto;
 import com.example.TheFit.totalworkouts.repository.TotalWorkOutsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
 public class TotalWorkOutsService {
     private final TotalWorkOutsRepository totalWorkOutsRepository;
 
@@ -22,24 +21,36 @@ public class TotalWorkOutsService {
         this.totalWorkOutsRepository = totalWorkOutsRepository;
     }
 
-    public void create(TotalWorkOutsCreateDto totalWorkOutsCreateDto) {
+    public void create(TotalWorkOutsDto totalWorkOutsCreateDto) {
         TotalWorkOuts totalWorkOuts = TotalWorkOuts.builder()
                 .name(totalWorkOutsCreateDto.getName())
                 .target(totalWorkOutsCreateDto.getTarget())
                 .build();
         totalWorkOutsRepository.save(totalWorkOuts);
     }
-    public List<TotalWorkOutsResDto> findAll() {
+
+    public List<TotalWorkOutsDto> findAll() {
         List<TotalWorkOuts> totalWorkOutsList = totalWorkOutsRepository.findAll();
-        List<TotalWorkOutsResDto> totalWorkOutsResDtos = new ArrayList<>();
+        List<TotalWorkOutsDto> totalWorkOutsDtos = new ArrayList<>();
         for (TotalWorkOuts totalWorkOuts : totalWorkOutsList) {
-            TotalWorkOutsResDto totalWorkOutsResDto = TotalWorkOutsResDto.builder()
+            TotalWorkOutsDto totalWorkOutsDto = TotalWorkOutsDto.builder()
                     .name(totalWorkOuts.getName())
                     .target(totalWorkOuts.getTarget())
                     .build();
-            totalWorkOutsResDtos.add(totalWorkOutsResDto);
+            totalWorkOutsDtos.add(totalWorkOutsDto);
         }
-        return totalWorkOutsResDtos;
+        return totalWorkOutsDtos;
     }
 
+    public TotalWorkOuts update(Long id, TotalWorkOutsDto totalWorkOutsDto) {
+        TotalWorkOuts totalWorkOutsUpdate = totalWorkOutsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("not found"));
+        totalWorkOutsUpdate.update(totalWorkOutsDto);
+        return totalWorkOutsRepository.save(totalWorkOutsUpdate);
+    }
+
+    public void delete(Long id) {
+        totalWorkOutsRepository.deleteById(id);
+    }
 }
+

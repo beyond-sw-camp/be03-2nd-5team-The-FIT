@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TotalWorkOutsResDto {
+public class TotalWorkOutsDto {
     private String name;
     private String target;
 }
