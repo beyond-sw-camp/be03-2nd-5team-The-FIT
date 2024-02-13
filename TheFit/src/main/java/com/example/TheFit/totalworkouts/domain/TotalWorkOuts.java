@@ -2,12 +2,15 @@ package com.example.TheFit.totalworkouts.domain;
 
 import com.example.TheFit.diet.dto.DietDto;
 import com.example.TheFit.totalworkouts.dto.TotalWorkOutsDto;
+import com.example.TheFit.workout.domain.WorkOut;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,6 +25,9 @@ public class TotalWorkOuts {
     private String name;
     @Column(nullable = false)
     private String target;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "workout_id")
+    private WorkOut workOut;
 
     public void update(TotalWorkOutsDto totalWorkOutsDto) {
         this.name = totalWorkOutsDto.getName();
