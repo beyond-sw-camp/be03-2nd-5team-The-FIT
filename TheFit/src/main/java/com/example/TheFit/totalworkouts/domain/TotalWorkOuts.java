@@ -1,6 +1,5 @@
 package com.example.TheFit.totalworkouts.domain;
 
-import com.example.TheFit.diet.dto.DietDto;
 import com.example.TheFit.totalworkouts.dto.TotalWorkOutsDto;
 import com.example.TheFit.workout.domain.WorkOut;
 import lombok.AllArgsConstructor;
@@ -25,9 +24,9 @@ public class TotalWorkOuts {
     private String name;
     @Column(nullable = false)
     private String target;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "workout_id")
-    private WorkOut workOut;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "workOut")
+//    private WorkOut workOut;
 
     public void update(TotalWorkOutsDto totalWorkOutsDto) {
         this.name = totalWorkOutsDto.getName();

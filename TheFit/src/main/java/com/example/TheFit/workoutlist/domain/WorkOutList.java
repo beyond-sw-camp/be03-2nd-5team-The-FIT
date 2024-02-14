@@ -1,5 +1,6 @@
 package com.example.TheFit.workoutlist.domain;
 
+import com.example.TheFit.member.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,5 +15,8 @@ public class WorkOutList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
     private LocalDate workOutDate;
 }

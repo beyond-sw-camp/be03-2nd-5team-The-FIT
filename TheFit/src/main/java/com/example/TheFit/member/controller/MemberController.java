@@ -7,6 +7,7 @@ import com.example.TheFit.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class MemberController {
         this.memberService = memberService;
     }
     @PostMapping("/member/create")
-    public String create(@RequestBody MemberCreateDto memberCreateDto){
+    public String create(@Valid @RequestBody MemberCreateDto memberCreateDto){
         memberService.create(memberCreateDto);
         return "member create ok";
     }
@@ -26,12 +27,12 @@ public class MemberController {
         return memberService.findAll();
     }
     @PatchMapping("/member/update/{id}")
-    public String update(@PathVariable Long id, @RequestBody MemberReqDto memberReqDto) {
+    public String update(@Valid @PathVariable Long id, @RequestBody MemberReqDto memberReqDto) {
         memberService.update(id, memberReqDto);
         return "member update Ok";
     }
     @DeleteMapping("/member/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@Valid @PathVariable Long id) {
         memberService.delete(id);
         return "member delete Ok";
     }

@@ -1,6 +1,7 @@
 package com.example.TheFit.diet.domain;
 
 import com.example.TheFit.diet.dto.DietDto;
+import com.example.TheFit.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,6 +18,9 @@ public class Diet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
     private String imagePath;
     @Column(nullable = false)
     private String type;

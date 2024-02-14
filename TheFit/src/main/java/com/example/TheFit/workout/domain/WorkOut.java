@@ -1,6 +1,7 @@
 package com.example.TheFit.workout.domain;
 
 import com.example.TheFit.totalworkouts.domain.TotalWorkOuts;
+import com.example.TheFit.workoutlist.domain.WorkOutList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,8 +23,12 @@ public class WorkOut {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "totalworkouts", cascade = CascadeType.ALL)
-    private List<TotalWorkOuts> totalWorkOuts = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TotalWorkOuts_id")
+    private TotalWorkOuts totalWorkOuts;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "WorkOutList_id")
+    private WorkOutList workOutList;
     @Column(nullable = false)
     private int sets;
     @Column(nullable = false)

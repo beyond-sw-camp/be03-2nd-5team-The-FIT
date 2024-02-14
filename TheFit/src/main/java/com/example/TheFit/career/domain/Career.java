@@ -1,6 +1,7 @@
 package com.example.TheFit.career.domain;
 
 import com.example.TheFit.career.dto.CareerDto;
+import com.example.TheFit.trainer.domain.Trainer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,9 @@ public class Career {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
     private String awards;
     private String license;
     private String work;
