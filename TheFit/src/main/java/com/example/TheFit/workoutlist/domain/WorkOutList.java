@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Builder
 public class WorkOutList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

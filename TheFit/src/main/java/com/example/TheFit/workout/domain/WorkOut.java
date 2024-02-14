@@ -1,6 +1,8 @@
 package com.example.TheFit.workout.domain;
 
+import com.example.TheFit.career.dto.CareerDto;
 import com.example.TheFit.totalworkouts.domain.TotalWorkOuts;
+import com.example.TheFit.workout.dto.WorkOutDto;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,4 +44,13 @@ public class WorkOut {
     private LocalDateTime createdTime;
     @UpdateTimestamp
     private LocalDateTime updatedTime;
+
+    public void update(WorkOutDto workOutDto) {
+        this.sets = workOutDto.getSets();
+        this.weight = workOutDto.getWeight();
+        this.reps = workOutDto.getReps();
+        this.restTime = workOutDto.getRestTime();
+        this.performance = workOutDto.getPerformance();
+
+    }
 }
