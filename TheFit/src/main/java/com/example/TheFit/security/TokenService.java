@@ -1,5 +1,9 @@
 package com.example.TheFit.security;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -8,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class TokenService {
@@ -43,8 +45,12 @@ public class TokenService {
         return refreshTokenValue;
     }
 
-    public Map<Object,Object> decodeAccessTokenPayload(){
-
-        return null;
+    public Map<String,Object> decodeAccessTokenPayload(String token) throws JsonProcessingException {
+        String[] values = token.split("\\.");
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+        String payload = new String(decoder.decode(values[1]));
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String,Object> map = objectMapper.readValue(payload,Map.class);
+        return map;
     }
 }
