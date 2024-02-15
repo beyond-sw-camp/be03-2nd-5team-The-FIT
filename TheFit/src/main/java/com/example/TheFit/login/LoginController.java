@@ -5,6 +5,7 @@ import com.example.TheFit.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +34,16 @@ public class LoginController {
         memberInfo.put("token",accessToken);
         memberInfo.put("refreshToken",refreshToken);
         return new ResponseEntity<>(new TmpResponse(HttpStatus.OK,"login success",memberInfo),HttpStatus.OK);
+    }
+
+    @GetMapping("/onlyLogin")
+    public ResponseEntity<TmpResponse> onlyLogin(@RequestBody LoginRequestDto loginRequestDto){
+        return new ResponseEntity<>(new TmpResponse(HttpStatus.OK,"접근 완료",loginRequestDto),HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('trainer')")
+    @GetMapping("/onlyTrainer")
+    public ResponseEntity<TmpResponse> onlyTrainer(@RequestBody LoginRequestDto loginRequestDto){
+        return new ResponseEntity<>(new TmpResponse(HttpStatus.OK,"접근 완료",loginRequestDto),HttpStatus.OK);
     }
 }
