@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Builder
 public class TrainingFeedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,5 @@ public class TrainingFeedback {
     private Trainer trainer;
     private String feedback;
     private String rating;
-
-
 
 }

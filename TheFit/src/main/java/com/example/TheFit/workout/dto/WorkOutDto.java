@@ -8,6 +8,8 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class WorkOutDto {
+    private Long workOutListId;
+    private Long totalWorkOutsId;
     private int sets;
     private int weight;
     private int reps;

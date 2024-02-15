@@ -35,6 +35,8 @@ public class WorkOutService {
         List<WorkOutDto> workOutDtos = new ArrayList<>();
         for (WorkOut workOut : workOuts) {
             WorkOutDto workOutDto = WorkOutDto.builder()
+                    .workOutListId(workOut.getWorkOutList() != null ? workOut.getWorkOutList().getId() : null)
+                    .totalWorkOutsId(workOut.getTotalWorkOuts() != null ? workOut.getTotalWorkOuts().getId() : null)
                     .sets(workOut.getSets())
                     .weight(workOut.getWeight())
                     .reps(workOut.getReps())

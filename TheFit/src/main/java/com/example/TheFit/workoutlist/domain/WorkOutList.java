@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Getter
 @Builder
 public class WorkOutList {
     @Id

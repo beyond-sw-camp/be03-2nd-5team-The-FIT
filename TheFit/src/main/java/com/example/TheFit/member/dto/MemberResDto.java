@@ -1,7 +1,6 @@
 package com.example.TheFit.member.dto;
 
 import com.example.TheFit.member.domain.Gender;
-import com.example.TheFit.member.domain.Member;
 import lombok.*;
 
 @Data
@@ -10,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class MemberResDto {
     private Long id;
+    private Long TrainerId;
     private String name;
     private String email;
     private int cmHeight;

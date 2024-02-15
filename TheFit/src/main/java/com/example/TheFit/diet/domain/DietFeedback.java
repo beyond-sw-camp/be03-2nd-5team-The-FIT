@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Builder
 public class DietFeedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,8 @@
 package com.example.TheFit.member.domain;
 
 import com.example.TheFit.member.dto.MemberReqDto;
+import com.example.TheFit.trainer.domain.Trainer;
+import com.example.TheFit.workoutlist.domain.WorkOutList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +22,9 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
     @Column(nullable = false)
     private String name;
     @Column(unique = true, nullable = false)

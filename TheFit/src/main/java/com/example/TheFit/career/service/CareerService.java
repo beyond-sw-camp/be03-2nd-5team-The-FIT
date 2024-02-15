@@ -4,6 +4,8 @@ package com.example.TheFit.career.service;
 import com.example.TheFit.career.domain.Career;
 import com.example.TheFit.career.dto.CareerDto;
 import com.example.TheFit.career.repository.CareerRepository;
+import com.example.TheFit.trainer.domain.Trainer;
+import com.example.TheFit.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,17 @@ import java.util.List;
 @Service
 public class CareerService {
     private final CareerRepository careerRepository;
+    private final TrainerRepository trainerRepository;
     @Autowired
-    public CareerService(CareerRepository careerRepository) {
+    public CareerService(CareerRepository careerRepository, TrainerRepository trainerRepository) {
         this.careerRepository = careerRepository;
+        this.trainerRepository = trainerRepository;
     }
 
 
     public void create(CareerDto careerDto) {
+        Trainer trainer = trainerRepository.findById(careerDto.getTrainerId())
+                .orElseThrow(()->new EntityNotFoundException("not found"));
         Career career = Career.builder()
                 .awards(careerDto.getAwards())
                 .license(careerDto.getLicense())

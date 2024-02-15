@@ -41,8 +41,10 @@ public class MemberService {
         List<Member> members = memberRepository.findAll();
         List<MemberResDto> memberResDtos = new ArrayList<>();
         for (Member member : members) {
+            Long trainerId = member.getTrainer() != null ? member.getTrainer().getId() : null;
             MemberResDto memberResDto = MemberResDto.builder()
                     .id(member.getId())
+                    .TrainerId(trainerId)
                     .name(member.getName())
                     .email(member.getEmail())
                     .cmHeight(member.getCmHeight())

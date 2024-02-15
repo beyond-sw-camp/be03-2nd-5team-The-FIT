@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class CareerDto {
+    private Long TrainerId;
     private String awards;
     private String license;
     private String work;

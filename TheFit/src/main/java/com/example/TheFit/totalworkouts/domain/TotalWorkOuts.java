@@ -24,9 +24,6 @@ public class TotalWorkOuts {
     private String name;
     @Column(nullable = false)
     private String target;
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "workOut")
-//    private WorkOut workOut;
 
     public void update(TotalWorkOutsDto totalWorkOutsDto) {
         this.name = totalWorkOutsDto.getName();
