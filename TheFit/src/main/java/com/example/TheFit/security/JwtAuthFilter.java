@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,32 +29,30 @@ import java.util.List;
 public class JwtAuthFilter extends OncePerRequestFilter {
     @Value("${jwt.secretKey}")
     private String secretKey;
+    @Autowired
+    private final TokenService tokenService;
+    @Autowired
+    private final RedisRepository redisRepository;
+    public JwtAuthFilter(TokenService tokenService, RedisRepository redisRepository) {
+        this.tokenService = tokenService;
+        this.redisRepository = redisRepository;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String bearerToken = ((HttpServletRequest) request).getHeader("Authorization");
-        String refreshToken = ((HttpServletRequest) request).getHeader("refreshToken");
+        String bearerToken = request.getHeader("Authorization");
         if(bearerToken != null){
             if(!bearerToken.substring(0,7).equals("Bearer ")){
                 throw new AuthenticationServiceException("token의 형식이 맞지않습니다.");
             }
             String token = bearerToken.substring(7);
             Claims claims = null;
-            try {
-                claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority("ROLE_"+claims.get("role")));
-                UserDetails userDetails = new User(claims.getSubject(),"",authorities);
-                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }catch (ExpiredJwtException e){
-//                RefreshToken refreshTokenValue = refreshTokenRepository.findById(decode(token)).orElseThrow(()->new JwtException("refreshToken invalid"));
-//                if(!refreshToken.equals(refreshTokenValue.getRefreshToken())){
-//                    // 모든 접근 거부
-//                    throw new AuthenticationServiceException("refresh token의 형식이 맞지않습니다.");
-//                }
-//                token = jwtTokenProvider.createToken(refreshTokenValue.getEmail(),secretKey);
-            }
+            claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+            List<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+claims.get("role")));
+            UserDetails userDetails = new User(claims.getSubject(),"",authorities);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request,response);
     }
