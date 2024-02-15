@@ -1,5 +1,6 @@
 package com.example.TheFit.login;
 
+import com.example.TheFit.member.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,8 @@ public class LoginController {
     }
 
     @GetMapping("/doLogin")
-    public ResponseEntity<TmpResponse> login(String email, String password){
-        Object object = loginService.login(email,password);
+    public ResponseEntity<TmpResponse> login(LoginRequestDto loginRequestDto){
+        Member object = loginService.login(loginRequestDto);
 
         return new ResponseEntity<>(new TmpResponse(HttpStatus.OK,"login success",object),HttpStatus.OK);
     }
