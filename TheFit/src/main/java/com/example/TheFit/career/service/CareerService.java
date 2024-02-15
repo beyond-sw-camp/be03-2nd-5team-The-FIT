@@ -28,6 +28,7 @@ public class CareerService {
         Trainer trainer = trainerRepository.findById(careerDto.getTrainerId())
                 .orElseThrow(()->new EntityNotFoundException("not found"));
         Career career = Career.builder()
+                .trainer(trainer)
                 .awards(careerDto.getAwards())
                 .license(careerDto.getLicense())
                 .work(careerDto.getWork())

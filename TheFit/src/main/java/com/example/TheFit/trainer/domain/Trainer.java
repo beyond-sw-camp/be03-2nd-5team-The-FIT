@@ -31,7 +31,7 @@ public class Trainer {
     private String password;
     private int cmHeight;
     private int kgWeight;
-    @Column
+    @Enumerated
     private Gender gender;
     private String profileImage;
     @Column(unique = true, nullable = false)

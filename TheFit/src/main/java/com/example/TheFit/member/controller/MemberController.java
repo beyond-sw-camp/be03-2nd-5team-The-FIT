@@ -27,12 +27,12 @@ public class MemberController {
         return memberService.findAll();
     }
     @PatchMapping("/member/update/{id}")
-    public String update(@Valid @PathVariable Long id, @RequestBody MemberReqDto memberReqDto) {
+    public String update(@PathVariable Long id, @RequestBody MemberReqDto memberReqDto) {
         memberService.update(id, memberReqDto);
         return "member update Ok";
     }
     @DeleteMapping("/member/delete/{id}")
-    public String delete(@Valid @PathVariable Long id) {
+    public String delete(@PathVariable Long id) {
         memberService.delete(id);
         return "member delete Ok";
     }

@@ -18,7 +18,7 @@ public class TotalWorkOutsController {
         this.totalWorkOutsService = totalWorkOutsService;
     }
     @PostMapping("/create")
-    public String create(@Valid @RequestBody TotalWorkOutsDto totalWorkOutsDto){
+    public String create(@RequestBody TotalWorkOutsDto totalWorkOutsDto){
         totalWorkOutsService.create(totalWorkOutsDto);
         return "totalworkouts create ok";
     }
@@ -27,12 +27,12 @@ public class TotalWorkOutsController {
         return totalWorkOutsService.findAll();
     }
     @PatchMapping("/update/{id}")
-    public String update(@Valid @PathVariable Long id, @RequestBody TotalWorkOutsDto totalWorkOutsDto){
+    public String update(@PathVariable Long id, @RequestBody TotalWorkOutsDto totalWorkOutsDto){
         totalWorkOutsService.update(id, totalWorkOutsDto);
         return "totalworkouts update ok";
     }
     @DeleteMapping("/delete/{id}")
-    public String delete(@Valid @PathVariable Long id) {
+    public String delete(@PathVariable Long id) {
         totalWorkOutsService.delete(id);
         return "totalworkouts delete ok";
     }

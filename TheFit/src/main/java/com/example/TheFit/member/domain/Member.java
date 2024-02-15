@@ -33,7 +33,7 @@ public class Member {
     private String password;
     private int cmHeight;
     private int kgWeight;
-    @Column(nullable = false)
+    @Enumerated
     private Gender gender;
     private String profileImage;
     @Column(unique = true, nullable = false)

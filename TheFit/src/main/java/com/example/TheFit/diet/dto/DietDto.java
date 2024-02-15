@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 public class DietDto {
+    private Long MemberId;
     private String imagePath;
     private String type;
     private String comment;
