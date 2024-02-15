@@ -41,8 +41,10 @@ public class MemberService {
         List<Member> members = memberRepository.findAll();
         List<MemberResDto> memberResDtos = new ArrayList<>();
         for (Member member : members) {
+            Long trainerId = member.getTrainer() != null ? member.getTrainer().getId() : null;
             MemberResDto memberResDto = MemberResDto.builder()
                     .id(member.getId())
+                    .TrainerId(trainerId)
                     .name(member.getName())
                     .email(member.getEmail())
                     .cmHeight(member.getCmHeight())
@@ -55,23 +57,17 @@ public class MemberService {
         }
         return memberResDtos;
     }
-
     public Member update(Long id, MemberReqDto memberReqDto) {
-        Member member = memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("not found member"));
-        member.update(
-                memberReqDto.getName(),
-                memberReqDto.getPassword(),
-                memberReqDto.getCmHeight(),
-                memberReqDto.getKgWeight(),
-                memberReqDto.getProfileImage(),
-                memberReqDto.getPhoneNumber());
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("not found"));
+        member.update(memberReqDto);
         return memberRepository.save(member);
     }
+
     @Transactional
     public void delete(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("not found member"));
         member.delete();
-        memberRepository.save(member);
     }
 }

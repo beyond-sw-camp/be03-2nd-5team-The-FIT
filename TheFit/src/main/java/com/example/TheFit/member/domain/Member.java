@@ -1,6 +1,8 @@
 package com.example.TheFit.member.domain;
 
 import com.example.TheFit.member.dto.MemberReqDto;
+import com.example.TheFit.trainer.domain.Trainer;
+import com.example.TheFit.workoutlist.domain.WorkOutList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +22,9 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
     @Column(nullable = false)
     private String name;
     @Column(unique = true, nullable = false)
@@ -41,13 +46,13 @@ public class Member {
     private LocalDateTime updatedTime;
 
 
-    public void update(String name, String password, int cmHeight, int kgWeight, String profileImage, String phoneNumber) {
-        this.name = name;
-        this.password = password;
-        this.cmHeight = cmHeight;
-        this.kgWeight = kgWeight;
-        this.profileImage = profileImage;
-        this.phoneNumber = phoneNumber;
+    public void update(MemberReqDto memberReqDto) {
+        this.name = memberReqDto.getName();
+        this.password = memberReqDto.getPassword();
+        this.cmHeight = memberReqDto.getCmHeight();
+        this.kgWeight = memberReqDto.getKgWeight();
+        this.profileImage = memberReqDto.getProfileImage();
+        this.phoneNumber = memberReqDto.getPhoneNumber();
     }
 
     public void delete() {
