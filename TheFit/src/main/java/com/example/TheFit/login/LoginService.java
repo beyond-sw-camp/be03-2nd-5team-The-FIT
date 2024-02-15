@@ -1,7 +1,6 @@
 package com.example.TheFit.login;
 
 import com.example.TheFit.member.domain.Member;
-import com.example.TheFit.member.dto.MemberReqDto;
 import com.example.TheFit.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
