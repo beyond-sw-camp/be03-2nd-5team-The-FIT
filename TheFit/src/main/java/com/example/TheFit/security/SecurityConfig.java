@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .cors().and()
                 .httpBasic().disable()
                 .authorizeRequests()
-                    .antMatchers("/member/create","/doLogin")
+                    .antMatchers("/member/create","/doLogin","/reCreateAccessToken")
                     .permitAll()
                 .anyRequest().authenticated()
                 .and()
