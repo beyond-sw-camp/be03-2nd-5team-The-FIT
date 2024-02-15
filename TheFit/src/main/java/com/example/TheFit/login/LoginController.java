@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class LoginController {
     }
 
     @GetMapping("/doLogin")
-    public ResponseEntity<TmpResponse> login(LoginRequestDto loginRequestDto){
+    public ResponseEntity<TmpResponse> login(@RequestBody LoginRequestDto loginRequestDto){
         Member member = loginService.login(loginRequestDto);
         //현재 트레이너와 트레이니의 부모 클래스가 아직 미구현임으로 loginRequestDto에서 임시로 role를 넘겨서 코드진행
         String accessToken = tokenService.createAccessToken(member.getEmail(),loginRequestDto.getRole());
