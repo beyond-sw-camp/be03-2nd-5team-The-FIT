@@ -1,7 +1,8 @@
-package com.example.TheFit.diet.domain;
+package com.example.TheFit.deitfeedback.domain;
 
+import com.example.TheFit.deitfeedback.dto.DietFeedBackReqDto;
+import com.example.TheFit.diet.domain.Diet;
 import com.example.TheFit.trainer.domain.Trainer;
-import com.example.TheFit.workoutlist.domain.WorkOutList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,10 @@ import javax.persistence.*;
 
 @Entity
 @Builder
-public class DietFeedback {
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class DietFeedBack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,8 +25,13 @@ public class DietFeedback {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
-    private String feedback;
+    private String feedBack;
     @Column(nullable = false)
     private String rating;
+
+    public void update(DietFeedBackReqDto dietFeedBackReqDto) {
+        this.feedBack = dietFeedBackReqDto.getFeedBack();
+        this.rating = dietFeedBackReqDto.getRating();
+    }
 
 }
