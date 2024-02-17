@@ -1,11 +1,11 @@
 package com.example.TheFit.workoutlist.domain;
 
 import com.example.TheFit.member.domain.Member;
+import com.example.TheFit.workoutlist.dto.WorkOutListReqDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,6 +13,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class WorkOutList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +23,6 @@ public class WorkOutList {
     @JoinColumn(name = "member_id")
     private Member member;
     private LocalDate workOutDate;
+
 }
+

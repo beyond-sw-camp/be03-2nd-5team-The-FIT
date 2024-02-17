@@ -2,7 +2,8 @@ package com.example.TheFit.career.service;
 
 
 import com.example.TheFit.career.domain.Career;
-import com.example.TheFit.career.dto.CareerDto;
+import com.example.TheFit.career.dto.CareerReqDto;
+import com.example.TheFit.career.dto.CareerResDto;
 import com.example.TheFit.career.repository.CareerRepository;
 import com.example.TheFit.trainer.domain.Trainer;
 import com.example.TheFit.trainer.repository.TrainerRepository;
@@ -24,36 +25,36 @@ public class CareerService {
     }
 
 
-    public void create(CareerDto careerDto) {
-        Trainer trainer = trainerRepository.findById(careerDto.getTrainerId())
+    public void create(CareerReqDto careerReqDto) {
+        Trainer trainer = trainerRepository.findById(careerReqDto.getTrainerId())
                 .orElseThrow(()->new EntityNotFoundException("not found"));
         Career career = Career.builder()
                 .trainer(trainer)
-                .awards(careerDto.getAwards())
-                .license(careerDto.getLicense())
-                .work(careerDto.getWork())
+                .awards(careerReqDto.getAwards())
+                .license(careerReqDto.getLicense())
+                .work(careerReqDto.getWork())
                 .build();
         careerRepository.save(career);
     }
 
-    public List<CareerDto> findAll() {
+    public List<CareerResDto> findAll() {
         List<Career> careers = careerRepository.findAll();
-        List<CareerDto> careerDtos = new ArrayList<>();
+        List<CareerResDto> careerDtos = new ArrayList<>();
         for (Career career : careers) {
-            CareerDto careerDto = CareerDto.builder()
+            CareerResDto careerResDto = CareerResDto.builder()
                     .awards(career.getAwards())
                     .license(career.getLicense())
                     .work(career.getWork())
                     .build();
-            careerDtos.add(careerDto);
+            careerDtos.add(careerResDto);
         }
         return careerDtos;
     }
 
-    public Career update(Long id, CareerDto careerDto) {
+    public Career update(Long id, CareerReqDto careerReqDto) {
         Career careerUpdate = careerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("not found"));
-        careerUpdate.update(careerDto);
+        careerUpdate.update(careerReqDto);
         return careerRepository.save(careerUpdate);
     }
 

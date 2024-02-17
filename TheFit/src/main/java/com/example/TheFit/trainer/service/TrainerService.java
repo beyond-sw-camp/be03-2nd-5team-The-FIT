@@ -1,8 +1,7 @@
 package com.example.TheFit.trainer.service;
 
-import com.example.TheFit.member.domain.Gender;
+import com.example.TheFit.trainer.domain.Gender;
 import com.example.TheFit.trainer.domain.Trainer;
-import com.example.TheFit.trainer.dto.TrainerCreateDto;
 import com.example.TheFit.trainer.dto.TrainerReqDto;
 import com.example.TheFit.trainer.dto.TrainerResDto;
 import com.example.TheFit.trainer.repository.TrainerRepository;
@@ -24,18 +23,19 @@ public class TrainerService {
         this.trainerRepository = trainerRepository;
     }
 
-    public void create(TrainerCreateDto trainerCreateDto) {
+    public void create(TrainerReqDto trainerReqDto) {
         Trainer trainer = Trainer.builder()
-                .name(trainerCreateDto.getName())
-                .email(trainerCreateDto.getEmail())
-                .password(trainerCreateDto.getPassword())
-                .cmHeight(trainerCreateDto.getCmHeight())
-                .kgWeight(trainerCreateDto.getKgWeight())
-                .phoneNumber(trainerCreateDto.getPhoneNumber())
+                .name(trainerReqDto.getName())
+                .email(trainerReqDto.getEmail())
+                .password(trainerReqDto.getPassword())
+                .cmHeight(trainerReqDto.getCmHeight())
+                .kgWeight(trainerReqDto.getKgWeight())
+                .gender(trainerReqDto.getGender())
+                .profileImage(trainerReqDto.getProfileImage())
+                .phoneNumber(trainerReqDto.getPhoneNumber())
                 .build();
         trainerRepository.save(trainer);
     }
-
     public List<TrainerResDto> findAll() {
         List<Trainer> trainers = trainerRepository.findAll();
         return trainers.stream()
@@ -45,6 +45,7 @@ public class TrainerService {
                         .email(trainer.getEmail())
                         .cmHeight(trainer.getCmHeight())
                         .kgWeight(trainer.getKgWeight())
+                        .gender(trainer.getGender())
                         .profileImage(trainer.getProfileImage())
                         .phoneNumber(trainer.getPhoneNumber())
                         .build())
@@ -56,9 +57,6 @@ public class TrainerService {
         trainer.update(trainerReqDto);
         return trainerRepository.save(trainer);
     }
-
-
-    @Transactional
     public void delete(Long id) {
         Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("not found trainer"));

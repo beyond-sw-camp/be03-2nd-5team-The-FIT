@@ -1,11 +1,11 @@
 package com.example.TheFit.member.service;
 
-import com.example.TheFit.member.domain.Gender;
 import com.example.TheFit.member.domain.Member;
-import com.example.TheFit.member.dto.MemberCreateDto;
 import com.example.TheFit.member.dto.MemberReqDto;
 import com.example.TheFit.member.dto.MemberResDto;
 import com.example.TheFit.member.repository.MemberRepository;
+import com.example.TheFit.trainer.domain.Trainer;
+import com.example.TheFit.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,21 +18,26 @@ import java.util.List;
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final TrainerRepository trainerRepository;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, TrainerRepository trainerRepository) {
         this.memberRepository = memberRepository;
+        this.trainerRepository = trainerRepository;
     }
 
-    public void create(MemberCreateDto memberCreateDto) {
+    public void create(MemberReqDto memberReqDto) {
+        Trainer trainer = trainerRepository.findById(memberReqDto.getTrainerId())
+                .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
         Member member = Member.builder()
-                .name(memberCreateDto.getName())
-                .email(memberCreateDto.getEmail())
-                .password(memberCreateDto.getPassword())
-                .cmHeight(memberCreateDto.getCmHeight())
-                .kgWeight(memberCreateDto.getKgWeight())
-                .gender(Gender.MALE)
-                .phoneNumber(memberCreateDto.getPhoneNumber())
+                .trainer(trainer)
+                .name(memberReqDto.getName())
+                .email(memberReqDto.getEmail())
+                .password(memberReqDto.getPassword())
+                .cmHeight(memberReqDto.getCmHeight())
+                .kgWeight(memberReqDto.getKgWeight())
+                .gender(memberReqDto.getGender())
+                .phoneNumber(memberReqDto.getPhoneNumber())
                 .build();
         memberRepository.save(member);
     }
@@ -41,10 +46,9 @@ public class MemberService {
         List<Member> members = memberRepository.findAll();
         List<MemberResDto> memberResDtos = new ArrayList<>();
         for (Member member : members) {
-            Long trainerId = member.getTrainer() != null ? member.getTrainer().getId() : null;
             MemberResDto memberResDto = MemberResDto.builder()
                     .id(member.getId())
-                    .TrainerId(trainerId)
+                    .trainerId(member.getTrainer() != null ? member.getTrainer().getId() : null)
                     .name(member.getName())
                     .email(member.getEmail())
                     .cmHeight(member.getCmHeight())

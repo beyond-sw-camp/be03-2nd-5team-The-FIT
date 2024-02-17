@@ -1,15 +1,12 @@
 package com.example.TheFit.totalworkouts.domain;
 
-import com.example.TheFit.totalworkouts.dto.TotalWorkOutsDto;
-import com.example.TheFit.workout.domain.WorkOut;
+import com.example.TheFit.totalworkouts.dto.TotalWorkOutsReqDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -25,8 +22,8 @@ public class TotalWorkOuts {
     @Column(nullable = false)
     private String target;
 
-    public void update(TotalWorkOutsDto totalWorkOutsDto) {
-        this.name = totalWorkOutsDto.getName();
-        this.target = totalWorkOutsDto.getTarget();
+    public void update(TotalWorkOutsReqDto totalWorkOutsReqDto) {
+        this.name = totalWorkOutsReqDto.getName();
+        this.target = totalWorkOutsReqDto.getTarget();
     }
 }

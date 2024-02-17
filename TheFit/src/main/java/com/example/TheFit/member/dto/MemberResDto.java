@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class MemberResDto {
     private Long id;
-    private Long TrainerId;
+    private Long trainerId;
     private String name;
     private String email;
     private int cmHeight;

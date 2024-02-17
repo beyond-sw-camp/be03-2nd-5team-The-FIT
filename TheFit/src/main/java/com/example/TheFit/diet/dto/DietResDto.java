@@ -11,7 +11,8 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DietDto {
+public class DietResDto {
+    private Long id;
     private Long memberId;
     private String imagePath;
     private String type;

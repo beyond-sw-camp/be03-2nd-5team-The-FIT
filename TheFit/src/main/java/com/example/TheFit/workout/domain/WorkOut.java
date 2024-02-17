@@ -1,8 +1,7 @@
 package com.example.TheFit.workout.domain;
 
-import com.example.TheFit.career.dto.CareerDto;
 import com.example.TheFit.totalworkouts.domain.TotalWorkOuts;
-import com.example.TheFit.workout.dto.WorkOutDto;
+import com.example.TheFit.workout.dto.WorkOutReqDto;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +12,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -40,17 +37,19 @@ public class WorkOut {
     private String restTime;
     @Column(nullable = false)
     private int performance;
+    @Enumerated(EnumType.STRING)
+    private WorkOutStatus workOutStatus;
     @CreationTimestamp
     private LocalDateTime createdTime;
     @UpdateTimestamp
     private LocalDateTime updatedTime;
 
-    public void update(WorkOutDto workOutDto) {
-        this.sets = workOutDto.getSets();
-        this.weight = workOutDto.getWeight();
-        this.reps = workOutDto.getReps();
-        this.restTime = workOutDto.getRestTime();
-        this.performance = workOutDto.getPerformance();
-
+    public void update(WorkOutReqDto workOutReqDto) {
+        this.sets = workOutReqDto.getSets();
+        this.weight = workOutReqDto.getWeight();
+        this.reps = workOutReqDto.getReps();
+        this.restTime = workOutReqDto.getRestTime();
+        this.performance = workOutReqDto.getPerformance();
+        this.workOutStatus = workOutReqDto.getWorkOutStatus();
     }
 }
