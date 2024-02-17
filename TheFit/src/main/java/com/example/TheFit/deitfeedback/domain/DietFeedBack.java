@@ -19,7 +19,7 @@ public class DietFeedBack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "diet_id")
     private Diet diet;
     @ManyToOne(fetch = FetchType.LAZY)

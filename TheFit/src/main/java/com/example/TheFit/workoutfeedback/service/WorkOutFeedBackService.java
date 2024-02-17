@@ -46,13 +46,13 @@ public class WorkOutFeedBackService {
     public List<WorkOutFeedBackResDto> findAll() {
         List<WorkOutFeedBack> workOutFeedBacks = workOutFeedBackRepository.findAll();
         List<WorkOutFeedBackResDto> workOutFeedBackDtos = new ArrayList<>();
-        for (WorkOutFeedBack workOutFeedback : workOutFeedBacks) {
+        for (WorkOutFeedBack workOutFeedBack : workOutFeedBacks) {
             WorkOutFeedBackResDto workOutFeedBackResDto = WorkOutFeedBackResDto.builder()
-                    .id(workOutFeedback.getId())
-                    .workOutListId(workOutFeedback.getWorkOutList() != null ? workOutFeedback.getWorkOutList().getId() : null)
-                    .trainerId(workOutFeedback.getTrainer() != null ? workOutFeedback.getTrainer().getId() : null)
-                    .feedBack(workOutFeedback.getFeedBack())
-                    .rating(workOutFeedback.getRating())
+                    .id(workOutFeedBack.getId())
+                    .workOutListId(workOutFeedBack.getWorkOutList() != null ? workOutFeedBack.getWorkOutList().getId() : null)
+                    .trainerId(workOutFeedBack.getTrainer() != null ? workOutFeedBack.getTrainer().getId() : null)
+                    .feedBack(workOutFeedBack.getFeedBack())
+                    .rating(workOutFeedBack.getRating())
                     .build();
             workOutFeedBackDtos.add(workOutFeedBackResDto);
         }

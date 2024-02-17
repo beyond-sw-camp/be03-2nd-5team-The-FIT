@@ -28,7 +28,7 @@ public class WorkOutFeedBackController {
     public List<WorkOutFeedBackResDto> workOutFeedBacks(){
         return workOutFeedBackService.findAll();
     }
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     public String update(@PathVariable Long id, @RequestBody WorkOutFeedBackReqDto workOutFeedBackReqDto) {
         workOutFeedBackService.update(id, workOutFeedBackReqDto);
         return "WorkOutFeedBack update Ok";

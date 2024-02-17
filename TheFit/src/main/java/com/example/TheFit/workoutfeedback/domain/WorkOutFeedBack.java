@@ -19,7 +19,7 @@ public class WorkOutFeedBack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "workOutList_id")
     private WorkOutList workOutList;
     @ManyToOne(fetch = FetchType.LAZY)

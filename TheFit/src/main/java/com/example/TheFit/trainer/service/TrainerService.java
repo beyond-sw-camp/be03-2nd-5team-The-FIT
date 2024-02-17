@@ -60,6 +60,6 @@ public class TrainerService {
     public void delete(Long id) {
         Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("not found trainer"));
-        trainerRepository.save(trainer);
+        trainer.delete();
     }
 }
