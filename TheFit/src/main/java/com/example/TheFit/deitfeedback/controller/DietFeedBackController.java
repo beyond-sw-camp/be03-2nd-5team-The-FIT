@@ -6,6 +6,7 @@ import com.example.TheFit.deitfeedback.service.DietFeedBackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class DietFeedBackController {
     }
 
     @PostMapping("/create")
-    public String create(@RequestBody DietFeedBackReqDto dietFeedBackReqDto) {
+    public String create(@Valid @RequestBody DietFeedBackReqDto dietFeedBackReqDto) {
         dietFeedBackService.create(dietFeedBackReqDto);
         return "DietFeedBack create ok";
     }
@@ -29,7 +30,7 @@ public class DietFeedBackController {
         return dietFeedBackService.findAll();
     }
     @PatchMapping("update/{id}")
-    public String update(@PathVariable Long id, @RequestBody DietFeedBackReqDto dietFeedBackReqDto) {
+    public String update(@PathVariable Long id, @Valid @RequestBody DietFeedBackReqDto dietFeedBackReqDto) {
         dietFeedBackService.update(id, dietFeedBackReqDto);
         return "DietFeedBack update Ok";
     }

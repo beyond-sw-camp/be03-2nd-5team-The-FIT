@@ -6,6 +6,8 @@ import com.example.TheFit.diet.service.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/diet")
 public class DietController {
@@ -18,7 +20,7 @@ public class DietController {
     }
 
     @PostMapping("/create")
-    public String createDiet(@RequestBody DietReqDto dietReqDto) {
+    public String createDiet(@Valid @RequestBody DietReqDto dietReqDto) {
         dietService.create(dietReqDto);
         return "diet create ok";
     }
@@ -27,7 +29,7 @@ public class DietController {
         return dietService.findById(id);
     }
     @PatchMapping("/update/{id}")
-    public String updateDiet(@PathVariable Long id, @RequestBody DietReqDto dietReqDto) {
+    public String updateDiet(@PathVariable Long id, @Valid @RequestBody DietReqDto dietReqDto) {
         dietService.update(id, dietReqDto);
         return "diet update ok";
     }

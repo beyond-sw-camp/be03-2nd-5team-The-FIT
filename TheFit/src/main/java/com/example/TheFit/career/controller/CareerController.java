@@ -6,6 +6,7 @@ import com.example.TheFit.career.service.CareerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class CareerController {
     }
 
     @PostMapping("/create")
-    public String create(@RequestBody CareerReqDto careerReqDto){
+    public String create(@Valid @RequestBody CareerReqDto careerReqDto){
         careerService.create(careerReqDto);
         return "career create ok";
     }
@@ -27,7 +28,7 @@ public class CareerController {
         return careerService.findAll();
     }
     @PatchMapping("/update/{id}")
-    public String update(@PathVariable Long id, @RequestBody CareerReqDto careerReqDto){
+    public String update(@PathVariable Long id, @Valid @RequestBody CareerReqDto careerReqDto){
         careerService.update(id, careerReqDto);
         return "career update ok";
     }

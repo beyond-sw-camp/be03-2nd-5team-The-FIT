@@ -32,7 +32,7 @@ public class TrainerController {
     }
 
     @PatchMapping("/update/{id}")
-    public String update(@Valid @PathVariable Long id, @RequestBody TrainerReqDto trainerReqDto) {
+    public String update(@PathVariable Long id, @Valid @RequestBody TrainerReqDto trainerReqDto) {
         trainerService.update(id, trainerReqDto);
         return "trainer update Ok";
     }

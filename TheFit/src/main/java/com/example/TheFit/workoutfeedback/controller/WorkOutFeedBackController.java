@@ -6,6 +6,7 @@ import com.example.TheFit.workoutfeedback.service.WorkOutFeedBackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class WorkOutFeedBackController {
     }
 
     @PostMapping("/create")
-    public String create(@RequestBody WorkOutFeedBackReqDto workOutFeedBackReqDto) {
+    public String create(@Valid @RequestBody WorkOutFeedBackReqDto workOutFeedBackReqDto) {
         workOutFeedBackService.create(workOutFeedBackReqDto);
         return "WorkOutFeedBack create ok";
     }
@@ -29,7 +30,7 @@ public class WorkOutFeedBackController {
         return workOutFeedBackService.findAll();
     }
     @PatchMapping("/update/{id}")
-    public String update(@PathVariable Long id, @RequestBody WorkOutFeedBackReqDto workOutFeedBackReqDto) {
+    public String update(@PathVariable Long id, @Valid @RequestBody WorkOutFeedBackReqDto workOutFeedBackReqDto) {
         workOutFeedBackService.update(id, workOutFeedBackReqDto);
         return "WorkOutFeedBack update Ok";
     }

@@ -5,6 +5,8 @@ import com.example.TheFit.workoutlist.service.WorkOutListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class WorkOutListController {
     private final WorkOutListService workOutListService;
@@ -15,7 +17,7 @@ public class WorkOutListController {
     }
 
     @PostMapping("workout/list/create")
-    public String create(@RequestBody WorkOutListReqDto workOutListReqDto){
+    public String create(@Valid @RequestBody WorkOutListReqDto workOutListReqDto){
         workOutListService.create(workOutListReqDto);
         return "WorkOutList create ok";
     }

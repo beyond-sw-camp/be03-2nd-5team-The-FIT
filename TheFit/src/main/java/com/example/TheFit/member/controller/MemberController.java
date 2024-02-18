@@ -27,7 +27,7 @@ public class MemberController {
         return memberService.findAll();
     }
     @PatchMapping("/update/{id}")
-    public String update(@PathVariable Long id, @RequestBody MemberReqDto memberReqDto) {
+    public String update(@PathVariable Long id, @Valid @RequestBody MemberReqDto memberReqDto) {
         memberService.update(id, memberReqDto);
         return "member update Ok";
     }

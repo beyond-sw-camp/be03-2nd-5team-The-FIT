@@ -6,6 +6,7 @@ import com.example.TheFit.workout.service.WorkOutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class WorkOutController {
     }
 
     @PostMapping("/create")
-    public String create(@RequestBody WorkOutReqDto workOutReqDto) {
+    public String create(@Valid @RequestBody WorkOutReqDto workOutReqDto) {
         workOutService.create(workOutReqDto);
         return "workOut create ok";
     }
@@ -30,7 +31,7 @@ public class WorkOutController {
     }
 
     @PatchMapping("/update/{id}")
-    public String update(@PathVariable Long id, @RequestBody WorkOutReqDto workOutReqDto) {
+    public String update(@PathVariable Long id, @Valid @RequestBody WorkOutReqDto workOutReqDto) {
         workOutService.update(id, workOutReqDto);
         return "workOut update ok";
     }
