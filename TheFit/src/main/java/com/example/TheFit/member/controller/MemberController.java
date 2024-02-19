@@ -1,6 +1,5 @@
 package com.example.TheFit.member.controller;
 
-import com.example.TheFit.member.dto.MemberCreateDto;
 import com.example.TheFit.member.dto.MemberReqDto;
 import com.example.TheFit.member.dto.MemberResDto;
 import com.example.TheFit.member.service.MemberService;
@@ -11,36 +10,30 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
-    @PostMapping("/member/create")
-    public String create(@Valid @RequestBody MemberCreateDto memberCreateDto){
-        memberService.create(memberCreateDto);
+    @PostMapping("/create")
+    public String create(@Valid @RequestBody MemberReqDto memberReqDto){
+        memberService.create(memberReqDto);
         return "member create ok";
     }
-    @GetMapping("/members")
+    @GetMapping("/list")
     public List<MemberResDto> members(){
         return memberService.findAll();
     }
-    @PatchMapping("/member/update/{id}")
-    public String update(@Valid @PathVariable Long id, @RequestBody MemberReqDto memberReqDto) {
+    @PatchMapping("/update/{id}")
+    public String update(@PathVariable Long id, @Valid @RequestBody MemberReqDto memberReqDto) {
         memberService.update(id, memberReqDto);
         return "member update Ok";
     }
-    @DeleteMapping("/member/delete/{id}")
-    public String delete(@Valid @PathVariable Long id) {
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
         memberService.delete(id);
         return "member delete Ok";
     }
-
-
 }
-
-
-
-
-

@@ -1,10 +1,12 @@
 package com.example.TheFit.diet.controller;
 
-import com.example.TheFit.diet.domain.Diet;
-import com.example.TheFit.diet.dto.DietDto;
+import com.example.TheFit.diet.dto.DietReqDto;
+import com.example.TheFit.diet.dto.DietResDto;
 import com.example.TheFit.diet.service.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/diet")
@@ -18,22 +20,22 @@ public class DietController {
     }
 
     @PostMapping("/create")
-    public String createDiet(@RequestBody DietDto dietDto) {
-        dietService.create(dietDto);
+    public String createDiet(@Valid @RequestBody DietReqDto dietReqDto) {
+        dietService.create(dietReqDto);
         return "diet create ok";
     }
     @GetMapping("/{id}")
-    public DietDto findById(@PathVariable Long id) {
+    public DietResDto findById(@PathVariable Long id) {
         return dietService.findById(id);
     }
     @PatchMapping("/update/{id}")
-    public String updateDiet(@PathVariable Long id, @RequestBody DietDto dietDto) {
-        dietService.update(id, dietDto);
+    public String updateDiet(@PathVariable Long id, @Valid @RequestBody DietReqDto dietReqDto) {
+        dietService.update(id, dietReqDto);
         return "diet update ok";
     }
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
-        Diet diet = dietService.delete(id);
+        dietService.delete(id);
         return "diet delete Ok";
     }
 }

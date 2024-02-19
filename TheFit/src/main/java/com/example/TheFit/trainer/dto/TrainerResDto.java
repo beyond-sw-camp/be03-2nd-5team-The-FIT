@@ -1,6 +1,6 @@
 package com.example.TheFit.trainer.dto;
 
-import com.example.TheFit.member.domain.Gender;
+import com.example.TheFit.trainer.domain.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,8 @@ public class TrainerResDto {
     private String email;
     private int cmHeight;
     private int kgWeight;
-    private Gender gender;
+    private String gender;
+    private String role;
     private String profileImage;
     private String phoneNumber;
 }
