@@ -5,9 +5,11 @@ import com.example.TheFit.totalworkouts.repository.TotalWorkOutsRepository;
 import com.example.TheFit.workout.domain.WorkOut;
 import com.example.TheFit.workout.dto.WorkOutReqDto;
 import com.example.TheFit.workout.dto.WorkOutResDto;
+import com.example.TheFit.workout.mapper.WorkOutMapper;
 import com.example.TheFit.workout.repository.WorkOutRepository;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
 import com.example.TheFit.workoutlist.repository.WorkOutListRepository;
+import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class WorkOutService {
     private final WorkOutRepository workOutRepository;
     private final WorkOutListRepository workOutListRepository;
     private final TotalWorkOutsRepository totalWorkOutsRepository;
+    private final WorkOutMapper workOutMapper =WorkOutMapper.INSTANCE;
 
     @Autowired
     public WorkOutService(WorkOutRepository workOutRepository, WorkOutListRepository workOutListRepository, TotalWorkOutsRepository totalWorkOutsRepository) {
@@ -29,19 +32,7 @@ public class WorkOutService {
     }
 
     public void create(WorkOutReqDto workOutReqDto) {
-        WorkOutList workOutList = workOutListRepository.findById(workOutReqDto.getWorkOutListId())
-                .orElseThrow(() -> new EntityNotFoundException("WorkOutList not found"));
-        TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(workOutReqDto.getTotalWorkOutsId())
-                .orElseThrow(() -> new EntityNotFoundException("TotalWorkOuts not found"));
-        WorkOut workOut = WorkOut.builder()
-                .workOutList(workOutList)
-                .totalWorkOuts(totalWorkOuts)
-                .sets(workOutReqDto.getSets())
-                .weight(workOutReqDto.getWeight())
-                .reps(workOutReqDto.getReps())
-                .restTime(workOutReqDto.getRestTime())
-                .performance(workOutReqDto.getPerformance())
-                .build();
+        WorkOut workOut = workOutMapper.toEntity(workOutReqDto);
         workOutRepository.save(workOut);
     }
 
