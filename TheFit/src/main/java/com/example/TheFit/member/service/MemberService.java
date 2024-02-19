@@ -2,7 +2,6 @@ package com.example.TheFit.member.service;
 
 import com.example.TheFit.deitfeedback.mapper.DietFeedBackMapper;
 import com.example.TheFit.member.domain.Member;
-import com.example.TheFit.member.dto.MemberCreateDto;
 import com.example.TheFit.member.dto.MemberLoginDto;
 import com.example.TheFit.member.dto.MemberReqDto;
 import com.example.TheFit.member.dto.MemberResDto;

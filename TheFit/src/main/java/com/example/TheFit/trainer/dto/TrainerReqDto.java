@@ -1,6 +1,5 @@
 package com.example.TheFit.trainer.dto;
 
-import com.example.TheFit.trainer.domain.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

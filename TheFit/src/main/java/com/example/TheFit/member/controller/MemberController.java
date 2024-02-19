@@ -3,7 +3,6 @@ package com.example.TheFit.member.controller;
 
 import com.example.TheFit.login.TmpResponse;
 import com.example.TheFit.member.domain.Member;
-import com.example.TheFit.member.dto.MemberCreateDto;
 import com.example.TheFit.member.dto.MemberLoginDto;
 import com.example.TheFit.member.dto.MemberReqDto;
 import com.example.TheFit.member.dto.MemberResDto;
@@ -50,7 +49,7 @@ public class MemberController {
         return "member delete Ok";
     }
 
-    @GetMapping("member/doLogin")
+    @GetMapping("/doLogin")
     public ResponseEntity<TmpResponse> memberLogin(@RequestBody MemberLoginDto memberLoginDto){
         Member member = memberService.login(memberLoginDto);
         String accessToken = tokenService.createAccessToken(member.getEmail(),member.getName());
@@ -60,13 +59,6 @@ public class MemberController {
         memberInfo.put("refreshToken",refreshToken);
         return new ResponseEntity<>(new TmpResponse(HttpStatus.OK,"login success",memberInfo),HttpStatus.OK);
     }
-
-
 }
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        memberService.delete(id);
-        return "member delete Ok";
-    }
-}
+

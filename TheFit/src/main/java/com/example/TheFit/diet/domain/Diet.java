@@ -1,6 +1,5 @@
 package com.example.TheFit.diet.domain;
 
-import com.example.TheFit.diet.dto.DietDto;
 import com.example.TheFit.diet.dto.DietReqDto;
 import com.example.TheFit.member.domain.Member;
 import lombok.AllArgsConstructor;
