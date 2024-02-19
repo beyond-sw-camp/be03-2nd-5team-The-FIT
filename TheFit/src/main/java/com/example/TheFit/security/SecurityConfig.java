@@ -1,5 +1,6 @@
 package com.example.TheFit.security;
 
+import com.example.TheFit.oauth.OAuth2MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -16,9 +17,14 @@ public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     @Autowired
     private final ExceptionHandlerFilter exceptionHandlerFilter;
-    public SecurityConfig(JwtAuthFilter jwtAuthFilter, ExceptionHandlerFilter exceptionHandlerFilter) {
+    @Autowired
+    private final OAuth2MemberService oAuth2MemberService;
+    public SecurityConfig(JwtAuthFilter jwtAuthFilter, ExceptionHandlerFilter exceptionHandlerFilter
+    ,OAuth2MemberService oAuth2MemberService) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.exceptionHandlerFilter = exceptionHandlerFilter;
+        this.oAuth2MemberService = oAuth2MemberService;
+
     }
 
     @Bean
@@ -28,14 +34,23 @@ public class SecurityConfig {
                 .cors().and()
                 .httpBasic().disable()
                 .authorizeRequests()
-                    .antMatchers("/member/create","/member/doLogin","/trainer/create","/reCreateAccessToken")
+                    .antMatchers("/member/create","/member/doLogin",
+                            "/trainer/create","/reCreateAccessToken",
+                            "/auth/google/callback")
                     .permitAll()
                 .anyRequest().authenticated()
-                .and()
+                .and().oauth2Login()
+                .loginPage("/") //로그인이 필요한데 로그인을 하지 않았다면 이동할 uri 설정 -> 프론트 화면 구성 이후 변경!
+                .defaultSuccessUrl("/") //OAuth 구글 로그인이 성공하면 이동할 uri 설정
+                .userInfoEndpoint()//로그인 완료 후 회원 정보 받기
+                .userService(oAuth2MemberService)
+                .and().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(exceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+
+
     }
 }
