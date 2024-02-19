@@ -2,7 +2,7 @@ package com.example.TheFit.deitfeedback.domain;
 
 import com.example.TheFit.deitfeedback.dto.DietFeedBackReqDto;
 import com.example.TheFit.diet.domain.Diet;
-import com.example.TheFit.trainer.domain.Trainer;
+import com.example.TheFit.user.trainer.domain.Trainer;
 import lombok.*;
 
 import javax.persistence.*;

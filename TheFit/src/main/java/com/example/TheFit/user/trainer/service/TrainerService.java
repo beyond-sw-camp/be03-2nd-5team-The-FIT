@@ -1,11 +1,10 @@
-package com.example.TheFit.trainer.service;
+package com.example.TheFit.user.trainer.service;
 
-import com.example.TheFit.trainer.domain.Gender;
-import com.example.TheFit.trainer.domain.Trainer;
-import com.example.TheFit.trainer.dto.TrainerReqDto;
-import com.example.TheFit.trainer.dto.TrainerResDto;
-import com.example.TheFit.trainer.mapper.TrainerMapper;
-import com.example.TheFit.trainer.repository.TrainerRepository;
+import com.example.TheFit.user.UserMapper;
+import com.example.TheFit.user.trainer.domain.Trainer;
+import com.example.TheFit.user.trainer.dto.TrainerReqDto;
+import com.example.TheFit.user.trainer.dto.TrainerResDto;
+import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class TrainerService {
     private final TrainerRepository trainerRepository;
-    private final TrainerMapper trainerMapper = TrainerMapper.INSTANCE;
+    private final UserMapper userMapper = UserMapper.INSTANCE;
 
     @Autowired
     public TrainerService(TrainerRepository trainerRepository) {
@@ -26,13 +25,13 @@ public class TrainerService {
     }
 
     public void create(TrainerReqDto trainerReqDto) {
-        Trainer trainer = trainerMapper.toEntity(trainerReqDto);
+        Trainer trainer = userMapper.toEntity(trainerReqDto);
         trainerRepository.save(trainer);
     }
 
     public List<TrainerResDto> findAll() {
         return trainerRepository.findAll().stream()
-                .map(trainerMapper::toDto)
+                .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -40,7 +39,7 @@ public class TrainerService {
         Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
         System.out.println(trainer.getCmHeight());
-        trainerMapper.update(trainerReqDto, trainer);
+        userMapper.update(trainerReqDto, trainer);
         System.out.println(trainer.getCmHeight());
         trainerRepository.save(trainer);
     }

@@ -1,6 +1,6 @@
-package com.example.TheFit.trainer.repository;
+package com.example.TheFit.user.trainer.repository;
 
-import com.example.TheFit.trainer.domain.Trainer;
+import com.example.TheFit.user.trainer.domain.Trainer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

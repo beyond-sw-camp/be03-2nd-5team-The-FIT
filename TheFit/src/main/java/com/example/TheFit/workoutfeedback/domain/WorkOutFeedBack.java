@@ -1,6 +1,6 @@
 package com.example.TheFit.workoutfeedback.domain;
 
-import com.example.TheFit.trainer.domain.Trainer;
+import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.workoutfeedback.dto.WorkOutFeedBackReqDto;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
 import lombok.AllArgsConstructor;

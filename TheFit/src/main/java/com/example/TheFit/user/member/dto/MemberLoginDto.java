@@ -1,4 +1,4 @@
-package com.example.TheFit.member.dto;
+package com.example.TheFit.user.member.dto;
 
 import lombok.Data;
 

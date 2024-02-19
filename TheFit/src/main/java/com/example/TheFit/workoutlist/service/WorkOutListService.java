@@ -1,7 +1,7 @@
 package com.example.TheFit.workoutlist.service;
 
-import com.example.TheFit.member.domain.Member;
-import com.example.TheFit.member.repository.MemberRepository;
+import com.example.TheFit.user.member.domain.Member;
+import com.example.TheFit.user.member.repository.MemberRepository;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
 import com.example.TheFit.workoutlist.dto.WorkOutListReqDto;
 import com.example.TheFit.workoutlist.repository.WorkOutListRepository;

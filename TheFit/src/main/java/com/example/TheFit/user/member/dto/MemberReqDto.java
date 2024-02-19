@@ -1,15 +1,13 @@
-package com.example.TheFit.trainer.dto;
+package com.example.TheFit.user.member.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TrainerReqDto {
+public class MemberReqDto {
+    private Long trainerId;
     private String name;
     private String email;
     private String password;

@@ -1,6 +1,5 @@
 package com.example.TheFit.totalworkouts.service;
 
-import com.example.TheFit.member.domain.Member;
 import com.example.TheFit.totalworkouts.domain.TotalWorkOuts;
 import com.example.TheFit.totalworkouts.dto.TotalWorkOutsReqDto;
 import com.example.TheFit.totalworkouts.dto.TotalWorkOutsResDto;
