@@ -17,9 +17,6 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @Data
 public abstract class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
     @Column(nullable = false)
     public String name;
     @Column(unique = true, nullable = false)
