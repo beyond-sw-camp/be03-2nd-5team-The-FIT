@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,9 +22,10 @@ public class Career {
     private String license;
     private String work;
 
-    public void update(CareerReqDto careerReqDto) {
+    public void update(CareerReqDto careerReqDto,Trainer trainer) {
         this.awards = careerReqDto.getAwards();
         this.license = careerReqDto.getLicense();
         this.work = careerReqDto.getWork();
+        this.trainer = trainer;
     }
 }

@@ -30,12 +30,12 @@ public class CareerService {
     public void create(CareerReqDto careerReqDto) {
         Trainer trainer = trainerRepository.findById(careerReqDto.getTrainerId())
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
-        Career career = careerMapper.toEntity(careerReqDto);
-        career.setTrainer(trainer);
+        Career career = careerMapper.toEntity(trainer,careerReqDto);
         careerRepository.save(career);
     }
 
     public List<CareerResDto> findAll() {
+        trainerRepository.findAll();
         List<Career> careers = careerRepository.findAll();
         return careers.stream()
                 .map(careerMapper::toDto)
@@ -47,8 +47,7 @@ public class CareerService {
                 .orElseThrow(() -> new EntityNotFoundException("Career not found"));
         Trainer trainer = trainerRepository.findById(careerReqDto.getTrainerId())
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
-        careerMapper.update(careerReqDto, career);
-        career.setTrainer(trainer);
+         career.update(careerReqDto,trainer);
         return careerRepository.save(career);
     }
 
