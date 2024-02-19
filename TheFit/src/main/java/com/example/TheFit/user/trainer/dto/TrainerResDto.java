@@ -1,4 +1,4 @@
-package com.example.TheFit.trainer.dto;
+package com.example.TheFit.user.trainer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TrainerReqDto {
+public class TrainerResDto {
+    private Long id;
     private String name;
     private String email;
-    private String password;
     private int cmHeight;
     private int kgWeight;
     private String gender;

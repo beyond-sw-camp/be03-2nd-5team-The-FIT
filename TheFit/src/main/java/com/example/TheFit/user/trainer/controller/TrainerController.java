@@ -1,8 +1,8 @@
-package com.example.TheFit.trainer.controller;
+package com.example.TheFit.user.trainer.controller;
 
-import com.example.TheFit.trainer.dto.TrainerReqDto;
-import com.example.TheFit.trainer.dto.TrainerResDto;
-import com.example.TheFit.trainer.service.TrainerService;
+import com.example.TheFit.user.trainer.dto.TrainerReqDto;
+import com.example.TheFit.user.trainer.dto.TrainerResDto;
+import com.example.TheFit.user.trainer.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
