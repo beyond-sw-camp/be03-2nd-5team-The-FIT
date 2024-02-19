@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/diet")
@@ -28,6 +29,13 @@ public class DietController {
     public DietResDto findById(@PathVariable Long id) {
         return dietService.findById(id);
     }
+
+
+    @GetMapping("/list")
+    public List<DietResDto> findById() {
+        return dietService.findAll();
+    }
+
     @PatchMapping("/update/{id}")
     public String updateDiet(@PathVariable Long id, @Valid @RequestBody DietReqDto dietReqDto) {
         dietService.update(id, dietReqDto);
