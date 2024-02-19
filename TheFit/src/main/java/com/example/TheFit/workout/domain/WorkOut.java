@@ -23,10 +23,10 @@ public class WorkOut {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TotalWorkOuts_id")
+    @JoinColumn(name = "totalWorkOuts_id")
     private TotalWorkOuts totalWorkOuts;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "WorkOutList_id")
+    @JoinColumn(name = "workOutList_id")
     private WorkOutList workOutList;
     @Column(nullable = false)
     private int sets;

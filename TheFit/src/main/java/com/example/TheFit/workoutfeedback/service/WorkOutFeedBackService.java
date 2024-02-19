@@ -5,6 +5,7 @@ import com.example.TheFit.trainer.repository.TrainerRepository;
 import com.example.TheFit.workoutfeedback.domain.WorkOutFeedBack;
 import com.example.TheFit.workoutfeedback.dto.WorkOutFeedBackReqDto;
 import com.example.TheFit.workoutfeedback.dto.WorkOutFeedBackResDto;
+import com.example.TheFit.workoutfeedback.mapper.WorkOutFeedBackMapper;
 import com.example.TheFit.workoutfeedback.repository.WorkOutFeedBackRepository;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
 import com.example.TheFit.workoutlist.repository.WorkOutListRepository;
@@ -21,6 +22,7 @@ import java.util.List;
 public class WorkOutFeedBackService {
 
     private final WorkOutFeedBackRepository workOutFeedBackRepository;
+    private final WorkOutFeedBackMapper workOutFeedBackMapper = WorkOutFeedBackMapper.INSTANCE;
     private final WorkOutListRepository workOutListRepository;
     private final TrainerRepository trainerRepository;
 

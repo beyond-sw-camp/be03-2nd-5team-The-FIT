@@ -20,5 +20,5 @@ public interface DietFeedBackMapper {
     @Mapping(source = "trainer.id", target = "trainerId")
     DietFeedBackResDto toDto(DietFeedBack dietFeedBack);
 
-    void update(DietFeedBackReqDto dietFeedBackReqDto, @MappingTarget DietFeedBack dietFeedBack);
+    void update(DietFeedBackReqDto dto, @MappingTarget DietFeedBack dietFeedBack);
 }
