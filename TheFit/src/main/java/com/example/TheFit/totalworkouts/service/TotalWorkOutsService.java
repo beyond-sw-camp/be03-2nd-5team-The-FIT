@@ -8,10 +8,12 @@ import com.example.TheFit.totalworkouts.repository.TotalWorkOutsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class TotalWorkOutsService {
     private final TotalWorkOutsRepository totalWorkOutsRepository;
     private final TotalWorkOutsMapper totalWorkOutsMapper = TotalWorkOutsMapper.INSTANCE;
@@ -35,8 +37,7 @@ public class TotalWorkOutsService {
     public void update(Long id, TotalWorkOutsReqDto totalWorkOutsReqDto) {
         TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("TotalWorkOuts not found"));
-        TotalWorkOutsMapper.INSTANCE.update(totalWorkOutsReqDto, totalWorkOuts);
-        totalWorkOutsRepository.save(totalWorkOuts);
+        totalWorkOuts.update(totalWorkOutsReqDto);
     }
     public void delete(Long id) {
         totalWorkOutsRepository.deleteById(id);
