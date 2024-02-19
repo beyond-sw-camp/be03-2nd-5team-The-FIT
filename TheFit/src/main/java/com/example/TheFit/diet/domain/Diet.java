@@ -1,9 +1,12 @@
 package com.example.TheFit.diet.domain;
 
 import com.example.TheFit.diet.dto.DietDto;
+import com.example.TheFit.diet.dto.DietReqDto;
 import com.example.TheFit.member.domain.Member;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +17,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Diet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,21 +32,15 @@ public class Diet {
     @Column(nullable = false)
     private String comment;
     private LocalDate dietDate;
-    @Builder.Default
-    private String delYn="N";
     @CreationTimestamp
     private LocalDateTime createdTime;
     @UpdateTimestamp
     private LocalDateTime updatedTime;
 
-    public void update(DietDto dietDto){
-        this.imagePath = dietDto.getImagePath();
-        this.type = dietDto.getType();
-        this.comment = dietDto.getComment();
-        this.dietDate = dietDto.getDietDate();
+    public void update(DietReqDto dietReqDto){
+        this.imagePath = dietReqDto.getImagePath();
+        this.type = dietReqDto.getType();
+        this.comment = dietReqDto.getComment();
+        this.dietDate = dietReqDto.getDietDate();
     }
-    public void delete() {
-        this.delYn = "Y";
-    }
-
 }

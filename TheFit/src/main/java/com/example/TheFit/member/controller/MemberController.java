@@ -1,5 +1,6 @@
 package com.example.TheFit.member.controller;
 
+
 import com.example.TheFit.login.TmpResponse;
 import com.example.TheFit.member.domain.Member;
 import com.example.TheFit.member.dto.MemberCreateDto;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/member")
 public class MemberController {
     private final TokenService tokenService;
     private final MemberService memberService;
@@ -27,17 +29,17 @@ public class MemberController {
         this.tokenService = tokenService;
         this.memberService = memberService;
     }
-    @PostMapping("/member/create")
-    public String create(@Valid @RequestBody MemberCreateDto memberCreateDto){
-        memberService.create(memberCreateDto);
+    @PostMapping("/create")
+    public String create(@Valid @RequestBody MemberReqDto memberReqDto){
+        memberService.create(memberReqDto);
         return "member create ok";
     }
-    @GetMapping("/members")
+    @GetMapping("/list")
     public List<MemberResDto> members(){
         return memberService.findAll();
     }
-    @PatchMapping("/member/update/{id}")
-    public String update(@Valid @PathVariable Long id, @RequestBody MemberReqDto memberReqDto) {
+    @PatchMapping("/update/{id}")
+    public String update(@PathVariable Long id, @Valid @RequestBody MemberReqDto memberReqDto) {
         memberService.update(id, memberReqDto);
         return "member update Ok";
     }
@@ -62,7 +64,9 @@ public class MemberController {
 
 }
 
-
-
-
-
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        memberService.delete(id);
+        return "member delete Ok";
+    }
+}

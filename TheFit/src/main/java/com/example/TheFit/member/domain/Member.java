@@ -3,10 +3,7 @@ package com.example.TheFit.member.domain;
 import com.example.TheFit.member.dto.MemberReqDto;
 import com.example.TheFit.trainer.domain.Trainer;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,8 +31,12 @@ public class Member {
     private String password;
     private int cmHeight;
     private int kgWeight;
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Gender gender;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
     private String profileImage;
     @Column(unique = true, nullable = false)
     private String phoneNumber;

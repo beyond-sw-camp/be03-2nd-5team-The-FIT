@@ -1,16 +1,16 @@
 package com.example.TheFit.workoutlist.dto;
 
-import com.example.TheFit.member.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Data
 @Builder
 @AllArgsConstructor
-public class WorkOutListDto {
-    private Long MemberId;
+@NoArgsConstructor
+public class WorkOutListReqDto {
+    private Long memberId;
     private LocalDate workOutDate;
 }

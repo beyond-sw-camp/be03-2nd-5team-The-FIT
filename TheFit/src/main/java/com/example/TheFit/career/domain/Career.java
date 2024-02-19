@@ -1,16 +1,14 @@
 package com.example.TheFit.career.domain;
 
-import com.example.TheFit.career.dto.CareerDto;
+import com.example.TheFit.career.dto.CareerReqDto;
 import com.example.TheFit.trainer.domain.Trainer;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,16 +16,16 @@ public class Career {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
     private String awards;
     private String license;
     private String work;
 
-    public void update(CareerDto careerDto) {
-        this.awards = careerDto.getAwards();
-        this.license = careerDto.getLicense();
-        this.work = careerDto.getWork();
+    public void update(CareerReqDto careerReqDto) {
+        this.awards = careerReqDto.getAwards();
+        this.license = careerReqDto.getLicense();
+        this.work = careerReqDto.getWork();
     }
 }
