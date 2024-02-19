@@ -2,15 +2,13 @@ package com.example.TheFit.career.domain;
 
 import com.example.TheFit.career.dto.CareerReqDto;
 import com.example.TheFit.trainer.domain.Trainer;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -39,5 +39,4 @@ public class DietFeedBackController {
         dietFeedBackService.delete(id);
         return "DietFeedBack delete ok";
     }
-
 }
