@@ -3,6 +3,7 @@ package com.example.TheFit.member.service;
 import com.example.TheFit.member.domain.Gender;
 import com.example.TheFit.member.domain.Member;
 import com.example.TheFit.member.dto.MemberCreateDto;
+import com.example.TheFit.member.dto.MemberLoginDto;
 import com.example.TheFit.member.dto.MemberReqDto;
 import com.example.TheFit.member.dto.MemberResDto;
 import com.example.TheFit.member.repository.MemberRepository;
@@ -69,5 +70,13 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("not found member"));
         member.delete();
+    }
+
+    public Member login(MemberLoginDto memberLoginDto) {
+        Member member = memberRepository.findByEmail(memberLoginDto.getEmail()).orElseThrow(()-> new EntityNotFoundException("해당 이메일이 없습니다"));
+        if(!member.getPassword().equals(memberLoginDto.getPassword())){
+            throw new IllegalArgumentException("비밀번호가 틀립니다");
+        }
+        return member;
     }
 }
