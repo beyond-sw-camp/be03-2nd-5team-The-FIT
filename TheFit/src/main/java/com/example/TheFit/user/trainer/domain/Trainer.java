@@ -14,7 +14,9 @@ import javax.persistence.*;
 @SuperBuilder
 @NoArgsConstructor
 public class Trainer extends User {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     public void update(TrainerReqDto trainerReqDto) {
         this.name = trainerReqDto.getName();
         this.password = trainerReqDto.getPassword();

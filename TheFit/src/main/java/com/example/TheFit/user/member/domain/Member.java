@@ -13,6 +13,9 @@ import javax.persistence.*;
 @SuperBuilder
 @NoArgsConstructor
 public class Member extends User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
@@ -28,9 +31,5 @@ public class Member extends User {
 
     public void delete() {
         this.delYn = "Y";
-    }
-
-    public void setTrainer(Trainer trainer) {
-        this.trainer = trainer;
     }
 }
