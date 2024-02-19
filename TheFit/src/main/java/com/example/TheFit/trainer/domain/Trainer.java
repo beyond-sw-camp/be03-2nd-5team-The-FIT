@@ -32,7 +32,11 @@ public class Trainer {
     private int cmHeight;
     private int kgWeight;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Gender gender;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
     private String profileImage;
     @Column(unique = true, nullable = false)
     private String phoneNumber;

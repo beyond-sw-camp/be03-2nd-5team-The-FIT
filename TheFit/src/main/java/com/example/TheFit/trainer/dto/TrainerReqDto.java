@@ -16,7 +16,8 @@ public class TrainerReqDto {
     private String password;
     private int cmHeight;
     private int kgWeight;
-    private Gender gender;
+    private String gender;
+    private String role;
     private String profileImage;
     private String phoneNumber;
 }

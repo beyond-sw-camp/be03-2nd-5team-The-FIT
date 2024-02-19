@@ -16,7 +16,8 @@ public class TrainerResDto {
     private String email;
     private int cmHeight;
     private int kgWeight;
-    private Gender gender;
+    private String gender;
+    private String role;
     private String profileImage;
     private String phoneNumber;
 }

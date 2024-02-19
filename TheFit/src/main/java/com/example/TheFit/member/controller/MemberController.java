@@ -36,11 +36,4 @@ public class MemberController {
         memberService.delete(id);
         return "member delete Ok";
     }
-
-
 }
-
-
-
-
-
