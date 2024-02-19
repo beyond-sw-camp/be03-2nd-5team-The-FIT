@@ -12,5 +12,5 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class WorkOutListReqDto {
     private Long memberId;
-    private LocalDate workOutDate;
+    private String workOutDate;
 }

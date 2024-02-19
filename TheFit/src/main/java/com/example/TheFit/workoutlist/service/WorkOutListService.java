@@ -4,33 +4,44 @@ import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.user.member.repository.MemberRepository;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
 import com.example.TheFit.workoutlist.dto.WorkOutListReqDto;
+import com.example.TheFit.workoutlist.dto.WorkOutListResDto;
+import com.example.TheFit.workoutlist.mapper.WorkOutListMapper;
 import com.example.TheFit.workoutlist.repository.WorkOutListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class WorkOutListService {
     private final WorkOutListRepository workOutListRepository;
     private final MemberRepository memberRepository;
-
+    private final WorkOutListMapper workOutListMapper;
     @Autowired
-    public WorkOutListService(WorkOutListRepository workOutListRepository, MemberRepository memberRepository) {
+    public WorkOutListService(WorkOutListRepository workOutListRepository, MemberRepository memberRepository, WorkOutListMapper workOutListMapper) {
         this.workOutListRepository = workOutListRepository;
         this.memberRepository = memberRepository;
+        this.workOutListMapper = workOutListMapper;
     }
 
-    public void create(WorkOutListReqDto workOutListReqDto) {
+    public WorkOutList create(WorkOutListReqDto workOutListReqDto) {
         Member member = memberRepository.findById(workOutListReqDto.getMemberId())
                 .orElseThrow(() -> new EntityNotFoundException("Member not found"));
-        WorkOutList workOutList = WorkOutList.builder()
-                .member(member)
-                .workOutDate(workOutListReqDto.getWorkOutDate())
-                .build();
-        workOutListRepository.save(workOutList);
+        WorkOutList workOutList = workOutListMapper.toEntity(member,workOutListReqDto);
+        return workOutListRepository.save(workOutList);
     }
 
     public void delete(Long id) {
         workOutListRepository.deleteById(id);
+    }
+
+    public List<WorkOutListResDto> findAll() {
+        List<WorkOutList> workOutLists = workOutListRepository.findAll();
+        List<WorkOutListResDto> workOutListResDtos = new ArrayList<>();
+        for(WorkOutList workOutList : workOutLists){
+            workOutListResDtos.add(workOutListMapper.toDto(workOutList));
+        }
+        return workOutListResDtos;
     }
 }

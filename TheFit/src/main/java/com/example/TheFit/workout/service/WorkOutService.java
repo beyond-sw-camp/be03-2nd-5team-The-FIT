@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class WorkOutService {
     private final WorkOutRepository workOutRepository;
@@ -32,7 +34,9 @@ public class WorkOutService {
     }
 
     public void create(WorkOutReqDto workOutReqDto) {
-        WorkOut workOut = workOutMapper.toEntity(workOutReqDto);
+        TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(workOutReqDto.getTotalWorkOutsId()).orElseThrow(()->new IllegalArgumentException("해당 운동이 없습니다"));
+        WorkOutList workOutList = workOutListRepository.findById(workOutReqDto.getWorkOutListId()).orElseThrow(()->new IllegalArgumentException("해당 list가 없습니다"));;
+        WorkOut workOut = workOutMapper.toEntity(totalWorkOuts,workOutList,workOutReqDto);
         workOutRepository.save(workOut);
     }
 
@@ -40,18 +44,7 @@ public class WorkOutService {
         List<WorkOut> workOuts = workOutRepository.findAll();
         List<WorkOutResDto> workOutResDtos = new ArrayList<>();
         for (WorkOut workOut : workOuts) {
-            WorkOutResDto workOutResDto = WorkOutResDto.builder()
-                    .id(workOut.getId())
-                    .workOutListId(workOut.getWorkOutList() != null ? workOut.getWorkOutList().getId() : null)
-                    .totalWorkOutsId(workOut.getTotalWorkOuts() != null ? workOut.getTotalWorkOuts().getId() : null)
-                    .sets(workOut.getSets())
-                    .weight(workOut.getWeight())
-                    .reps(workOut.getReps())
-                    .restTime(workOut.getRestTime())
-                    .performance(workOut.getPerformance())
-                    .workOutStatus(workOut.getWorkOutStatus())
-                    .build();
-            workOutResDtos.add(workOutResDto);
+            workOutResDtos.add(workOutMapper.toDto(workOut));
         }
         return workOutResDtos;
     }
@@ -59,7 +52,7 @@ public class WorkOutService {
             WorkOut workOutUpdate = workOutRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("not found"));
             workOutUpdate.update(workOutReqDto);
-            return workOutRepository.save(workOutUpdate);
+            return workOutUpdate;
         }
 
         public void delete(Long id) {

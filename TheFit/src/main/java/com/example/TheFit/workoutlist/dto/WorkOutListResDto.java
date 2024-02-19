@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -13,5 +14,5 @@ import java.time.LocalDate;
 public class WorkOutListResDto {
     private Long id;
     private Long memberId;
-    private LocalDate workOutDate;
+    private LocalDateTime workOutDate;
 }

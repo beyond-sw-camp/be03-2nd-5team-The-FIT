@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,9 +24,7 @@ public class WorkOutList {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-    @OneToMany(mappedBy = "workOutList", cascade = CascadeType.REMOVE)
-    private List<WorkOut> workOuts;
-    private LocalDate workOutDate;
+    private LocalDateTime workOutDate;
 
 }
 
