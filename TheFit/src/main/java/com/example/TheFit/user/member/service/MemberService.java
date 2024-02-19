@@ -8,8 +8,6 @@ import com.example.TheFit.user.member.dto.MemberResDto;
 import com.example.TheFit.user.member.repository.MemberRepository;
 import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.user.trainer.repository.TrainerRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,26 +19,30 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class MemberService {
-    private final MemberRepository memberRepository;
-    private final UserMapper userMapper = UserMapper.INSTANCE;
-    private final TrainerRepository trainerRepository;
-    Logger logger = LoggerFactory.getLogger(MemberService.class);
-
     @Autowired
-    public MemberService(MemberRepository memberRepository, TrainerRepository trainerRepository) {
+    private final MemberRepository memberRepository;
+    @Autowired
+    private final UserMapper userMapper;
+    @Autowired
+    private final TrainerRepository trainerRepository;
+
+    public MemberService(MemberRepository memberRepository, UserMapper userMapper, TrainerRepository trainerRepository) {
         this.memberRepository = memberRepository;
+        this.userMapper = userMapper;
         this.trainerRepository = trainerRepository;
     }
 
     public void create(MemberReqDto memberReqDto) {
         Trainer trainer = trainerRepository.findById(memberReqDto.getTrainerId())
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
-        Member member = userMapper.INSTANCE.toEntity(memberReqDto);
-        member.setTrainer(trainer);
+        Member member = userMapper.toEntity(memberReqDto,trainer);
+        Member member1 = memberRepository.findById(1L).orElseThrow();
+        System.out.println(member1.getTrainer().name);
         memberRepository.save(member);
     }
 
     public List<MemberResDto> findAll() {
+        trainerRepository.findAll();
         List<Member> members = memberRepository.findAll();
         return members.stream()
                 .map(userMapper::toDto)
@@ -51,9 +53,7 @@ public class MemberService {
                 .orElseThrow(() -> new EntityNotFoundException("Member not found"));
         Trainer trainer = trainerRepository.findById(member.getTrainer().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
-        userMapper.INSTANCE.update(memberReqDto, member);
-        member.setTrainer(trainer);
-        memberRepository.save(member);
+        member.update(memberReqDto,trainer);
     }
 
     public void delete(Long id) {

@@ -20,13 +20,14 @@ public class Member extends User {
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
-    public void update(MemberReqDto memberReqDto) {
+    public void update(MemberReqDto memberReqDto,Trainer trainer) {
         this.name = memberReqDto.getName();
         this.password = memberReqDto.getPassword();
         this.cmHeight = memberReqDto.getCmHeight();
         this.kgWeight = memberReqDto.getKgWeight();
         this.profileImage = memberReqDto.getProfileImage();
         this.phoneNumber = memberReqDto.getPhoneNumber();
+        this.trainer = trainer;
     }
 
     public void delete() {
