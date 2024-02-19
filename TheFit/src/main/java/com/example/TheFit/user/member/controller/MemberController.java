@@ -1,12 +1,12 @@
-package com.example.TheFit.member.controller;
+package com.example.TheFit.user.member.controller;
 
 
 import com.example.TheFit.login.TmpResponse;
-import com.example.TheFit.member.domain.Member;
-import com.example.TheFit.member.dto.MemberLoginDto;
-import com.example.TheFit.member.dto.MemberReqDto;
-import com.example.TheFit.member.dto.MemberResDto;
-import com.example.TheFit.member.service.MemberService;
+import com.example.TheFit.user.member.domain.Member;
+import com.example.TheFit.user.member.dto.MemberLoginDto;
+import com.example.TheFit.user.member.dto.MemberReqDto;
+import com.example.TheFit.user.member.dto.MemberResDto;
+import com.example.TheFit.user.member.service.MemberService;
 import com.example.TheFit.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
