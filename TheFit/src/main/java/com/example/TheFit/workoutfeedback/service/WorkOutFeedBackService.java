@@ -1,7 +1,7 @@
 package com.example.TheFit.workoutfeedback.service;
 
-import com.example.TheFit.trainer.domain.Trainer;
-import com.example.TheFit.trainer.repository.TrainerRepository;
+import com.example.TheFit.user.trainer.domain.Trainer;
+import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import com.example.TheFit.workoutfeedback.domain.WorkOutFeedBack;
 import com.example.TheFit.workoutfeedback.dto.WorkOutFeedBackReqDto;
 import com.example.TheFit.workoutfeedback.dto.WorkOutFeedBackResDto;

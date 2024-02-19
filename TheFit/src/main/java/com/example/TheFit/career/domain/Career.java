@@ -1,7 +1,7 @@
 package com.example.TheFit.career.domain;
 
 import com.example.TheFit.career.dto.CareerReqDto;
-import com.example.TheFit.trainer.domain.Trainer;
+import com.example.TheFit.user.trainer.domain.Trainer;
 import lombok.*;
 
 import javax.persistence.*;

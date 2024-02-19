@@ -6,13 +6,12 @@ import com.example.TheFit.career.dto.CareerReqDto;
 import com.example.TheFit.career.dto.CareerResDto;
 import com.example.TheFit.career.mapper.CareerMapper;
 import com.example.TheFit.career.repository.CareerRepository;
-import com.example.TheFit.trainer.domain.Trainer;
-import com.example.TheFit.trainer.repository.TrainerRepository;
+import com.example.TheFit.user.trainer.domain.Trainer;
+import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -7,8 +7,8 @@ import com.example.TheFit.deitfeedback.mapper.DietFeedBackMapper;
 import com.example.TheFit.deitfeedback.repository.DietFeedBackRepository;
 import com.example.TheFit.diet.domain.Diet;
 import com.example.TheFit.diet.repository.DietRepository;
-import com.example.TheFit.trainer.domain.Trainer;
-import com.example.TheFit.trainer.repository.TrainerRepository;
+import com.example.TheFit.user.trainer.domain.Trainer;
+import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

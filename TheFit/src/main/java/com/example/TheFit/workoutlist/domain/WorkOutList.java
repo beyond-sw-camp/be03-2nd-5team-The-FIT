@@ -1,8 +1,7 @@
 package com.example.TheFit.workoutlist.domain;
 
-import com.example.TheFit.member.domain.Member;
+import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.workout.domain.WorkOut;
-import com.example.TheFit.workoutlist.dto.WorkOutListReqDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
