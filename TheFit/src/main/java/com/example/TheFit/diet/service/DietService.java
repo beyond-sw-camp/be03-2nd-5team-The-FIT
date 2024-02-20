@@ -30,11 +30,11 @@ public class DietService {
         this.dietMapper = dietMapper;
     }
 
-    public void create(DietReqDto dietReqDto) {
+    public Diet create(DietReqDto dietReqDto) {
         Member member = memberRepository.findById(dietReqDto.getMemberId())
                 .orElseThrow(() -> new EntityNotFoundException("Member not found"));
         Diet diet = dietMapper.toEntity(member,dietReqDto);
-        dietRepository.save(diet);
+        return dietRepository.save(diet);
     }
 
     public DietResDto findById(Long id) {
@@ -44,10 +44,11 @@ public class DietService {
         return dietMapper.toDto(member, diet);
     }
 
-    public void update(Long id, DietReqDto dietReqDto) {
+    public Diet update(Long id, DietReqDto dietReqDto) {
         Diet diet = dietRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Diet not found"));
         diet.update(dietReqDto);
+        return diet;
     }
 
     public void delete(Long id) {

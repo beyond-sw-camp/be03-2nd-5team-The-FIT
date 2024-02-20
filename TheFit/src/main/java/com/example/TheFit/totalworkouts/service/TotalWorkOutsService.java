@@ -23,9 +23,10 @@ public class TotalWorkOutsService {
         this.totalWorkOutsRepository = totalWorkOutsRepository;
     }
 
-    public void create(TotalWorkOutsReqDto totalWorkOutsReqDto) {
+    public TotalWorkOuts create(TotalWorkOutsReqDto totalWorkOutsReqDto) {
         TotalWorkOuts totalWorkOuts = TotalWorkOutsMapper.INSTANCE.toEntity(totalWorkOutsReqDto);
         totalWorkOutsRepository.save(totalWorkOuts);
+        return totalWorkOuts;
     }
 
     public List<TotalWorkOutsResDto> findAll() {
@@ -34,10 +35,11 @@ public class TotalWorkOutsService {
                 .map(totalWorkOutsMapper::toDto)
                 .collect(Collectors.toList());
     }
-    public void update(Long id, TotalWorkOutsReqDto totalWorkOutsReqDto) {
+    public TotalWorkOuts update(Long id, TotalWorkOutsReqDto totalWorkOutsReqDto) {
         TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("TotalWorkOuts not found"));
         totalWorkOuts.update(totalWorkOutsReqDto);
+        return totalWorkOuts;
     }
     public void delete(Long id) {
         totalWorkOutsRepository.deleteById(id);

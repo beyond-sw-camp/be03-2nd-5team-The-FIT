@@ -1,9 +1,13 @@
 package com.example.TheFit.totalworkouts.controller;
 
+import com.example.TheFit.common.TheFitResponse;
+import com.example.TheFit.totalworkouts.domain.TotalWorkOuts;
 import com.example.TheFit.totalworkouts.dto.TotalWorkOutsReqDto;
 import com.example.TheFit.totalworkouts.dto.TotalWorkOutsResDto;
 import com.example.TheFit.totalworkouts.service.TotalWorkOutsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/totalworkouts")
 public class TotalWorkOutsController {
+
     private final TotalWorkOutsService totalWorkOutsService;
 
     @Autowired
@@ -20,25 +25,26 @@ public class TotalWorkOutsController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @RequestBody TotalWorkOutsReqDto totalWorkOutsReqDto){
-        totalWorkOutsService.create(totalWorkOutsReqDto);
-        return "totalworkouts create ok";
+    public ResponseEntity<TheFitResponse> create(@Valid @RequestBody TotalWorkOutsReqDto totalWorkOutsReqDto){
+        TotalWorkOuts totalWorkOuts = totalWorkOutsService.create(totalWorkOutsReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",totalWorkOuts.getId()),HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
-    public List<TotalWorkOutsResDto> findAll(){
-        return totalWorkOutsService.findAll();
+    public ResponseEntity<TheFitResponse> findAll(){
+        List<TotalWorkOutsResDto> totalWorkOutsResDtos = totalWorkOutsService.findAll();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success check",totalWorkOutsResDtos),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
-    public String update(@PathVariable Long id, @Valid @RequestBody TotalWorkOutsReqDto totalWorkOutsReqDto){
-        totalWorkOutsService.update(id, totalWorkOutsReqDto);
-        return "totalworkouts update ok";
+    public ResponseEntity<TheFitResponse> update(@PathVariable Long id, @Valid @RequestBody TotalWorkOutsReqDto totalWorkOutsReqDto){
+        TotalWorkOuts totalWorkOuts = totalWorkOutsService.update(id, totalWorkOutsReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success update",totalWorkOuts.getId()),HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public ResponseEntity<TheFitResponse> delete(@PathVariable Long id) {
         totalWorkOutsService.delete(id);
-        return "totalworkouts delete ok";
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success delete",null),HttpStatus.OK);
     }
 }

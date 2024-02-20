@@ -31,9 +31,9 @@ public class DietFeedBackService {
         this.trainerRepository = trainerRepository;
     }
 
-    public void create(DietFeedBackReqDto dietFeedBackReqDto) {
+    public DietFeedBack create(DietFeedBackReqDto dietFeedBackReqDto) {
         DietFeedBack dietFeedback = dietFeedBackMapper.toEntity(dietFeedBackReqDto);
-        dietFeedBackRepository.save(dietFeedback);
+        return dietFeedBackRepository.save(dietFeedback);
     }
 
     public List<DietFeedBackResDto> findAll() {

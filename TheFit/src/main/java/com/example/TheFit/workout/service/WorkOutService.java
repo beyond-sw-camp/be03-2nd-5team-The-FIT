@@ -33,11 +33,11 @@ public class WorkOutService {
         this.totalWorkOutsRepository = totalWorkOutsRepository;
     }
 
-    public void create(WorkOutReqDto workOutReqDto) {
+    public WorkOut create(WorkOutReqDto workOutReqDto) {
         TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(workOutReqDto.getTotalWorkOutsId()).orElseThrow(()->new IllegalArgumentException("해당 운동이 없습니다"));
         WorkOutList workOutList = workOutListRepository.findById(workOutReqDto.getWorkOutListId()).orElseThrow(()->new IllegalArgumentException("해당 list가 없습니다"));;
         WorkOut workOut = workOutMapper.toEntity(totalWorkOuts,workOutList,workOutReqDto);
-        workOutRepository.save(workOut);
+        return workOutRepository.save(workOut);
     }
 
     public List<WorkOutResDto> findAll() {

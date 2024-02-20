@@ -1,9 +1,13 @@
 package com.example.TheFit.deitfeedback.controller;
 
+import com.example.TheFit.common.TheFitResponse;
+import com.example.TheFit.deitfeedback.domain.DietFeedBack;
 import com.example.TheFit.deitfeedback.dto.DietFeedBackReqDto;
 import com.example.TheFit.deitfeedback.dto.DietFeedBackResDto;
 import com.example.TheFit.deitfeedback.service.DietFeedBackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,9 +25,9 @@ public class DietFeedBackController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @RequestBody DietFeedBackReqDto dietFeedBackReqDto) {
-        dietFeedBackService.create(dietFeedBackReqDto);
-        return "DietFeedBack create ok";
+    public ResponseEntity<TheFitResponse> create(@Valid @RequestBody DietFeedBackReqDto dietFeedBackReqDto) {
+        DietFeedBack dietFeedBack = dietFeedBackService.create(dietFeedBackReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",dietFeedBack),HttpStatus.CREATED);
     }
     @GetMapping("/list")
     public List<DietFeedBackResDto> dietFeedBackResDtos(){

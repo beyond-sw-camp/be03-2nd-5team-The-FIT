@@ -1,9 +1,13 @@
 package com.example.TheFit.user.trainer.controller;
 
+import com.example.TheFit.common.TheFitResponse;
+import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.user.trainer.dto.TrainerReqDto;
 import com.example.TheFit.user.trainer.dto.TrainerResDto;
 import com.example.TheFit.user.trainer.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,25 +24,26 @@ public class TrainerController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @RequestBody TrainerReqDto trainerReqDto) {
-        trainerService.create(trainerReqDto);
-        return "trainer create ok";
+    public ResponseEntity<TheFitResponse> create(@Valid @RequestBody TrainerReqDto trainerReqDto) {
+        Trainer trainer = trainerService.create(trainerReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",trainer.getId()),HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
-    public List<TrainerResDto> trainers() {
-        return trainerService.findAll();
+    public ResponseEntity<TheFitResponse> trainers() {
+        List<TrainerResDto> trainerResDtos = trainerService.findAll();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success check",trainerResDtos),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
-    public String update(@PathVariable Long id, @Valid @RequestBody TrainerReqDto trainerReqDto) {
-        trainerService.update(id, trainerReqDto);
-        return "trainer update Ok";
+    public ResponseEntity<TheFitResponse> update(@PathVariable Long id, @Valid @RequestBody TrainerReqDto trainerReqDto) {
+        Trainer trainer = trainerService.update(id, trainerReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success update",trainer.getId()),HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@Valid @PathVariable Long id) {
+    public ResponseEntity<TheFitResponse> delete(@Valid @PathVariable Long id) {
         trainerService.delete(id);
-        return "trainer delete Ok";
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success delete",null),HttpStatus.OK);
     }
 }

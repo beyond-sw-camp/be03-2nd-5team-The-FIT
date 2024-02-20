@@ -1,6 +1,7 @@
 package com.example.TheFit.user.member.controller;
 
 
+import com.example.TheFit.common.TheFitResponse;
 import com.example.TheFit.login.TmpResponse;
 import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.user.member.dto.MemberLoginDto;
@@ -29,35 +30,36 @@ public class MemberController {
         this.memberService = memberService;
     }
     @PostMapping("/create")
-    public String create(@Valid @RequestBody MemberReqDto memberReqDto){
-        memberService.create(memberReqDto);
-        return "member create ok";
+    public ResponseEntity<TheFitResponse> create(@Valid @RequestBody MemberReqDto memberReqDto){
+        Member member = memberService.create(memberReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",member.getId()),HttpStatus.CREATED);
     }
     @GetMapping("/list")
-    public List<MemberResDto> members(){
-        return memberService.findAll();
+    public ResponseEntity<TheFitResponse> members(){
+        List<MemberResDto> memberResDtos =  memberService.findAll();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success check",memberResDtos),HttpStatus.CREATED);
     }
     @PatchMapping("/update/{id}")
-    public String update(@PathVariable Long id, @Valid @RequestBody MemberReqDto memberReqDto) {
-        memberService.update(id, memberReqDto);
-        return "member update Ok";
+    public ResponseEntity<TheFitResponse> update(@PathVariable Long id, @Valid @RequestBody MemberReqDto memberReqDto) {
+        Member member = memberService.update(id, memberReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success update",member.getId()),HttpStatus.CREATED);
     }
 
     @DeleteMapping("/member/delete/{id}")
-    public String delete(@Valid @PathVariable Long id) {
+    public ResponseEntity<TheFitResponse> delete(@Valid @PathVariable Long id) {
         memberService.delete(id);
-        return "member delete Ok";
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success delete",null),HttpStatus.CREATED);
     }
 
     @GetMapping("/doLogin")
-    public ResponseEntity<TmpResponse> memberLogin(@RequestBody MemberLoginDto memberLoginDto){
+    public ResponseEntity<TheFitResponse> memberLogin(@RequestBody MemberLoginDto memberLoginDto){
         Member member = memberService.login(memberLoginDto);
         String accessToken = tokenService.createAccessToken(member.getEmail(),member.getName());
         String refreshToken = tokenService.createRefreshToken(member.getEmail());
         Map<String,Object> memberInfo = new HashMap<>();
         memberInfo.put("token",accessToken);
         memberInfo.put("refreshToken",refreshToken);
-        return new ResponseEntity<>(new TmpResponse(HttpStatus.OK,"login success",memberInfo),HttpStatus.OK);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success login",memberInfo),HttpStatus.OK);
     }
 }
 

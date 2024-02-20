@@ -24,9 +24,9 @@ public class TrainerService {
         this.trainerRepository = trainerRepository;
     }
 
-    public void create(TrainerReqDto trainerReqDto) {
+    public Trainer create(TrainerReqDto trainerReqDto) {
         Trainer trainer = userMapper.toEntity(trainerReqDto);
-        trainerRepository.save(trainer);
+        return trainerRepository.save(trainer);
     }
 
     public List<TrainerResDto> findAll() {
@@ -35,13 +35,11 @@ public class TrainerService {
                 .collect(Collectors.toList());
     }
 
-    public void update(Long id, TrainerReqDto trainerReqDto) {
+    public Trainer update(Long id, TrainerReqDto trainerReqDto) {
         Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
-        System.out.println(trainer.getCmHeight());
         userMapper.update(trainerReqDto, trainer);
-        System.out.println(trainer.getCmHeight());
-        trainerRepository.save(trainer);
+        return trainerRepository.save(trainer);
     }
 
     public void delete(Long id) {

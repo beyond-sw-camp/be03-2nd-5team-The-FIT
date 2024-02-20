@@ -1,9 +1,13 @@
 package com.example.TheFit.workoutlist.controller;
 
+import com.example.TheFit.common.TheFitResponse;
+import com.example.TheFit.workoutlist.domain.WorkOutList;
 import com.example.TheFit.workoutlist.dto.WorkOutListReqDto;
 import com.example.TheFit.workoutlist.dto.WorkOutListResDto;
 import com.example.TheFit.workoutlist.service.WorkOutListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,19 +24,20 @@ public class WorkOutListController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @RequestBody WorkOutListReqDto workOutListReqDto){
-        workOutListService.create(workOutListReqDto);
-        return "WorkOutList create ok";
+    public ResponseEntity<TheFitResponse> create(@Valid @RequestBody WorkOutListReqDto workOutListReqDto){
+        WorkOutList workOutList = workOutListService.create(workOutListReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",workOutList.getId()),HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
-    public List<WorkOutListResDto> create(){
-        return workOutListService.findAll();
+    public ResponseEntity<TheFitResponse> create(){
+        List<WorkOutListResDto> workOutListResDtoList = workOutListService.findAll();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success create",workOutListResDtoList),HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public ResponseEntity<TheFitResponse> delete(@PathVariable Long id) {
         workOutListService.delete(id);
-        return "WorkOutList delete ok";
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success delete",null),HttpStatus.OK);
     }
 }

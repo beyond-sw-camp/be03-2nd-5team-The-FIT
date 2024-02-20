@@ -1,9 +1,13 @@
 package com.example.TheFit.workout.controller;
 
+import com.example.TheFit.common.TheFitResponse;
+import com.example.TheFit.workout.domain.WorkOut;
 import com.example.TheFit.workout.dto.WorkOutReqDto;
 import com.example.TheFit.workout.dto.WorkOutResDto;
 import com.example.TheFit.workout.service.WorkOutService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,25 +24,26 @@ public class WorkOutController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @RequestBody WorkOutReqDto workOutReqDto) {
-        workOutService.create(workOutReqDto);
-        return "workOut create ok";
+    public  ResponseEntity<TheFitResponse> create(@Valid @RequestBody WorkOutReqDto workOutReqDto) {
+        WorkOut workOut = workOutService.create(workOutReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",workOut.getId()),HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
-    public List<WorkOutResDto> findAll() {
-        return workOutService.findAll();
+    public ResponseEntity<TheFitResponse> findAll() {
+        List<WorkOutResDto> workOutResDtos =  workOutService.findAll();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success check",workOutResDtos),HttpStatus.OK);
     }
 
     @PatchMapping("/update/{id}")
-    public String update(@PathVariable Long id, @Valid @RequestBody WorkOutReqDto workOutReqDto) {
-        workOutService.update(id, workOutReqDto);
-        return "workOut update ok";
+    public  ResponseEntity<TheFitResponse> update(@PathVariable Long id, @Valid @RequestBody WorkOutReqDto workOutReqDto) {
+        WorkOut workOut = workOutService.update(id, workOutReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success update",workOut.getId()),HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public  ResponseEntity<TheFitResponse> delete(@PathVariable Long id) {
         workOutService.delete(id);
-        return "workOut delete ok";
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success delete",null),HttpStatus.CREATED);
     }
 }

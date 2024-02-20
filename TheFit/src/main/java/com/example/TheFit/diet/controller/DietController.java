@@ -1,9 +1,13 @@
 package com.example.TheFit.diet.controller;
 
+import com.example.TheFit.common.TheFitResponse;
+import com.example.TheFit.diet.domain.Diet;
 import com.example.TheFit.diet.dto.DietReqDto;
 import com.example.TheFit.diet.dto.DietResDto;
 import com.example.TheFit.diet.service.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,29 +25,33 @@ public class DietController {
     }
 
     @PostMapping("/create")
-    public String createDiet(@Valid @RequestBody DietReqDto dietReqDto) {
-        dietService.create(dietReqDto);
-        return "diet create ok";
+    public ResponseEntity<TheFitResponse> createDiet(@Valid @RequestBody DietReqDto dietReqDto) {
+        Diet diet = dietService.create(dietReqDto);
+        TheFitResponse theFitResponse = new TheFitResponse(HttpStatus.CREATED,"success create",diet.getId());
+        return new ResponseEntity<>(theFitResponse,HttpStatus.CREATED);
+
     }
     @GetMapping("/{id}")
-    public DietResDto findById(@PathVariable Long id) {
-        return dietService.findById(id);
+    public ResponseEntity<TheFitResponse> findById(@PathVariable Long id) {
+        DietResDto dietResDto = dietService.findById(id);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",dietResDto),HttpStatus.OK);
     }
 
 
     @GetMapping("/list")
-    public List<DietResDto> findById() {
-        return dietService.findAll();
+    public ResponseEntity<TheFitResponse> findById() {
+        List<DietResDto>  dietResDtos =  dietService.findAll();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",dietResDtos),HttpStatus.OK);
     }
 
     @PatchMapping("/update/{id}")
-    public String updateDiet(@PathVariable Long id, @Valid @RequestBody DietReqDto dietReqDto) {
-        dietService.update(id, dietReqDto);
-        return "diet update ok";
+    public ResponseEntity<TheFitResponse> updateDiet(@PathVariable Long id, @Valid @RequestBody DietReqDto dietReqDto) {
+        Diet diet = dietService.update(id, dietReqDto);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success update",diet.getId()),HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id){
+    public ResponseEntity<TheFitResponse> delete(@PathVariable Long id){
         dietService.delete(id);
-        return "diet delete Ok";
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success update",null),HttpStatus.OK);
     }
 }

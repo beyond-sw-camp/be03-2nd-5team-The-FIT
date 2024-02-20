@@ -32,13 +32,13 @@ public class MemberService {
         this.trainerRepository = trainerRepository;
     }
 
-    public void create(MemberReqDto memberReqDto) {
+    public Member create(MemberReqDto memberReqDto) {
         Trainer trainer = trainerRepository.findById(memberReqDto.getTrainerId())
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
         Member member = userMapper.toEntity(memberReqDto,trainer);
         Member member1 = memberRepository.findById(1L).orElseThrow();
         System.out.println(member1.getTrainer().name);
-        memberRepository.save(member);
+        return  memberRepository.save(member);
     }
 
     public List<MemberResDto> findAll() {
@@ -48,12 +48,13 @@ public class MemberService {
                 .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }
-    public void update(Long id, MemberReqDto memberReqDto) {
+    public Member update(Long id, MemberReqDto memberReqDto) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Member not found"));
         Trainer trainer = trainerRepository.findById(member.getTrainer().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
         member.update(memberReqDto,trainer);
+        return member;
     }
 
     public void delete(Long id) {

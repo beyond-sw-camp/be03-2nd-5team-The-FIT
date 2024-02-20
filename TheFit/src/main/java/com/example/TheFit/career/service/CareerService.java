@@ -27,11 +27,11 @@ public class CareerService {
         this.trainerRepository = trainerRepository;
     }
 
-    public void create(CareerReqDto careerReqDto) {
+    public Career create(CareerReqDto careerReqDto) {
         Trainer trainer = trainerRepository.findById(careerReqDto.getTrainerId())
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
         Career career = careerMapper.toEntity(trainer,careerReqDto);
-        careerRepository.save(career);
+        return careerRepository.save(career);
     }
 
     public List<CareerResDto> findAll() {
@@ -47,8 +47,8 @@ public class CareerService {
                 .orElseThrow(() -> new EntityNotFoundException("Career not found"));
         Trainer trainer = trainerRepository.findById(careerReqDto.getTrainerId())
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
-         career.update(careerReqDto,trainer);
-        return careerRepository.save(career);
+        career.update(careerReqDto,trainer);
+        return career;
     }
 
     public void delete(Long id) {
