@@ -1,5 +1,7 @@
 package com.example.TheFit.workoutlist.service;
 
+import com.example.TheFit.common.ErrorCode;
+import com.example.TheFit.common.TheFitBizException;
 import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.user.member.repository.MemberRepository;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
@@ -25,9 +27,9 @@ public class WorkOutListService {
         this.workOutListMapper = workOutListMapper;
     }
 
-    public WorkOutList create(WorkOutListReqDto workOutListReqDto) {
+    public WorkOutList create(WorkOutListReqDto workOutListReqDto) throws TheFitBizException {
         Member member = memberRepository.findById(workOutListReqDto.getMemberId())
-                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
         WorkOutList workOutList = workOutListMapper.toEntity(member,workOutListReqDto);
         return workOutListRepository.save(workOutList);
     }

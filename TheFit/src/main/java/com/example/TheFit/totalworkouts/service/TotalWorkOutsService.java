@@ -1,5 +1,7 @@
 package com.example.TheFit.totalworkouts.service;
 
+import com.example.TheFit.common.ErrorCode;
+import com.example.TheFit.common.TheFitBizException;
 import com.example.TheFit.totalworkouts.domain.TotalWorkOuts;
 import com.example.TheFit.totalworkouts.dto.TotalWorkOutsReqDto;
 import com.example.TheFit.totalworkouts.dto.TotalWorkOutsResDto;
@@ -35,9 +37,9 @@ public class TotalWorkOutsService {
                 .map(totalWorkOutsMapper::toDto)
                 .collect(Collectors.toList());
     }
-    public TotalWorkOuts update(Long id, TotalWorkOutsReqDto totalWorkOutsReqDto) {
+    public TotalWorkOuts update(Long id, TotalWorkOutsReqDto totalWorkOutsReqDto) throws TheFitBizException {
         TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("TotalWorkOuts not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TOTALWORKOUT));
         totalWorkOuts.update(totalWorkOutsReqDto);
         return totalWorkOuts;
     }

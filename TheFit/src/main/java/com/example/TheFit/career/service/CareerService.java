@@ -6,6 +6,8 @@ import com.example.TheFit.career.dto.CareerReqDto;
 import com.example.TheFit.career.dto.CareerResDto;
 import com.example.TheFit.career.mapper.CareerMapper;
 import com.example.TheFit.career.repository.CareerRepository;
+import com.example.TheFit.common.ErrorCode;
+import com.example.TheFit.common.TheFitBizException;
 import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,9 @@ public class CareerService {
         this.trainerRepository = trainerRepository;
     }
 
-    public Career create(CareerReqDto careerReqDto) {
+    public Career create(CareerReqDto careerReqDto) throws TheFitBizException {
         Trainer trainer = trainerRepository.findById(careerReqDto.getTrainerId())
-                .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
         Career career = careerMapper.toEntity(trainer,careerReqDto);
         return careerRepository.save(career);
     }
@@ -46,9 +48,9 @@ public class CareerService {
     @Transactional
     public Career update(Long id, CareerReqDto careerReqDto) {
         Career career = careerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Career not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_CAREER));
         Trainer trainer = trainerRepository.findById(careerReqDto.getTrainerId())
-                .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
         career.update(careerReqDto,trainer);
         return career;
     }

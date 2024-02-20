@@ -1,5 +1,7 @@
 package com.example.TheFit.user.trainer.service;
 
+import com.example.TheFit.common.ErrorCode;
+import com.example.TheFit.common.TheFitBizException;
 import com.example.TheFit.user.dto.UserIdPassword;
 import com.example.TheFit.user.entity.Role;
 import com.example.TheFit.user.mapper.UserMapper;
@@ -29,9 +31,9 @@ public class TrainerService {
         this.userRepository = userRepository;
     }
 
-    public Trainer create(TrainerReqDto trainerReqDto) {
+    public Trainer create(TrainerReqDto trainerReqDto) throws TheFitBizException {
         if(userRepository.findByEmail(trainerReqDto.getEmail()).isPresent()){
-            throw new IllegalArgumentException("이메일이 중복입니다.");
+            throw new TheFitBizException(ErrorCode.ID_DUPLICATE);
         }
         Trainer trainer = userMapper.toEntity(trainerReqDto);
         userRepository.save(new UserIdPassword(trainer.email,trainer.password,trainer.name,Role.TRAINER));
@@ -44,16 +46,16 @@ public class TrainerService {
                 .collect(Collectors.toList());
     }
 
-    public Trainer update(Long id, TrainerReqDto trainerReqDto) {
+    public Trainer update(Long id, TrainerReqDto trainerReqDto) throws TheFitBizException{
         Trainer trainer = trainerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
         userMapper.update(trainerReqDto, trainer);
         return trainerRepository.save(trainer);
     }
 
     public void delete(Long id) {
         Trainer trainer = trainerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
         trainer.delete();
     }
 }

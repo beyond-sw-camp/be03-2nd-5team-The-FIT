@@ -1,5 +1,7 @@
 package com.example.TheFit.workout.service;
 
+import com.example.TheFit.common.ErrorCode;
+import com.example.TheFit.common.TheFitBizException;
 import com.example.TheFit.totalworkouts.domain.TotalWorkOuts;
 import com.example.TheFit.totalworkouts.repository.TotalWorkOutsRepository;
 import com.example.TheFit.workout.domain.WorkOut;
@@ -34,8 +36,8 @@ public class WorkOutService {
     }
 
     public WorkOut create(WorkOutReqDto workOutReqDto) {
-        TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(workOutReqDto.getTotalWorkOutsId()).orElseThrow(()->new IllegalArgumentException("해당 운동이 없습니다"));
-        WorkOutList workOutList = workOutListRepository.findById(workOutReqDto.getWorkOutListId()).orElseThrow(()->new IllegalArgumentException("해당 list가 없습니다"));;
+        TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(workOutReqDto.getTotalWorkOutsId()).orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_TOTALWORKOUT));
+        WorkOutList workOutList = workOutListRepository.findById(workOutReqDto.getWorkOutListId()).orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUTLIST));;
         WorkOut workOut = workOutMapper.toEntity(totalWorkOuts,workOutList,workOutReqDto);
         return workOutRepository.save(workOut);
     }
@@ -50,7 +52,7 @@ public class WorkOutService {
     }
         public WorkOut update(Long id, WorkOutReqDto workOutReqDto) {
             WorkOut workOutUpdate = workOutRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("not found"));
+                    .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUT));
             workOutUpdate.update(workOutReqDto);
             return workOutUpdate;
         }
