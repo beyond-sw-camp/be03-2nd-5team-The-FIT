@@ -44,6 +44,11 @@ public class MemberController {
         Member member = memberService.update(id, memberReqDto);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success update",member.getId()),HttpStatus.CREATED);
     }
+    @GetMapping("/myInfo")
+    public ResponseEntity<TheFitResponse> myInfo(){
+        MemberResDto memberResDto = memberService.findMyInfo();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",memberResDto),HttpStatus.CREATED);
+    }
 
     @DeleteMapping("/member/delete/{id}")
     public ResponseEntity<TheFitResponse> delete(@Valid @PathVariable Long id) {
