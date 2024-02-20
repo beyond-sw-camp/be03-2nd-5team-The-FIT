@@ -44,6 +44,6 @@ public class WorkOutController {
     @DeleteMapping("/delete/{id}")
     public  ResponseEntity<TheFitResponse> delete(@PathVariable Long id) {
         workOutService.delete(id);
-        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success delete",null),HttpStatus.CREATED);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success delete",null),HttpStatus.OK);
     }
 }

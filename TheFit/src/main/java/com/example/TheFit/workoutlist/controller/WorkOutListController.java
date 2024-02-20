@@ -30,7 +30,7 @@ public class WorkOutListController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<TheFitResponse> create(){
+    public ResponseEntity<TheFitResponse> findALl(){
         List<WorkOutListResDto> workOutListResDtoList = workOutListService.findAll();
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success create",workOutListResDtoList),HttpStatus.OK);
     }
