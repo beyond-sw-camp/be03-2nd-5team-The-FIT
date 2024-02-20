@@ -1,20 +1,12 @@
 package com.example.TheFit.workoutlist.mapper;
 
-import com.example.TheFit.diet.domain.Diet;
-import com.example.TheFit.diet.dto.DietReqDto;
 import com.example.TheFit.user.member.domain.Member;
-import com.example.TheFit.workoutfeedback.domain.WorkOutFeedBack;
-import com.example.TheFit.workoutfeedback.dto.WorkOutFeedBackReqDto;
-import com.example.TheFit.workoutfeedback.dto.WorkOutFeedBackResDto;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
 import com.example.TheFit.workoutlist.dto.WorkOutListReqDto;
 import com.example.TheFit.workoutlist.dto.WorkOutListResDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

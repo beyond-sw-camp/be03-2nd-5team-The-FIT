@@ -13,4 +13,9 @@ public class TheFitResponse {
     private HttpStatus status;
     private String message;
     private Object result;
+
+    public TheFitResponse(HttpStatus httpStatus, String message) {
+        this.status = httpStatus;
+        this.message = message;
+    }
 }
