@@ -1,8 +1,8 @@
-package com.example.TheFit.deitfeedback.mapper;
+package com.example.TheFit.dietfeedback.mapper;
 
-import com.example.TheFit.deitfeedback.domain.DietFeedBack;
-import com.example.TheFit.deitfeedback.dto.DietFeedBackReqDto;
-import com.example.TheFit.deitfeedback.dto.DietFeedBackResDto;
+import com.example.TheFit.dietfeedback.domain.DietFeedBack;
+import com.example.TheFit.dietfeedback.dto.DietFeedBackReqDto;
+import com.example.TheFit.dietfeedback.dto.DietFeedBackResDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

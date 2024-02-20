@@ -1,4 +1,4 @@
-package com.example.TheFit.deitfeedback.dto;
+package com.example.TheFit.dietfeedback.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DietFeedBackReqDto {
+public class DietFeedBackResDto {
+    private Long id;
     private Long dietId;
     private Long trainerId;
     private String feedBack;
