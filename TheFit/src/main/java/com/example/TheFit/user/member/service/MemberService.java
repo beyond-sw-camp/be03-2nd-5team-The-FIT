@@ -9,6 +9,8 @@ import com.example.TheFit.user.member.repository.MemberRepository;
 import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,5 +71,11 @@ public class MemberService {
             throw new IllegalArgumentException("비밀번호가 틀립니다");
         }
         return member;
+    }
+
+    public MemberResDto findMyInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Member member = memberRepository.findByEmail(authentication.getName()).orElseThrow();
+        return userMapper.toDto(member);
     }
 }
