@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,7 @@ public class CareerService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Career update(Long id, CareerReqDto careerReqDto) {
         Career career = careerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Career not found"));
