@@ -47,7 +47,7 @@ public class MemberController {
     @GetMapping("/myInfo")
     public ResponseEntity<TheFitResponse> myInfo(){
         MemberResDto memberResDto = memberService.findMyInfo();
-        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",memberResDto),HttpStatus.CREATED);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success check",memberResDto),HttpStatus.CREATED);
     }
 
     @DeleteMapping("/member/delete/{id}")
