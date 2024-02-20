@@ -1,5 +1,7 @@
-package com.example.TheFit.user;
+package com.example.TheFit.user.mapper;
 
+import com.example.TheFit.user.entity.Gender;
+import com.example.TheFit.user.entity.Role;
 import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.user.member.dto.MemberReqDto;
 import com.example.TheFit.user.member.dto.MemberResDto;

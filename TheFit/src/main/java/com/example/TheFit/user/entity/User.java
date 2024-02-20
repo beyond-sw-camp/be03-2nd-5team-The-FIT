@@ -1,4 +1,4 @@
-package com.example.TheFit.user;
+package com.example.TheFit.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

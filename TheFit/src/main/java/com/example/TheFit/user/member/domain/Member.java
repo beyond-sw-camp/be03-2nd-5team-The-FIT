@@ -2,7 +2,7 @@ package com.example.TheFit.user.member.domain;
 
 import com.example.TheFit.user.member.dto.MemberReqDto;
 import com.example.TheFit.user.trainer.domain.Trainer;
-import com.example.TheFit.user.User;
+import com.example.TheFit.user.entity.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
