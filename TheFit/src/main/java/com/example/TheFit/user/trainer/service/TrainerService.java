@@ -1,6 +1,9 @@
 package com.example.TheFit.user.trainer.service;
 
-import com.example.TheFit.user.UserMapper;
+import com.example.TheFit.user.dto.UserIdPassword;
+import com.example.TheFit.user.entity.Role;
+import com.example.TheFit.user.mapper.UserMapper;
+import com.example.TheFit.user.repo.UserRepository;
 import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.user.trainer.dto.TrainerReqDto;
 import com.example.TheFit.user.trainer.dto.TrainerResDto;
@@ -18,14 +21,20 @@ import java.util.stream.Collectors;
 public class TrainerService {
     private final TrainerRepository trainerRepository;
     private final UserMapper userMapper = UserMapper.INSTANCE;
+    private final UserRepository userRepository;
 
     @Autowired
-    public TrainerService(TrainerRepository trainerRepository) {
+    public TrainerService(TrainerRepository trainerRepository, UserRepository userRepository) {
         this.trainerRepository = trainerRepository;
+        this.userRepository = userRepository;
     }
 
     public Trainer create(TrainerReqDto trainerReqDto) {
+        if(userRepository.findByEmail(trainerReqDto.getEmail()).isPresent()){
+            throw new IllegalArgumentException("이메일이 중복입니다.");
+        }
         Trainer trainer = userMapper.toEntity(trainerReqDto);
+        userRepository.save(new UserIdPassword(trainer.email,trainer.password, Role.TRAINER));
         return trainerRepository.save(trainer);
     }
 

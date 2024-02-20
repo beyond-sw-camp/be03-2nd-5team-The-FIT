@@ -1,6 +1,6 @@
 package com.example.TheFit.user.trainer.domain;
 
-import com.example.TheFit.user.User;
+import com.example.TheFit.user.entity.User;
 import com.example.TheFit.user.trainer.dto.TrainerReqDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

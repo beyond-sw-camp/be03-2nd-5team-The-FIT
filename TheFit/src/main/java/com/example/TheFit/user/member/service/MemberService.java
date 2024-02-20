@@ -1,11 +1,13 @@
 package com.example.TheFit.user.member.service;
 
-import com.example.TheFit.user.UserMapper;
+import com.example.TheFit.user.dto.UserIdPassword;
+import com.example.TheFit.user.entity.Role;
+import com.example.TheFit.user.mapper.UserMapper;
 import com.example.TheFit.user.member.domain.Member;
-import com.example.TheFit.user.member.dto.MemberLoginDto;
 import com.example.TheFit.user.member.dto.MemberReqDto;
 import com.example.TheFit.user.member.dto.MemberResDto;
 import com.example.TheFit.user.member.repository.MemberRepository;
+import com.example.TheFit.user.repo.UserRepository;
 import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +29,28 @@ public class MemberService {
     private final UserMapper userMapper;
     @Autowired
     private final TrainerRepository trainerRepository;
+    @Autowired
+    private final UserRepository userRepository;
 
-    public MemberService(MemberRepository memberRepository, UserMapper userMapper, TrainerRepository trainerRepository) {
+    public MemberService(MemberRepository memberRepository, UserMapper userMapper, TrainerRepository trainerRepository, UserRepository userRepository) {
         this.memberRepository = memberRepository;
         this.userMapper = userMapper;
         this.trainerRepository = trainerRepository;
+        this.userRepository = userRepository;
     }
 
     public Member create(MemberReqDto memberReqDto) {
+        if(userRepository.findByEmail(memberReqDto.getEmail()).isPresent()){
+            throw new IllegalArgumentException("이메일이 중복입니다.");
+        }
         Trainer trainer = trainerRepository.findById(memberReqDto.getTrainerId())
                 .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
         Member member = userMapper.toEntity(memberReqDto,trainer);
-        Member member1 = memberRepository.findById(1L).orElseThrow();
-        System.out.println(member1.getTrainer().name);
+        Role role = Role.MEMBER;
+        if(memberReqDto.getRole().equals("ADMIN")){
+            role = Role.ADMIN;
+        }
+        userRepository.save(new UserIdPassword(memberReqDto.getEmail(),memberReqDto.getPassword(),role));
         return  memberRepository.save(member);
     }
 
@@ -63,14 +74,6 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("not found member"));
         member.delete();
-    }
-
-    public Member login(MemberLoginDto memberLoginDto) {
-        Member member = memberRepository.findByEmail(memberLoginDto.getEmail()).orElseThrow(()-> new EntityNotFoundException("해당 이메일이 없습니다"));
-        if(!member.getPassword().equals(memberLoginDto.getPassword())){
-            throw new IllegalArgumentException("비밀번호가 틀립니다");
-        }
-        return member;
     }
 
     public MemberResDto findMyInfo() {
