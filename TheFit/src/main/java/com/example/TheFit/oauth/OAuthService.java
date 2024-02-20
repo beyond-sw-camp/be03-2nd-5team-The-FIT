@@ -38,6 +38,7 @@ public class OAuthService {
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
         ResponseEntity<String> responseEntity = restTemplate.exchange(GOOGLE_TOKEN_URL, HttpMethod.POST, entity, String.class);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            System.out.println("ResponseEntity: "+responseEntity);
             return responseEntity;
         }
         return null;

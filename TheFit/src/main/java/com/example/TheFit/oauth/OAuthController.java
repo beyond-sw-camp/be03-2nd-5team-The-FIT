@@ -37,9 +37,10 @@ public class OAuthController {
     public ResponseEntity<TmpResponse> successGoogleLogin(@RequestParam("code") String accessCode) throws ParseException, JsonProcessingException {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(oAuthService.getGoogleAccessToken(accessCode).getBody());
-        String accessToken = jsonObject.get("access_token").toString();
-        String refreshToken = jsonObject.get("refresh_token").toString();
-        String idToken = jsonObject.get("id_token").toString();
+        System.out.println("HERE:: "+ jsonObject);
+        String accessToken = (String) jsonObject.get("access_token");
+        String refreshToken = (String) jsonObject.get("refresh_token");
+        String idToken =  (String)jsonObject.get("id_token");
 
         Map<String, Object> oAuthMemberInfo = new HashMap<>();
         oAuthMemberInfo.put("accessToken", accessToken);

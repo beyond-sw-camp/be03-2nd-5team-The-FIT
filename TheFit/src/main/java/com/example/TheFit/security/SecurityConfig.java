@@ -40,11 +40,12 @@ public class SecurityConfig {
                     .permitAll()
                 .anyRequest().authenticated()
                 .and().oauth2Login()
-                .loginPage("/") //로그인이 필요한데 로그인을 하지 않았다면 이동할 uri 설정 -> 프론트 화면 구성 이후 변경!
+                .loginPage("/dologin") //로그인이 필요한데 로그인을 하지 않았다면 이동할 uri 설정 -> 프론트 화면 구성 이후 변경!
                 .defaultSuccessUrl("/") //OAuth 구글 로그인이 성공하면 이동할 uri 설정
                 .userInfoEndpoint()//로그인 완료 후 회원 정보 받기
                 .userService(oAuth2MemberService)
-                .and().and()
+                .and()
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(exceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class)
