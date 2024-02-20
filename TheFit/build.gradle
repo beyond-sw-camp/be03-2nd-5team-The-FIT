@@ -12,7 +12,7 @@ java {
 }
 
 springBoot {
-	mainClass =  'com.TheFit.TheFitApplication'
+	mainClass =  'com.example.TheFit.TheFitApplication'
 }
 
 configurations {
