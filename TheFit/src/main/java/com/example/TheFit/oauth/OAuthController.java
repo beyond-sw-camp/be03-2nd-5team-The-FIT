@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.Cookie;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,21 +39,19 @@ public class OAuthController {
     public ResponseEntity<TmpResponse> successGoogleLogin(@RequestParam("code") String accessCode) throws ParseException, JsonProcessingException {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(oAuthService.getGoogleAccessToken(accessCode).getBody());
-        System.out.println("HERE:: "+ jsonObject);
-        String accessToken = (String) jsonObject.get("access_token");
-        String refreshToken = (String) jsonObject.get("refresh_token");
-        String idToken =  (String)jsonObject.get("id_token");
-
+        System.out.println("HERE:: " + jsonObject);
+//        String accessToken = (String) jsonObject.get("access_token");
+//        String refreshToken = (String) jsonObject.get("refresh_token");
+        String idToken = (String) jsonObject.get("id_token");
         Map<String, Object> oAuthMemberInfo = new HashMap<>();
-        oAuthMemberInfo.put("accessToken", accessToken);
-        oAuthMemberInfo.put("refreshToken", refreshToken);
-        oAuthMemberInfo.put("idToken", idToken);
+//        oAuthMemberInfo.put("accessToken", accessToken);
+//        oAuthMemberInfo.put("refreshToken", refreshToken);
+//        oAuthMemberInfo.put("idToken", idToken);
         GoogleUser googleUser = getUserInfo(oAuthService.decryptBase64UrlToken(idToken.split("\\.")[1]));
         oAuthMemberInfo.put("email", googleUser.getEmail());
-        oAuthMemberInfo.put("memberInfo", googleUser);
+//        oAuthMemberInfo.put("memberInfo", googleUser);
         return new ResponseEntity<>(new TmpResponse(HttpStatus.OK,
                 "login success", oAuthMemberInfo), HttpStatus.OK);
+//        return new RedirectView("http://localhost:8081/loginSuccess");
     }
-
-
 }

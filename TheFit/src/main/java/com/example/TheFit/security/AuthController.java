@@ -18,31 +18,32 @@ public class AuthController {
     private final TokenService tokenService;
     @Autowired
     private final RedisRepository redisRepository;
+
     public AuthController(TokenService tokenService, RedisRepository redisRepository) {
         this.tokenService = tokenService;
         this.redisRepository = redisRepository;
     }
 
     @GetMapping("/reCreateAccessToken")
-    public ResponseEntity<TmpResponse> reCreateAccessToken(@RequestHeader("Authorization")String accessToken,
+    public ResponseEntity<TmpResponse> reCreateAccessToken(@RequestHeader("Authorization") String accessToken,
                                                            @RequestHeader("refreshToken") String refreshToken) throws JsonProcessingException {
-        Map<String,Object> memberInfo = tokenService.decodeAccessTokenPayload(accessToken);
+        Map<String, Object> memberInfo = tokenService.decodeAccessTokenPayload(accessToken);
         String email = memberInfo.get("sub").toString();
-        RefreshToken saveRefreshToken =null;
+        RefreshToken saveRefreshToken = null;
         try {
             saveRefreshToken = redisRepository.findById(email).orElseThrow();
-        }catch (IllegalArgumentException e){
-            return new ResponseEntity<>(new TmpResponse(HttpStatus.BAD_REQUEST,"다시 로그인 해주세요",null),HttpStatus.BAD_REQUEST);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(new TmpResponse(HttpStatus.BAD_REQUEST, "다시 로그인 해주세요", null), HttpStatus.BAD_REQUEST);
         }
-        if(refreshToken!=null && refreshToken.equals(saveRefreshToken.getRefreshTokenValue())){
-            String newAccessToken = tokenService.createAccessToken(email,memberInfo.get("userName").toString(),memberInfo.get("role").toString());
+        if (refreshToken != null && refreshToken.equals(saveRefreshToken.getRefreshTokenValue())) {
+            String newAccessToken = tokenService.createAccessToken(email, memberInfo.get("userName").toString(), memberInfo.get("role").toString());
             String newRefreshToken = tokenService.createRefreshToken(email);
-            Map<String,Object> newMemberInfo = new HashMap<>();
-            newMemberInfo.put("token",newAccessToken);
-            newMemberInfo.put("refreshToken",newRefreshToken);
-            return new ResponseEntity<>(new TmpResponse(HttpStatus.OK,"login success",newMemberInfo),HttpStatus.OK);
+            Map<String, Object> newMemberInfo = new HashMap<>();
+            newMemberInfo.put("token", newAccessToken);
+            newMemberInfo.put("refreshToken", newRefreshToken);
+            return new ResponseEntity<>(new TmpResponse(HttpStatus.OK, "login success", newMemberInfo), HttpStatus.OK);
         }
         redisRepository.deleteById(email);
-        return new ResponseEntity<>(new TmpResponse(HttpStatus.BAD_REQUEST,"다시 로그인 해주세요",null),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new TmpResponse(HttpStatus.BAD_REQUEST, "다시 로그인 해주세요", null), HttpStatus.BAD_REQUEST);
     }
 }
