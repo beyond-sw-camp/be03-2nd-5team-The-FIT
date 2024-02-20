@@ -1,5 +1,7 @@
 package com.example.TheFit.diet.service;
 
+import com.example.TheFit.common.ErrorCode;
+import com.example.TheFit.common.TheFitBizException;
 import com.example.TheFit.diet.domain.Diet;
 import com.example.TheFit.diet.dto.DietReqDto;
 import com.example.TheFit.diet.dto.DietResDto;
@@ -30,23 +32,23 @@ public class DietService {
         this.dietMapper = dietMapper;
     }
 
-    public Diet create(DietReqDto dietReqDto) {
+    public Diet create(DietReqDto dietReqDto)throws TheFitBizException {
         Member member = memberRepository.findById(dietReqDto.getMemberId())
-                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
         Diet diet = dietMapper.toEntity(member,dietReqDto);
         return dietRepository.save(diet);
     }
 
-    public DietResDto findById(Long id) {
+    public DietResDto findById(Long id)throws TheFitBizException {
         Diet diet = dietRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Diet not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_DIET));
         Member member = memberRepository.findById(diet.getMember().getId()).orElseThrow();
         return dietMapper.toDto(member, diet);
     }
 
-    public Diet update(Long id, DietReqDto dietReqDto) {
+    public Diet update(Long id, DietReqDto dietReqDto)throws TheFitBizException {
         Diet diet = dietRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Diet not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_DIET));
         diet.update(dietReqDto);
         return diet;
     }

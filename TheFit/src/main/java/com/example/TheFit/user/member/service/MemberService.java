@@ -1,5 +1,7 @@
 package com.example.TheFit.user.member.service;
 
+import com.example.TheFit.common.ErrorCode;
+import com.example.TheFit.common.TheFitBizException;
 import com.example.TheFit.user.dto.UserIdPassword;
 import com.example.TheFit.user.entity.Role;
 import com.example.TheFit.user.mapper.UserMapper;
@@ -39,12 +41,12 @@ public class MemberService {
         this.userRepository = userRepository;
     }
 
-    public Member create(MemberReqDto memberReqDto) {
+    public Member create(MemberReqDto memberReqDto) throws TheFitBizException {
         if(userRepository.findByEmail(memberReqDto.getEmail()).isPresent()){
-            throw new IllegalArgumentException("이메일이 중복입니다.");
+            throw new TheFitBizException(ErrorCode.ID_DUPLICATE);
         }
         Trainer trainer = trainerRepository.findById(memberReqDto.getTrainerId())
-                .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
         Member member = userMapper.toEntity(memberReqDto,trainer);
         Role role = Role.MEMBER;
         if(memberReqDto.getRole().equals("ADMIN")){
@@ -61,24 +63,24 @@ public class MemberService {
                 .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }
-    public Member update(Long id, MemberReqDto memberReqDto) {
+    public Member update(Long id, MemberReqDto memberReqDto) throws TheFitBizException{
         Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
         Trainer trainer = trainerRepository.findById(member.getTrainer().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
         member.update(memberReqDto,trainer);
         return member;
     }
 
     public void delete(Long id) {
         Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("not found member"));
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
         member.delete();
     }
 
     public MemberResDto findMyInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Member member = memberRepository.findByEmail(authentication.getName()).orElseThrow();
+        Member member = memberRepository.findByEmail(authentication.getName()).orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
         return userMapper.toDto(member);
     }
 }
