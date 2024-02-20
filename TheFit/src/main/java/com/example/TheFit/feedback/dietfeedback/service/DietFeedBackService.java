@@ -1,10 +1,12 @@
-package com.example.TheFit.dietfeedback.service;
+package com.example.TheFit.feedback.dietfeedback.service;
 
-import com.example.TheFit.dietfeedback.domain.DietFeedBack;
-import com.example.TheFit.dietfeedback.dto.DietFeedBackReqDto;
-import com.example.TheFit.dietfeedback.dto.DietFeedBackResDto;
-import com.example.TheFit.dietfeedback.mapper.DietFeedBackMapper;
-import com.example.TheFit.dietfeedback.repository.DietFeedBackRepository;
+import com.example.TheFit.common.ErrorCode;
+import com.example.TheFit.common.TheFitBizException;
+import com.example.TheFit.feedback.FeedBackMapper;
+import com.example.TheFit.feedback.dietfeedback.domain.DietFeedBack;
+import com.example.TheFit.feedback.dietfeedback.dto.DietFeedBackReqDto;
+import com.example.TheFit.feedback.dietfeedback.dto.DietFeedBackResDto;
+import com.example.TheFit.feedback.dietfeedback.repository.DietFeedBackRepository;
 import com.example.TheFit.diet.domain.Diet;
 import com.example.TheFit.diet.repository.DietRepository;
 import com.example.TheFit.user.trainer.domain.Trainer;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +23,7 @@ import java.util.stream.Collectors;
 public class DietFeedBackService {
 
     private final DietFeedBackRepository dietFeedBackRepository;
-    private final DietFeedBackMapper dietFeedBackMapper = DietFeedBackMapper.INSTANCE;
+    private final FeedBackMapper feedBackMapper = FeedBackMapper.INSTANCE;
     private final DietRepository dietRepository;
     private final TrainerRepository trainerRepository;
 
@@ -32,27 +35,26 @@ public class DietFeedBackService {
     }
 
     public DietFeedBack create(DietFeedBackReqDto dietFeedBackReqDto) {
-        DietFeedBack dietFeedback = dietFeedBackMapper.toEntity(dietFeedBackReqDto);
+        Diet diet = dietRepository.findById(dietFeedBackReqDto.getDietId()).orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_DIET));
+        Trainer trainer = trainerRepository.findById(dietFeedBackReqDto.getTrainerId()).orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
+        DietFeedBack dietFeedback = feedBackMapper.toEntity(trainer,diet,dietFeedBackReqDto);
         return dietFeedBackRepository.save(dietFeedback);
     }
 
     public List<DietFeedBackResDto> findAll() {
         return dietFeedBackRepository.findAll().stream()
-                .map(dietFeedBackMapper::toDto)
+                .map(feedBackMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public void update(Long id, DietFeedBackReqDto dietFeedBackReqDto) {
+    @Transactional
+    public DietFeedBack update(Long id, DietFeedBackReqDto dietFeedBackReqDto) {
         DietFeedBack dietFeedBack = dietFeedBackRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("DietFeedback not found"));
-        Diet diet = dietRepository.findById(dietFeedBackReqDto.getDietId())
-                .orElseThrow(() -> new EntityNotFoundException("Diet not found"));
-        Trainer trainer = trainerRepository.findById(dietFeedBackReqDto.getTrainerId())
-                .orElseThrow(() -> new EntityNotFoundException("Trainer not found"));
-        dietFeedBackMapper.update(dietFeedBackReqDto, dietFeedBack);
-        dietFeedBack.setDiet(diet);
-        dietFeedBack.setTrainer(trainer);
-        dietFeedBackRepository.save(dietFeedBack);
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_DIET_FEEDBACK));
+        Diet diet = dietFeedBack.getDiet();
+        Trainer trainer = dietFeedBack.getTrainer();
+        dietFeedBack.update(diet,trainer,dietFeedBackReqDto);
+        return dietFeedBack;
     }
 
     public void delete(Long id) {

@@ -1,4 +1,4 @@
-package com.example.TheFit.workoutfeedback.dto;
+package com.example.TheFit.feedback.workoutfeedback.dto;
 
 import lombok.*;
 

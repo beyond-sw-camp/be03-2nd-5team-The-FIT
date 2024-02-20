@@ -1,8 +1,8 @@
-package com.example.TheFit.workoutfeedback.repository;
+package com.example.TheFit.feedback.workoutfeedback.repository;
 
 
 
-import com.example.TheFit.workoutfeedback.domain.WorkOutFeedBack;
+import com.example.TheFit.feedback.workoutfeedback.domain.WorkOutFeedBack;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
