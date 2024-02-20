@@ -1,6 +1,7 @@
 package com.example.TheFit.oauth;
 
 import com.example.TheFit.login.TmpResponse;
+import com.example.TheFit.security.TokenService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
@@ -12,22 +13,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 public class OAuthController {
     @Autowired
     private final OAuthService oAuthService;
     private final ObjectMapper objectMapper;
+    private final TokenService tokenService;
 
-    public OAuthController(OAuthService oAuthService, ObjectMapper objectMapper) {
+    public OAuthController(OAuthService oAuthService, ObjectMapper objectMapper,
+                           TokenService tokenService) {
         this.oAuthService = oAuthService;
         this.objectMapper = objectMapper;
+        this.tokenService = tokenService;
     }
 
     public GoogleUser getUserInfo(String userInfoResponse) throws JsonProcessingException {
@@ -36,22 +43,20 @@ public class OAuthController {
     }
 
     @GetMapping("/auth/google/callback")
-    public ResponseEntity<TmpResponse> successGoogleLogin(@RequestParam("code") String accessCode) throws ParseException, JsonProcessingException {
+    public RedirectView successGoogleLogin(@RequestParam("code") String accessCode) throws ParseException, JsonProcessingException {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(oAuthService.getGoogleAccessToken(accessCode).getBody());
-        System.out.println("HERE:: " + jsonObject);
-//        String accessToken = (String) jsonObject.get("access_token");
-//        String refreshToken = (String) jsonObject.get("refresh_token");
         String idToken = (String) jsonObject.get("id_token");
         Map<String, Object> oAuthMemberInfo = new HashMap<>();
-//        oAuthMemberInfo.put("accessToken", accessToken);
-//        oAuthMemberInfo.put("refreshToken", refreshToken);
-//        oAuthMemberInfo.put("idToken", idToken);
         GoogleUser googleUser = getUserInfo(oAuthService.decryptBase64UrlToken(idToken.split("\\.")[1]));
         oAuthMemberInfo.put("email", googleUser.getEmail());
-//        oAuthMemberInfo.put("memberInfo", googleUser);
-        return new ResponseEntity<>(new TmpResponse(HttpStatus.OK,
-                "login success", oAuthMemberInfo), HttpStatus.OK);
-//        return new RedirectView("http://localhost:8081/loginSuccess");
+        oAuthMemberInfo.put("name", googleUser.getName());
+        String role = oAuthService.findRole(googleUser.getEmail());
+        String accessToken = tokenService.createAccessToken(googleUser.email, googleUser.getName(), role);
+        String refreshToken = tokenService.createRefreshToken(googleUser.email);
+        String redirectUrl = "http://localhost:8081/loginSuccess/?accessToken=" + accessToken
+                + "&refreshToken=" + refreshToken
+                + "&role=" + role;
+        return new RedirectView(redirectUrl);
     }
 }
