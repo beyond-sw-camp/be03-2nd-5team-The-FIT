@@ -23,7 +23,7 @@ spring:
       ddl-auto: update
     show-sql: true
 jwt:
-  expiration: 1 #1min
+  expiration: 30 #1min
   secretKey: mysecret
 
 
