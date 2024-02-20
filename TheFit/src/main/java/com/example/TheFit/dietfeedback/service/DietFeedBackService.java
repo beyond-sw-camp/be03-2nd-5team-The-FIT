@@ -1,10 +1,10 @@
-package com.example.TheFit.deitfeedback.service;
+package com.example.TheFit.dietfeedback.service;
 
-import com.example.TheFit.deitfeedback.domain.DietFeedBack;
-import com.example.TheFit.deitfeedback.dto.DietFeedBackReqDto;
-import com.example.TheFit.deitfeedback.dto.DietFeedBackResDto;
-import com.example.TheFit.deitfeedback.mapper.DietFeedBackMapper;
-import com.example.TheFit.deitfeedback.repository.DietFeedBackRepository;
+import com.example.TheFit.dietfeedback.domain.DietFeedBack;
+import com.example.TheFit.dietfeedback.dto.DietFeedBackReqDto;
+import com.example.TheFit.dietfeedback.dto.DietFeedBackResDto;
+import com.example.TheFit.dietfeedback.mapper.DietFeedBackMapper;
+import com.example.TheFit.dietfeedback.repository.DietFeedBackRepository;
 import com.example.TheFit.diet.domain.Diet;
 import com.example.TheFit.diet.repository.DietRepository;
 import com.example.TheFit.user.trainer.domain.Trainer;

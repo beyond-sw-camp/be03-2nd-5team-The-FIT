@@ -1,10 +1,10 @@
-package com.example.TheFit.deitfeedback.controller;
+package com.example.TheFit.dietfeedback.controller;
 
 import com.example.TheFit.common.TheFitResponse;
-import com.example.TheFit.deitfeedback.domain.DietFeedBack;
-import com.example.TheFit.deitfeedback.dto.DietFeedBackReqDto;
-import com.example.TheFit.deitfeedback.dto.DietFeedBackResDto;
-import com.example.TheFit.deitfeedback.service.DietFeedBackService;
+import com.example.TheFit.dietfeedback.domain.DietFeedBack;
+import com.example.TheFit.dietfeedback.dto.DietFeedBackReqDto;
+import com.example.TheFit.dietfeedback.dto.DietFeedBackResDto;
+import com.example.TheFit.dietfeedback.service.DietFeedBackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

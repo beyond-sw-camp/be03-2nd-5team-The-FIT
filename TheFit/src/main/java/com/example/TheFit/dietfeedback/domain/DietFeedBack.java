@@ -1,6 +1,6 @@
-package com.example.TheFit.deitfeedback.domain;
+package com.example.TheFit.dietfeedback.domain;
 
-import com.example.TheFit.deitfeedback.dto.DietFeedBackReqDto;
+import com.example.TheFit.dietfeedback.dto.DietFeedBackReqDto;
 import com.example.TheFit.diet.domain.Diet;
 import com.example.TheFit.user.trainer.domain.Trainer;
 import lombok.*;
