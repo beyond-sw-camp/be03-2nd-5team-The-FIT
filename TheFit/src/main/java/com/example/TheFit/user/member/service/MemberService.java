@@ -50,7 +50,7 @@ public class MemberService {
         if(memberReqDto.getRole().equals("ADMIN")){
             role = Role.ADMIN;
         }
-        userRepository.save(new UserIdPassword(memberReqDto.getEmail(),memberReqDto.getPassword(),role));
+        userRepository.save(new UserIdPassword(memberReqDto.getEmail(),memberReqDto.getName(),memberReqDto.getPassword(),role));
         return  memberRepository.save(member);
     }
 

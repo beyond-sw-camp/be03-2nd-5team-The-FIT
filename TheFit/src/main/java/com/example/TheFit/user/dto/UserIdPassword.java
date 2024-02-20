@@ -17,13 +17,15 @@ public class UserIdPassword {
     private Long id;
     private String email;
     private String password;
+    private String name;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     public Role role;
 
-    public UserIdPassword(String email, String password, Role role) {
+    public UserIdPassword(String email, String password,String name,Role role) {
         this.email = email;
         this.password =password;
+        this.name = name;
         this.role = role;
     }
 }

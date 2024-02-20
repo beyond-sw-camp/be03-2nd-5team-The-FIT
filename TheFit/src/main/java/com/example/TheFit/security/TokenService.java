@@ -23,8 +23,9 @@ public class TokenService {
         this.redisRepository = redisRepository;
     }
 
-    public String createAccessToken(String email,String role){
+    public String createAccessToken(String email,String name,String role){
         Claims claims = Jwts.claims().setSubject(email);
+        claims.put("userName",name);
         claims.put("role",role);
         Date now = new Date();
         return Jwts.builder()

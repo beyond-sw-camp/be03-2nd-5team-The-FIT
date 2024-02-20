@@ -34,7 +34,7 @@ public class TrainerService {
             throw new IllegalArgumentException("이메일이 중복입니다.");
         }
         Trainer trainer = userMapper.toEntity(trainerReqDto);
-        userRepository.save(new UserIdPassword(trainer.email,trainer.password, Role.TRAINER));
+        userRepository.save(new UserIdPassword(trainer.email,trainer.password,trainer.name,Role.TRAINER));
         return trainerRepository.save(trainer);
     }
 

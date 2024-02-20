@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping("/dologin")
     public ResponseEntity<TheFitResponse> doLogin(@RequestBody UserLoginRequestDto userLoginRequestDto){
         UserIdPassword userIdPassword = userService.login(userLoginRequestDto);
-        String accessToken = tokenService.createAccessToken(userIdPassword.getEmail(),userIdPassword.getRole().toString());
+        String accessToken = tokenService.createAccessToken(userIdPassword.getEmail(),userIdPassword.getName(),userIdPassword.getRole().toString());
         String refreshToken = tokenService.createRefreshToken(userIdPassword.getEmail());
         Map<String,Object> memberInfo = new HashMap<>();
         memberInfo.put("token",accessToken);

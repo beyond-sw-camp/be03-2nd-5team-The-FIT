@@ -35,7 +35,7 @@ public class AuthController {
             return new ResponseEntity<>(new TmpResponse(HttpStatus.BAD_REQUEST,"다시 로그인 해주세요",null),HttpStatus.BAD_REQUEST);
         }
         if(refreshToken!=null && refreshToken.equals(saveRefreshToken.getRefreshTokenValue())){
-            String newAccessToken = tokenService.createAccessToken(email,memberInfo.get("role").toString());
+            String newAccessToken = tokenService.createAccessToken(email,memberInfo.get("userName").toString(),memberInfo.get("role").toString());
             String newRefreshToken = tokenService.createRefreshToken(email);
             Map<String,Object> newMemberInfo = new HashMap<>();
             newMemberInfo.put("token",newAccessToken);
