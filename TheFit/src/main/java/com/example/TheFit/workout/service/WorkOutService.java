@@ -10,6 +10,7 @@ import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.workout.domain.WorkOut;
 import com.example.TheFit.workout.dto.WorkOutReqDto;
 import com.example.TheFit.workout.dto.WorkOutResDto;
+import com.example.TheFit.workout.dto.WorkOutUsingMemberResDto;
 import com.example.TheFit.workout.mapper.WorkOutMapper;
 import com.example.TheFit.workout.repository.WorkOutRepository;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
@@ -62,14 +63,17 @@ public class WorkOutService {
         return workOutMapper.toDto(workOut);
     }
 
-    public List<WorkOutResDto> findByMemberId(Long id) throws TheFitBizException {
+    public List<
+            WorkOutUsingMemberResDto> findByMemberId(Long id) throws TheFitBizException {
         List<WorkOutList> workOutLists = workOutListRepository.findByMemberId(id).orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUTLIST));
         List<WorkOut> workOuts = workOutRepository.findAll();
-        List<WorkOutResDto> workOutResDtos = new ArrayList<>();
+        List<WorkOutUsingMemberResDto> workOutResDtos = new ArrayList<>();
         for(WorkOutList workOutList : workOutLists){
             for(WorkOut workOut : workOuts){
                 if(workOutList.getId().equals(workOut.getWorkOutList().getId())){
-                    workOutResDtos.add(workOutMapper.toDto(workOut));
+                    WorkOutUsingMemberResDto workOutUsingMemberResDto = workOutMapper.toDtoUsingMember(workOut);
+                    workOutUsingMemberResDto.setWorkOutDate(workOutList.getWorkOutDate());
+                    workOutResDtos.add(workOutUsingMemberResDto);
                 }
             }
         }

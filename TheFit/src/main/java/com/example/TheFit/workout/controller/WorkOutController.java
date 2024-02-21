@@ -5,6 +5,7 @@ import com.example.TheFit.diet.dto.DietResDto;
 import com.example.TheFit.workout.domain.WorkOut;
 import com.example.TheFit.workout.dto.WorkOutReqDto;
 import com.example.TheFit.workout.dto.WorkOutResDto;
+import com.example.TheFit.workout.dto.WorkOutUsingMemberResDto;
 import com.example.TheFit.workout.service.WorkOutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,7 @@ public class WorkOutController {
 
     @GetMapping("/list/member/{id}")
     public ResponseEntity<TheFitResponse> findByMemberId(@PathVariable Long id) {
-        List<WorkOutResDto> workOutResDto = workOutService.findByMemberId(id);
+        List<WorkOutUsingMemberResDto> workOutResDto = workOutService.findByMemberId(id);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",workOutResDto),HttpStatus.OK);
     }
 
