@@ -37,9 +37,10 @@ public class Diet {
     private LocalDateTime updatedTime;
 
     public void update(DietReqDto dietReqDto){
-        this.imagePath = dietReqDto.getImagePath();
+        //TODO : 수정 필요
+        this.imagePath = dietReqDto.getImage().getContentType();
         this.type = dietReqDto.getType();
         this.comment = dietReqDto.getComment();
-        this.dietDate = dietReqDto.getDietDate();
+        this.dietDate = LocalDate.parse(dietReqDto.getDietDate());
     }
 }

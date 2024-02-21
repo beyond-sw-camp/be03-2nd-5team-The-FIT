@@ -15,7 +15,9 @@ public enum ErrorCode {
     NOT_FOUND_WORKOUT(400,"D6","해당 WorkOut 정보가 없습니다"),
     NOT_FOUND_WORKOUTLIST(400,"D7","해당 WorkOutList 정보가 없습니다."),
     NOT_FOUND_DIET_FEEDBACK(400,"D8" ,"해당 DietFeedback 정보가 없습니다."),
-    NOT_FOUND_WORKOUT_FEEDBACK(400,"D8" ,"해당 WorkoutFeedback 정보가 없습니다." );
+    NOT_FOUND_WORKOUT_FEEDBACK(400,"D8" ,"해당 WorkoutFeedback 정보가 없습니다." ),
+    FEEDBACK_DATE_DUPLICATE(400,"D9","이미 오늘 피드백을 작성했습니다."),
+    S3_SERVER_ERROR(500,"S1","S3 서버와 연결 할 수 없습니다.");
 
     private int status;
     private String code;

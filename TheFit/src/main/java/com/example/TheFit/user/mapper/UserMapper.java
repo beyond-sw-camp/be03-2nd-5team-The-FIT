@@ -16,7 +16,26 @@ import org.mapstruct.factory.Mappers;
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    Trainer toEntity(TrainerReqDto dto);
+    default Trainer toEntity(String url,TrainerReqDto dto){
+        if ( dto == null ) {
+            return null;
+        }
+        Trainer.TrainerBuilder<?, ?> trainer = Trainer.builder();
+        trainer.name( dto.getName() );
+        trainer.email( dto.getEmail() );
+        trainer.password( dto.getPassword() );
+        trainer.cmHeight( dto.getCmHeight() );
+        trainer.kgWeight( dto.getKgWeight() );
+        trainer.phoneNumber( dto.getPhoneNumber() );
+        if ( dto.getGender() != null ) {
+            trainer.gender( Enum.valueOf( Gender.class, dto.getGender() ) );
+        }
+        if ( dto.getRole() != null ) {
+            trainer.role( Enum.valueOf( Role.class, dto.getRole() ) );
+        }
+        trainer.profileImage(url);
+        return trainer.build();
+    }
 
     default MemberResDto toDto(Member member){
         if ( member == null ) {
@@ -44,7 +63,8 @@ public interface UserMapper {
 
     TrainerResDto toDto(Trainer trainer);
 
-    void update(TrainerReqDto dto, @MappingTarget Trainer trainer);
+    void
+    update(TrainerReqDto dto, @MappingTarget Trainer trainer);
 
     default Member toEntity(MemberReqDto dto,Trainer trainer){
         if ( dto == null ) {

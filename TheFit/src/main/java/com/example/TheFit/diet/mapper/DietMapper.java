@@ -13,20 +13,22 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
+import java.time.LocalDate;
+
 @Mapper(componentModel = "spring")
 public interface DietMapper {
     DietMapper INSTANCE = Mappers.getMapper(DietMapper.class);
 
-    default Diet toEntity(Member member, DietReqDto dietReqDto){
+    default Diet toEntity(Member member,String url,DietReqDto dietReqDto){
         if ( dietReqDto == null ) {
             return null;
         }
         Diet diet = Diet.builder()
                 .member(member)
-                .imagePath(dietReqDto.getImagePath())
+                .imagePath(url)
                 .type(dietReqDto.getType())
                 .comment(dietReqDto.getComment())
-                .dietDate(dietReqDto.getDietDate())
+                .dietDate(LocalDate.parse(dietReqDto.getDietDate()))
                 .build();
         return diet;
     }

@@ -25,5 +25,14 @@ spring:
 jwt:
   expiration: 30 #1min
   secretKey: mysecret
+cloud:
+  aws:
+    s3:
+      bucket: thefitbuckettesting
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: AKIAXYKJTVOEH5WX5UM6
+      secretKey: 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
 
 

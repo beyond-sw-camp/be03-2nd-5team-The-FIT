@@ -17,13 +17,11 @@ public class DietFeedBack extends FeedBack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "diet_id")
-    private Diet diet;
+    private String uploadDate;
 
-    public void update(Diet diet, Trainer trainer,DietFeedBackReqDto dietFeedBackReqDto) {
+    public void update(Trainer trainer,DietFeedBackReqDto dietFeedBackReqDto) {
         this.trainer = trainer;
-        this.diet = diet;
+        this.uploadDate = dietFeedBackReqDto.getUploadDate();
         this.feedBack = dietFeedBackReqDto.getFeedBack();
         this.rating = dietFeedBackReqDto.getRating();
     }
