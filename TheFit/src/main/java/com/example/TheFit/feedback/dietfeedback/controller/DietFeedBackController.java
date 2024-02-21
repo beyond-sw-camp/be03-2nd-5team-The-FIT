@@ -34,6 +34,11 @@ public class DietFeedBackController {
         List<DietFeedBackResDto> dietFeedBackResDtos = dietFeedBackService.findAll();
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",dietFeedBackResDtos),HttpStatus.CREATED);
     }
+    @GetMapping("/my")
+    public ResponseEntity<TheFitResponse> myFeedback(){
+        DietFeedBackResDto dietFeedBackResDto = dietFeedBackService.findFeedBack();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",dietFeedBackResDto),HttpStatus.CREATED);
+    }
     @PatchMapping("update/{id}")
     public ResponseEntity<TheFitResponse> update(@PathVariable Long id, @Valid @RequestBody DietFeedBackReqDto dietFeedBackReqDto) {
         DietFeedBack dietFeedBack = dietFeedBackService.update(id, dietFeedBackReqDto);
