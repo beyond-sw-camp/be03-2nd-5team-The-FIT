@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
@@ -17,6 +18,6 @@ public class TrainerReqDto {
     private int kgWeight;
     private String gender;
     private String role;
-    private String profileImage;
+    private MultipartFile profileImage;
     private String phoneNumber;
 }
