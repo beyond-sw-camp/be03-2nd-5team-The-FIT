@@ -24,7 +24,7 @@ public class WorkOutList {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-    private LocalDateTime workOutDate;
+    private LocalDate workOutDate;
 
 }
 

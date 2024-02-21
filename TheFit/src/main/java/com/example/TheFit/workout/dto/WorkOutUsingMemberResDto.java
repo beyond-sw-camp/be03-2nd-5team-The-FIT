@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class WorkOutUsingMemberResDto {
     private Long id;
-    private LocalDateTime workOutDate;
+    private LocalDate workOutDate;
     private Long workOutListId;
     private Long totalWorkOutsId;
     private String name;
