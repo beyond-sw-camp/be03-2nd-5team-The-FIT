@@ -22,7 +22,7 @@ public class Trainer extends User {
         this.password = trainerReqDto.getPassword();
         this.cmHeight = trainerReqDto.getCmHeight();
         this.kgWeight = trainerReqDto.getKgWeight();
-        this.profileImage = trainerReqDto.getProfileImage();
+//        this.profileImage = trainerReqDto.getProfileImage();
         this.phoneNumber = trainerReqDto.getPhoneNumber();
     }
     public void delete() {

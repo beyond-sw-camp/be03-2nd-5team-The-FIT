@@ -63,8 +63,8 @@ public interface UserMapper {
 
     TrainerResDto toDto(Trainer trainer);
 
-    void
-    update(TrainerReqDto dto, @MappingTarget Trainer trainer);
+
+//    update(TrainerReqDto dto, @MappingTarget Trainer trainer);
 
     default Member toEntity(MemberReqDto dto,Trainer trainer){
         if ( dto == null ) {
