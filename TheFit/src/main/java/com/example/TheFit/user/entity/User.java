@@ -21,7 +21,7 @@ public abstract class User {
     public String name;
     @Column(unique = true, nullable = false)
     public String email;
-    @Column(nullable = false)
+//    @Column(nullable = false)
     public String password;
     public int cmHeight;
     public int kgWeight;
