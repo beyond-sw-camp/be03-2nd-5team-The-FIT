@@ -41,6 +41,12 @@ public class WorkOutController {
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",workOutResDto),HttpStatus.OK);
     }
 
+    @GetMapping("/list/member/{id}")
+    public ResponseEntity<TheFitResponse> findByMemberId(@PathVariable Long id) {
+        List<WorkOutResDto> workOutResDto = workOutService.findByMemberId(id);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",workOutResDto),HttpStatus.OK);
+    }
+
     @PatchMapping("/update/{id}")
     public  ResponseEntity<TheFitResponse> update(@PathVariable Long id, @Valid @RequestBody WorkOutReqDto workOutReqDto) {
         WorkOut workOut = workOutService.update(id, workOutReqDto);

@@ -29,7 +29,7 @@ public class WorkOutService {
     private final WorkOutRepository workOutRepository;
     private final WorkOutListRepository workOutListRepository;
     private final TotalWorkOutsRepository totalWorkOutsRepository;
-    private final WorkOutMapper workOutMapper =WorkOutMapper.INSTANCE;
+    private final WorkOutMapper workOutMapper = WorkOutMapper.INSTANCE;
 
     @Autowired
     public WorkOutService(WorkOutRepository workOutRepository, WorkOutListRepository workOutListRepository, TotalWorkOutsRepository totalWorkOutsRepository) {
@@ -39,9 +39,10 @@ public class WorkOutService {
     }
 
     public WorkOut create(WorkOutReqDto workOutReqDto) {
-        TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(workOutReqDto.getTotalWorkOutsId()).orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_TOTALWORKOUT));
-        WorkOutList workOutList = workOutListRepository.findById(workOutReqDto.getWorkOutListId()).orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUTLIST));;
-        WorkOut workOut = workOutMapper.toEntity(totalWorkOuts,workOutList,workOutReqDto);
+        TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(workOutReqDto.getTotalWorkOutsId()).orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TOTALWORKOUT));
+        WorkOutList workOutList = workOutListRepository.findById(workOutReqDto.getWorkOutListId()).orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUTLIST));
+        ;
+        WorkOut workOut = workOutMapper.toEntity(totalWorkOuts, workOutList, workOutReqDto);
         return workOutRepository.save(workOut);
     }
 
@@ -49,26 +50,42 @@ public class WorkOutService {
         List<WorkOut> workOuts = workOutRepository.findAll();
         List<WorkOutResDto> workOutResDtos = new ArrayList<>();
         for (WorkOut workOut : workOuts) {
-            workOutResDtos.add(workOutMapper.toDto(workOut.getWorkOutList(), workOut));
+            workOutResDtos.add(workOutMapper.toDto(workOut));
         }
         return workOutResDtos;
     }
 
-    public WorkOutResDto findById(Long id)throws TheFitBizException {
+    public WorkOutResDto findById(Long id) throws TheFitBizException {
         WorkOut workOut = workOutRepository.findById(id)
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUT));
         WorkOutList workOutList = workOutListRepository.findById(workOut.getWorkOutList().getId()).orElseThrow();
-        return workOutMapper.toDto(workOutList, workOut);
+        return workOutMapper.toDto(workOut);
     }
 
-        public WorkOut update(Long id, WorkOutReqDto workOutReqDto) {
-            WorkOut workOutUpdate = workOutRepository.findById(id)
-                    .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUT));
-            workOutUpdate.update(workOutReqDto);
-            return workOutUpdate;
+    public List<WorkOutResDto> findByMemberId(Long id) throws TheFitBizException {
+        List<WorkOutList> workOutLists = workOutListRepository.findByMemberId(id).orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUTLIST));
+        List<WorkOut> workOuts = workOutRepository.findAll();
+        List<WorkOutResDto> workOutResDtos = new ArrayList<>();
+        for(WorkOutList workOutList : workOutLists){
+            for(WorkOut workOut : workOuts){
+                if(workOutList.getId().equals(workOut.getWorkOutList().getId())){
+                    workOutResDtos.add(workOutMapper.toDto(workOut));
+                }
+            }
         }
-
-        public void delete(Long id) {
-            workOutRepository.deleteById(id);
-        }
+        return workOutResDtos;
     }
+
+    public WorkOut update(Long id, WorkOutReqDto workOutReqDto) {
+        WorkOut workOutUpdate = workOutRepository.findById(id)
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUT));
+        workOutUpdate.update(workOutReqDto);
+        return workOutUpdate;
+    }
+
+    public void delete(Long id) {
+        workOutRepository.deleteById(id);
+    }
+
+
+}
