@@ -5,6 +5,8 @@ import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.user.member.dto.MemberReqDto;
 import com.example.TheFit.user.member.repository.MemberRepository;
 import com.example.TheFit.user.member.service.MemberService;
+import com.example.TheFit.user.repo.UserRepository;
+import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
@@ -30,16 +32,16 @@ public class OAuthController {
     @Autowired
     private final MemberRepository memberRepository;
     @Autowired
-    private final MemberService memberService;
+    private final TrainerRepository trainerRepository;
 
     public OAuthController(OAuthService oAuthService, ObjectMapper objectMapper,
                            TokenService tokenService, MemberRepository memberRepository,
-                           MemberService memberService) {
+                           TrainerRepository trainerRepository) {
         this.oAuthService = oAuthService;
         this.objectMapper = objectMapper;
         this.tokenService = tokenService;
         this.memberRepository = memberRepository;
-        this.memberService = memberService;
+        this.trainerRepository = trainerRepository;
     }
 
     public GoogleUser getUserInfo(String userInfoResponse) throws JsonProcessingException {
@@ -57,17 +59,23 @@ public class OAuthController {
         oAuthMemberInfo.put("email", googleUser.getEmail());
         oAuthMemberInfo.put("name", googleUser.getName());
         Boolean memberExists = memberRepository.findByEmail(googleUser.getEmail()).isPresent();
+        Boolean trainerExists = trainerRepository.findByEmail(googleUser.getEmail()).isPresent();
         System.out.println(memberExists);
+        System.out.println(trainerExists);
 //        Long memberId = member.getId();
-        if (!memberExists) {
+        //member도 아니고 trainer도 아니면
+        if (!memberExists && !trainerExists) {
 //            String accessToken = tokenService.createAccessToken(googleUser.email, googleUser.getName(), null);
 //            String refreshToken = tokenService.createRefreshToken(googleUser.email);
             String signupUrl = "http://localhost:8081/signupoauth/?email=" + googleUser.getEmail();
             return new RedirectView(signupUrl);
         }
         String role = oAuthService.findRole(googleUser.getEmail());
+        System.out.println(role);
         String accessToken = tokenService.createAccessToken(googleUser.email, googleUser.getName(), role);
+        System.out.println(accessToken);
         String refreshToken = tokenService.createRefreshToken(googleUser.email);
+        System.out.println(refreshToken);
         String loginUrl = "http://localhost:8081/loginSuccess/?accessToken=" + accessToken
                 + "&refreshToken=" + refreshToken
                 + "&role=" + role;

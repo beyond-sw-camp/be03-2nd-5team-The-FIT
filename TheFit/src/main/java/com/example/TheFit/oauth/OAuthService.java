@@ -3,6 +3,8 @@ package com.example.TheFit.oauth;
 import com.example.TheFit.user.entity.Role;
 import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.user.member.repository.MemberRepository;
+import com.example.TheFit.user.trainer.domain.Trainer;
+import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import io.jsonwebtoken.impl.Base64UrlCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,9 +30,12 @@ public class OAuthService {
 
     @Autowired
     private final MemberRepository memberRepository;
+    @Autowired
+    private final TrainerRepository trainerRepository;
 
-    public OAuthService(MemberRepository memberRepository) {
+    public OAuthService(MemberRepository memberRepository, TrainerRepository trainerRepository) {
         this.memberRepository = memberRepository;
+        this.trainerRepository = trainerRepository;
     }
 
     public ResponseEntity<String> getGoogleAccessToken(String accessCode) {
@@ -58,10 +63,12 @@ public class OAuthService {
     }
 
     public String findRole(String email) {
-        Member member = memberRepository.findByEmail(email).orElseThrow();
-        if (member.getRole().equals(Role.MEMBER)) {
+        if(memberRepository.findByEmail(email).isPresent()){
+            Member member = memberRepository.findByEmail(email).get();
             return "MEMBER";
-        } else if (member.getRole().equals(Role.TRAINER)) {
+        }
+        else if(trainerRepository.findByEmail(email).isPresent()){
+            Trainer trainer = trainerRepository.findByEmail(email).get();
             return "TRAINER";
         }
         return "ADMIN";
