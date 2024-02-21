@@ -2,8 +2,11 @@ package com.example.TheFit.workout.service;
 
 import com.example.TheFit.common.ErrorCode;
 import com.example.TheFit.common.TheFitBizException;
+import com.example.TheFit.diet.domain.Diet;
+import com.example.TheFit.diet.dto.DietResDto;
 import com.example.TheFit.totalworkouts.domain.TotalWorkOuts;
 import com.example.TheFit.totalworkouts.repository.TotalWorkOutsRepository;
+import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.workout.domain.WorkOut;
 import com.example.TheFit.workout.dto.WorkOutReqDto;
 import com.example.TheFit.workout.dto.WorkOutResDto;
@@ -46,10 +49,18 @@ public class WorkOutService {
         List<WorkOut> workOuts = workOutRepository.findAll();
         List<WorkOutResDto> workOutResDtos = new ArrayList<>();
         for (WorkOut workOut : workOuts) {
-            workOutResDtos.add(workOutMapper.toDto(workOut));
+            workOutResDtos.add(workOutMapper.toDto(workOut.getWorkOutList(), workOut));
         }
         return workOutResDtos;
     }
+
+    public WorkOutResDto findById(Long id)throws TheFitBizException {
+        WorkOut workOut = workOutRepository.findById(id)
+                .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUT));
+        WorkOutList workOutList = workOutListRepository.findById(workOut.getWorkOutList().getId()).orElseThrow();
+        return workOutMapper.toDto(workOutList, workOut);
+    }
+
         public WorkOut update(Long id, WorkOutReqDto workOutReqDto) {
             WorkOut workOutUpdate = workOutRepository.findById(id)
                     .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUT));

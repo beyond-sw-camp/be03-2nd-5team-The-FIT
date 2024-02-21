@@ -31,7 +31,7 @@ public interface WorkOutMapper {
         return workOut.build();
     }
 
-    default WorkOutResDto toDto(WorkOut workOut){
+    default WorkOutResDto toDto(WorkOutList workOutList, WorkOut workOut){
         return WorkOutResDto.builder()
                 .id(workOut.getId())
                 .workOutListId(workOut.getWorkOutList() != null ? workOut.getWorkOutList().getId() : null)
