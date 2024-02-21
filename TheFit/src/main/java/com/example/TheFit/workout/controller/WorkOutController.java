@@ -42,9 +42,9 @@ public class WorkOutController {
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",workOutResDto),HttpStatus.OK);
     }
 
-    @GetMapping("/list/member/{id}")
-    public ResponseEntity<TheFitResponse> findByMemberId(@PathVariable Long id) {
-        List<WorkOutUsingMemberResDto> workOutResDto = workOutService.findByMemberId(id);
+    @GetMapping("/list/member/{email}")
+    public ResponseEntity<TheFitResponse> findByMemberEmail(@PathVariable String email) {
+        List<WorkOutUsingMemberResDto> workOutResDto = workOutService.findByMemberEmail(email);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",workOutResDto),HttpStatus.OK);
     }
 

@@ -32,7 +32,7 @@ public interface WorkOutListMapper {
         }
         return WorkOutListResDto.builder()
                 .id(workOutList.getId())
-                .memberId(workOutList.getId())
+                .memberId(workOutList.getMember().getId())
                 .workOutDate(workOutList.getWorkOutDate())
                 .build();
     }

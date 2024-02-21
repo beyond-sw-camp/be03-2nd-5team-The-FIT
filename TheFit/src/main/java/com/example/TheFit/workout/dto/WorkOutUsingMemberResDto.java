@@ -17,6 +17,8 @@ public class WorkOutUsingMemberResDto {
     private LocalDateTime workOutDate;
     private Long workOutListId;
     private Long totalWorkOutsId;
+    private String name;
+    private String target;
     private int sets;
     private int weight;
     private int reps;

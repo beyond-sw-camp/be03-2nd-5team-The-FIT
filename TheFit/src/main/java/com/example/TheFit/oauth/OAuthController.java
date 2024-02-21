@@ -67,9 +67,11 @@ public class OAuthController {
         String role = oAuthService.findRole(googleUser.getEmail());
         String accessToken = tokenService.createAccessToken(googleUser.email, googleUser.getName(), role);
         String refreshToken = tokenService.createRefreshToken(googleUser.email);
+        String email = googleUser.email;
         String loginUrl = "http://localhost:8081/loginSuccess/?accessToken=" + accessToken
                 + "&refreshToken=" + refreshToken
-                + "&role=" + role;
+                + "&role=" + role
+                + "&email=" + email;
         return new RedirectView(loginUrl);
     }
 }
