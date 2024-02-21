@@ -1,9 +1,11 @@
 package com.example.TheFit.workout.controller;
 
 import com.example.TheFit.common.TheFitResponse;
+import com.example.TheFit.diet.dto.DietResDto;
 import com.example.TheFit.workout.domain.WorkOut;
 import com.example.TheFit.workout.dto.WorkOutReqDto;
 import com.example.TheFit.workout.dto.WorkOutResDto;
+import com.example.TheFit.workout.dto.WorkOutUsingMemberResDto;
 import com.example.TheFit.workout.service.WorkOutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,17 @@ public class WorkOutController {
     public ResponseEntity<TheFitResponse> findAll() {
         List<WorkOutResDto> workOutResDtos =  workOutService.findAll();
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success check",workOutResDtos),HttpStatus.OK);
+    }
+    @GetMapping("/list/{id}")
+    public ResponseEntity<TheFitResponse> findById(@PathVariable Long id) {
+        WorkOutResDto workOutResDto = workOutService.findById(id);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",workOutResDto),HttpStatus.OK);
+    }
+
+    @GetMapping("/list/member/{email}")
+    public ResponseEntity<TheFitResponse> findByMemberEmail(@PathVariable String email) {
+        List<WorkOutUsingMemberResDto> workOutResDto = workOutService.findByMemberEmail(email);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",workOutResDto),HttpStatus.OK);
     }
 
     @PatchMapping("/update/{id}")

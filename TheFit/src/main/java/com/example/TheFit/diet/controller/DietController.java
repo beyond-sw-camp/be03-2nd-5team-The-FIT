@@ -25,7 +25,7 @@ public class DietController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TheFitResponse> createDiet(@Valid @RequestBody DietReqDto dietReqDto) {
+    public ResponseEntity<TheFitResponse> createDiet(@Valid @ModelAttribute DietReqDto dietReqDto) {
         Diet diet = dietService.create(dietReqDto);
         TheFitResponse theFitResponse = new TheFitResponse(HttpStatus.CREATED,"success create",diet.getId());
         return new ResponseEntity<>(theFitResponse,HttpStatus.CREATED);

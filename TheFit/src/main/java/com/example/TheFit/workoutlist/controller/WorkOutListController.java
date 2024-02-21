@@ -26,7 +26,7 @@ public class WorkOutListController {
     @PostMapping("/create")
     public ResponseEntity<TheFitResponse> create(@Valid @RequestBody WorkOutListReqDto workOutListReqDto){
         WorkOutList workOutList = workOutListService.create(workOutListReqDto);
-        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",workOutList.getId()),HttpStatus.CREATED);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create", workOutList.getId()),HttpStatus.CREATED);
     }
 
     @GetMapping("/list")

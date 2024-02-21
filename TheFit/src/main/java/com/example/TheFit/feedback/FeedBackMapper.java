@@ -12,31 +12,36 @@ import com.example.TheFit.workoutlist.domain.WorkOutList;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.time.format.DateTimeFormatter;
+
 @Mapper(componentModel = "spring")
 public interface FeedBackMapper {
     FeedBackMapper INSTANCE = Mappers.getMapper(FeedBackMapper.class);
 
-    default DietFeedBack toEntity(Trainer trainer,Diet diet, DietFeedBackReqDto dto){
+    default DietFeedBack toEntity(Trainer trainer, DietFeedBackReqDto dto){
         if ( dto == null ) {
             return null;
         }
+
         return DietFeedBack.builder()
-                .diet(diet)
+                .uploadDate(dto.getUploadDate())
                 .trainer(trainer)
                 .feedBack( dto.getFeedBack() )
                 .rating( dto.getRating() )
                 .build();
     }
 
-    default DietFeedBackResDto toDto(DietFeedBack dietFeedBack){
+    default DietFeedBackResDto toDto(String trainerName,DietFeedBack dietFeedBack){
         if ( dietFeedBack == null ) {
             return null;
         }
 
         return DietFeedBackResDto.builder()
-                .dietId(dietFeedBack.getDiet().getId())
+                .trainerName(trainerName)
+                .uploadDate(dietFeedBack.getUploadDate())
                 .trainerId(dietFeedBack.getTrainer().getId())
                 .id( dietFeedBack.getId() )
+                .createdTime(dietFeedBack.getCreatedTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .feedBack( dietFeedBack.getFeedBack() )
                 .rating( dietFeedBack.getRating() )
                 .build();

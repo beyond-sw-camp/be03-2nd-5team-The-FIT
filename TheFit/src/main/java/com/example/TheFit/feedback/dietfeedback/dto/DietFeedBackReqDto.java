@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DietFeedBackReqDto {
-    private Long dietId;
-    private Long trainerId;
     private String feedBack;
     private String rating;
+    private String uploadDate;
 }

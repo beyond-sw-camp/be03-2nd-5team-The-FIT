@@ -1,20 +1,28 @@
 package com.example.TheFit.user.trainer.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.TheFit.common.ErrorCode;
 import com.example.TheFit.common.TheFitBizException;
+import com.example.TheFit.diet.domain.Diet;
 import com.example.TheFit.user.dto.UserIdPassword;
 import com.example.TheFit.user.entity.Role;
 import com.example.TheFit.user.mapper.UserMapper;
+import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.user.repo.UserRepository;
 import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.user.trainer.dto.TrainerReqDto;
 import com.example.TheFit.user.trainer.dto.TrainerResDto;
 import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,18 +32,34 @@ public class TrainerService {
     private final TrainerRepository trainerRepository;
     private final UserMapper userMapper = UserMapper.INSTANCE;
     private final UserRepository userRepository;
+    private final AmazonS3Client amazonS3Client;
 
     @Autowired
-    public TrainerService(TrainerRepository trainerRepository, UserRepository userRepository) {
+    public TrainerService(TrainerRepository trainerRepository, UserRepository userRepository, AmazonS3Client amazonS3Client) {
         this.trainerRepository = trainerRepository;
         this.userRepository = userRepository;
+        this.amazonS3Client = amazonS3Client;
     }
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     public Trainer create(TrainerReqDto trainerReqDto) throws TheFitBizException {
         if(userRepository.findByEmail(trainerReqDto.getEmail()).isPresent()){
             throw new TheFitBizException(ErrorCode.ID_DUPLICATE);
         }
-        Trainer trainer = userMapper.toEntity(trainerReqDto);
+        String fileName =trainerReqDto.getProfileImage().getOriginalFilename();
+        String fileUrl = null;
+        try {
+            ObjectMetadata metadata= new ObjectMetadata();
+            metadata.setContentType(trainerReqDto.getProfileImage().getContentType());
+            metadata.setContentLength(trainerReqDto.getProfileImage().getSize());
+            amazonS3Client.putObject(bucket,fileName,trainerReqDto.getProfileImage().getInputStream(),metadata);
+            fileUrl = amazonS3Client.getUrl(bucket,fileName).toString();
+        } catch (
+                IOException e) {
+            throw new TheFitBizException(ErrorCode.S3_SERVER_ERROR);
+        }
+        Trainer trainer = userMapper.toEntity(fileUrl,trainerReqDto);
         userRepository.save(new UserIdPassword(trainer.email,trainer.password,trainer.name,Role.TRAINER));
         return trainerRepository.save(trainer);
     }
@@ -49,7 +73,8 @@ public class TrainerService {
     public Trainer update(Long id, TrainerReqDto trainerReqDto) throws TheFitBizException{
         Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
-        userMapper.update(trainerReqDto, trainer);
+        //Todo : 추후 수정
+        //userMapper.update(trainerReqDto, trainer);
         return trainerRepository.save(trainer);
     }
 

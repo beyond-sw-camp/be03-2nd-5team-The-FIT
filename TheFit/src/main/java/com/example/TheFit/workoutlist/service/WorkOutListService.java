@@ -30,7 +30,7 @@ public class WorkOutListService {
     public WorkOutList create(WorkOutListReqDto workOutListReqDto) throws TheFitBizException {
         Member member = memberRepository.findById(workOutListReqDto.getMemberId())
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
-        WorkOutList workOutList = workOutListMapper.toEntity(member,workOutListReqDto);
+        WorkOutList workOutList = workOutListMapper.toEntity(member, workOutListReqDto);
         return workOutListRepository.save(workOutList);
     }
 
