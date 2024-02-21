@@ -45,11 +45,9 @@ public class WorkOutController {
     }
 
     @GetMapping("/list/member")
-    public ResponseEntity<TheFitResponse> findByMemberEmail(@RequestParam("memberEmail") String email,
+    public ResponseEntity<TheFitResponse> findByMemberEmailAndWorkOutDate(@RequestParam("memberEmail") String email,
                                                              @RequestParam("date") String date) {
-        List<WorkOutUsingMemberResDto> workOutResDto = workOutService.findByMemberEmail(email, date);
-        System.out.println(email);
-        System.out.println(date);
+        List<WorkOutUsingMemberResDto> workOutResDto = workOutService.findByMemberEmailAndWorkOutDate(email, date);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK, "success find", workOutResDto), HttpStatus.OK);
     }
 

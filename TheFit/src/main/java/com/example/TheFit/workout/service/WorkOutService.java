@@ -69,28 +69,7 @@ public class WorkOutService {
         return workOutMapper.toDto(workOut);
     }
 
-//    public List<WorkOutUsingMemberResDto> findByMemberEmail(String email) throws TheFitBizException {
-//        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
-//        List<WorkOutList> workOutLists = workOutListRepository.findByMemberId(member.getId()).orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUTLIST));
-//        List<WorkOut> workOuts = workOutRepository.findAll();
-//        List<WorkOutUsingMemberResDto> workOutResDtos = new ArrayList<>();
-//        for (WorkOutList workOutList : workOutLists) {
-//            for (WorkOut workOut : workOuts) {
-//                if (workOutList.getId().equals(workOut.getWorkOutList().getId())) {
-//                    TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(workOut.getWorkOutList().getId())
-//                            .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TOTALWORKOUT));
-//                    WorkOutUsingMemberResDto workOutUsingMemberResDto = workOutMapper.toDtoUsingMember(workOut);
-//                    workOutUsingMemberResDto.setWorkOutDate(workOutList.getWorkOutDate());
-//                    workOutUsingMemberResDto.setName(totalWorkOuts.getName());
-//                    workOutUsingMemberResDto.setTarget(totalWorkOuts.getTarget());
-//                    workOutResDtos.add(workOutUsingMemberResDto);
-//                }
-//            }
-//        }
-//        return workOutResDtos;
-//    }
-
-    public List<WorkOutUsingMemberResDto> findByMemberEmail(String email, String inputDate) throws TheFitBizException {
+    public List<WorkOutUsingMemberResDto> findByMemberEmailAndWorkOutDate(String email, String inputDate) throws TheFitBizException {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
         LocalDate date = LocalDate.parse(inputDate, DateTimeFormatter.ISO_LOCAL_DATE);
         List<WorkOutList> workOutLists = workOutListRepository.findByMemberIdAndWorkOutDate(member.getId(), date)
