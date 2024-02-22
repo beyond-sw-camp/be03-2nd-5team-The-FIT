@@ -11,6 +11,7 @@ import com.example.TheFit.user.member.dto.MemberResDto;
 import com.example.TheFit.user.member.repository.MemberRepository;
 import com.example.TheFit.user.repo.UserRepository;
 import com.example.TheFit.user.trainer.domain.Trainer;
+import com.example.TheFit.user.trainer.dto.TrainerResDto;
 import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -82,5 +83,12 @@ public class MemberService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = memberRepository.findByEmail(authentication.getName()).orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
         return userMapper.toDto(member);
+    }
+
+    public TrainerResDto findMyTrainer() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Member member = memberRepository.findByEmail(authentication.getName()).orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
+        Trainer trainer = member.getTrainer();
+        return userMapper.toDto(trainer);
     }
 }
