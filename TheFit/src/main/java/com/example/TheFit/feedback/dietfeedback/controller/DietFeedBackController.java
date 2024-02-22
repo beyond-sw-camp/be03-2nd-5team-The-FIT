@@ -5,6 +5,7 @@ import com.example.TheFit.feedback.dietfeedback.domain.DietFeedBack;
 import com.example.TheFit.feedback.dietfeedback.dto.DietFeedBackReqDto;
 import com.example.TheFit.feedback.dietfeedback.dto.DietFeedBackResDto;
 import com.example.TheFit.feedback.dietfeedback.service.DietFeedBackService;
+import com.example.TheFit.feedback.workoutfeedback.dto.WorkOutFeedBackResDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,11 +35,6 @@ public class DietFeedBackController {
         List<DietFeedBackResDto> dietFeedBackResDtos = dietFeedBackService.findAll();
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",dietFeedBackResDtos),HttpStatus.CREATED);
     }
-    @GetMapping("/my")
-    public ResponseEntity<TheFitResponse> myFeedback(){
-        DietFeedBackResDto dietFeedBackResDto = dietFeedBackService.findFeedBack();
-        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",dietFeedBackResDto),HttpStatus.CREATED);
-    }
     @PatchMapping("update/{id}")
     public ResponseEntity<TheFitResponse> update(@PathVariable Long id, @Valid @RequestBody DietFeedBackReqDto dietFeedBackReqDto) {
         DietFeedBack dietFeedBack = dietFeedBackService.update(id, dietFeedBackReqDto);
@@ -48,5 +44,11 @@ public class DietFeedBackController {
     public ResponseEntity<TheFitResponse> delete(@PathVariable Long id) {
         dietFeedBackService.delete(id);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success delete"),HttpStatus.OK);
+    }
+    @GetMapping("/find")
+    public ResponseEntity<TheFitResponse> find(@RequestParam(value ="date") String date){
+        System.out.println(date);
+       DietFeedBackResDto dietFeedBackResDto = dietFeedBackService.findFeedback(date);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",dietFeedBackResDto),HttpStatus.OK);
     }
 }
