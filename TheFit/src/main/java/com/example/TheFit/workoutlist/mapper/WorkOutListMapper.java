@@ -7,6 +7,7 @@ import com.example.TheFit.workoutlist.dto.WorkOutListResDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -18,8 +19,8 @@ public interface WorkOutListMapper {
         if ( dto == null ) {
             return null;
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime date = LocalDateTime.parse(dto.getWorkOutDate(), formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(dto.getWorkOutDate(), formatter);
         return WorkOutList.builder()
                 .member(member)
                 .workOutDate(date)
