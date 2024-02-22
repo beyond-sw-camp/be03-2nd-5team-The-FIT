@@ -29,7 +29,14 @@ public class WorkOutListController {
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create", workOutList.getId()),HttpStatus.CREATED);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/getid")
+    public ResponseEntity<TheFitResponse> getId(@RequestParam("memberEmail") String email,
+                                                @RequestParam("date") String date){
+        WorkOutListResDto workOutListResDto = workOutListService.findByMemberEmailAndWorkOutDate(email, date);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success finding",workOutListResDto.getId()),HttpStatus.OK);
+    }
+
+    @GetMapping("/list/")
     public ResponseEntity<TheFitResponse> findALl(){
         List<WorkOutListResDto> workOutListResDtoList = workOutListService.findAll();
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success create",workOutListResDtoList),HttpStatus.OK);
