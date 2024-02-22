@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,33 +47,34 @@ public class DietService {
         this.amazonS3Client = amazonS3Client;
     }
 
-    public Diet create(DietReqDto dietReqDto)throws TheFitBizException {
-        String fileName =dietReqDto.getImage().getOriginalFilename();
+    public Diet create(DietReqDto dietReqDto) throws TheFitBizException {
+        String fileName = dietReqDto.getImage().getOriginalFilename();
         String fileUrl = null;
         try {
-            ObjectMetadata metadata= new ObjectMetadata();
+            ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(dietReqDto.getImage().getContentType());
             metadata.setContentLength(dietReqDto.getImage().getSize());
-            amazonS3Client.putObject(bucket,fileName,dietReqDto.getImage().getInputStream(),metadata);
-            fileUrl = amazonS3Client.getUrl(bucket,fileName).toString();
+            amazonS3Client.putObject(bucket, fileName, dietReqDto.getImage().getInputStream(), metadata);
+            fileUrl = amazonS3Client.getUrl(bucket, fileName).toString();
         } catch (IOException e) {
             throw new TheFitBizException(ErrorCode.S3_SERVER_ERROR);
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = memberRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
-        Diet diet = dietMapper.toEntity(member,fileUrl,dietReqDto);
+        Diet diet = dietMapper.toEntity(member, fileUrl, dietReqDto);
         return dietRepository.save(diet);
     }
 
-    public DietResDto findById(Long id)throws TheFitBizException {
+    public DietResDto findById(Long id) throws TheFitBizException {
         Diet diet = dietRepository.findById(id)
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_DIET));
         Member member = memberRepository.findById(diet.getMember().getId()).orElseThrow();
         return dietMapper.toDto(member, diet);
     }
 
-    public Diet update(Long id, DietReqDto dietReqDto)throws TheFitBizException {
+
+    public Diet update(Long id, DietReqDto dietReqDto) throws TheFitBizException {
         Diet diet = dietRepository.findById(id)
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_DIET));
         diet.update(dietReqDto);
@@ -85,11 +88,23 @@ public class DietService {
     public List<DietResDto> findAll() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long memberId = memberRepository.findByEmail(authentication.getName()).orElseThrow(
-                ()-> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER)
+                () -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER)
         ).getId();
         List<Diet> diets = dietRepository.findByMemberId(memberId);
         List<DietResDto> dietResDtos = new ArrayList<>();
-        for(Diet diet :diets){
+        for (Diet diet : diets) {
+            dietResDtos.add(dietMapper.toDto(diet.getMember(), diet));
+        }
+        return dietResDtos;
+    }
+
+    public List<DietResDto> findByMemberEmailAndDietDate(String email, String inputDate) {
+        Long memberId = memberRepository.findByEmail(email).orElseThrow(
+                () -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER)
+        ).getId();
+        LocalDate date = LocalDate.parse(inputDate, DateTimeFormatter.ISO_LOCAL_DATE);
+        List<DietResDto> dietResDtos = new ArrayList<>();
+        for (Diet diet : dietRepository.findByMemberIdAndDietDate(memberId, date)) {
             dietResDtos.add(dietMapper.toDto(diet.getMember(), diet));
         }
         return dietResDtos;
