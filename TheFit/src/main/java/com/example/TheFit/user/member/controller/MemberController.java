@@ -7,6 +7,7 @@ import com.example.TheFit.user.member.dto.MemberReqDto;
 import com.example.TheFit.user.member.dto.MemberResDto;
 import com.example.TheFit.user.member.service.MemberService;
 import com.example.TheFit.security.TokenService;
+import com.example.TheFit.user.trainer.dto.TrainerResDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,15 +39,21 @@ public class MemberController {
         Member member = memberService.update(id, memberReqDto);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success update",member.getId()),HttpStatus.CREATED);
     }
-    @GetMapping("/myInfo")
+    @GetMapping("/my/info")
     public ResponseEntity<TheFitResponse> myInfo(){
         MemberResDto memberResDto = memberService.findMyInfo();
-        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success check",memberResDto),HttpStatus.CREATED);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success check",memberResDto),HttpStatus.OK);
     }
     @DeleteMapping("/member/delete/{id}")
     public ResponseEntity<TheFitResponse> delete(@Valid @PathVariable Long id) {
         memberService.delete(id);
-        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success delete",null),HttpStatus.CREATED);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success delete",null),HttpStatus.OK);
+    }
+
+    @GetMapping("/my/trainer")
+    public ResponseEntity<TheFitResponse> myTrainer(){
+        TrainerResDto trainerResDto = memberService.findMyTrainer();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",trainerResDto),HttpStatus.OK);
     }
 }
 

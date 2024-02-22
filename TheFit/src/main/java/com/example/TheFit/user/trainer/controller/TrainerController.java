@@ -1,6 +1,7 @@
 package com.example.TheFit.user.trainer.controller;
 
 import com.example.TheFit.common.TheFitResponse;
+import com.example.TheFit.user.member.dto.MemberResDto;
 import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.user.trainer.dto.TrainerReqDto;
 import com.example.TheFit.user.trainer.dto.TrainerResDto;
@@ -51,5 +52,19 @@ public class TrainerController {
     public ResponseEntity<TheFitResponse> delete(@Valid @PathVariable Long id) {
         trainerService.delete(id);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success delete",null),HttpStatus.OK);
+    }
+
+    // (트레이너) 내 정보 조회
+    @GetMapping("/my/info")
+    public ResponseEntity<TheFitResponse> myInfo(){
+        TrainerResDto trainerResDto = trainerService.findMyInfo();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",trainerResDto),HttpStatus.OK);
+    }
+
+    // (트레이너) 내  멤버들 조회
+    @GetMapping("/my/members")
+    public ResponseEntity<TheFitResponse> myMembers(){
+        List<MemberResDto> trainerResDto = trainerService.findMyMembers();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",trainerResDto),HttpStatus.OK);
     }
 }
