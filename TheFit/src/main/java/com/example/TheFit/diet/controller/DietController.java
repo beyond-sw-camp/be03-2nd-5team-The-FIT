@@ -5,6 +5,7 @@ import com.example.TheFit.diet.domain.Diet;
 import com.example.TheFit.diet.dto.DietReqDto;
 import com.example.TheFit.diet.dto.DietResDto;
 import com.example.TheFit.diet.service.DietService;
+import com.example.TheFit.workout.dto.WorkOutUsingMemberResDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +41,17 @@ public class DietController {
 
     @GetMapping("/list")
     public ResponseEntity<TheFitResponse> findById() {
-        List<DietResDto>  dietResDtos =  dietService.findAll();
+        List<DietResDto> dietResDtos =  dietService.findAll();
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",dietResDtos),HttpStatus.OK);
     }
+
+    @GetMapping("/list/member")
+    public ResponseEntity<TheFitResponse> findByMemberEmailAndDietDate(@RequestParam("memberEmail") String email,
+                                                                          @RequestParam("date") String date) {
+        List<DietResDto> dietResDtos = dietService.findByMemberEmailAndDietDate(email, date);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK, "success find", dietResDtos), HttpStatus.OK);
+    }
+
 
     @PatchMapping("/update/{id}")
     public ResponseEntity<TheFitResponse> updateDiet(@PathVariable Long id, @Valid @RequestBody DietReqDto dietReqDto) {
