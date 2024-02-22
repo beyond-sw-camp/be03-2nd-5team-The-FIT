@@ -1,11 +1,11 @@
 package com.example.TheFit.user.member.dto;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class MemberReqDto {
     private Long trainerId;
     private String name;
@@ -15,6 +15,6 @@ public class MemberReqDto {
     private int kgWeight;
     private String gender;
     private String role;
-    private String profileImage;
+    private MultipartFile profileImage;
     private String phoneNumber;
 }
