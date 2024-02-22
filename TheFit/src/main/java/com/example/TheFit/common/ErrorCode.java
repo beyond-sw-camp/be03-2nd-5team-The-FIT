@@ -7,6 +7,7 @@ public enum ErrorCode {
     ID_DUPLICATE(400,"L1","중복된 이메일입니다"),
     INCORRECT_ID(400,"L2","존재하지 않는 아이디 입니다."),
     INCORRECT_PASSWORD(400,"L3","틀린 비밀번호 입니다."),
+    LEAVE_MEMBER(400,"L3","탈퇴한 멤버입니다."),
     NOT_FOUND_MEMBER(400,"D1","해당 멤버가 없습니다."),
     NOT_FOUND_TRAINER(400,"D2","해당 트레이너가 없습니다."),
     NOT_FOUND_CAREER(400,"D3", "해당 커리어가 없습니다."),

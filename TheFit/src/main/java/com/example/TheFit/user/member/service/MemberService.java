@@ -106,6 +106,10 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
         member.delete();
+        UserIdPassword userIdPassword = userRepository.findByEmail(member.email).orElseThrow(
+                ()-> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER)
+        );
+        userIdPassword.delYn = "Y";
     }
 
     public MemberResDto findMyInfo() {
