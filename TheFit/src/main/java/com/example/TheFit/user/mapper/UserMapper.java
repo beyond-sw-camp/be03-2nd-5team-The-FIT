@@ -48,7 +48,11 @@ public interface UserMapper {
         memberResDto.email( member.getEmail() );
         memberResDto.cmHeight( member.getCmHeight() );
         memberResDto.kgWeight( member.getKgWeight() );
-        memberResDto.trainerId( member.getTrainer().getId() );
+        memberResDto.delYn(member.delYn);
+        if(member.getTrainer()!=null){
+            memberResDto.trainerId( member.getTrainer().getId() );
+        }
+
         if ( member.getGender() != null ) {
             memberResDto.gender( member.getGender().name() );
         }
@@ -66,7 +70,7 @@ public interface UserMapper {
 
 //    update(TrainerReqDto dto, @MappingTarget Trainer trainer);
 
-    default Member toEntity(MemberReqDto dto,Trainer trainer){
+    default Member toEntity(String url,MemberReqDto dto,Trainer trainer){
         if ( dto == null ) {
             return null;
         }
@@ -85,7 +89,7 @@ public interface UserMapper {
         if ( dto.getRole() != null ) {
             member.role( Enum.valueOf( Role.class, dto.getRole() ) );
         }
-        member.profileImage( dto.getProfileImage() );
+        member.profileImage( url );
 
         return member.build();
     }

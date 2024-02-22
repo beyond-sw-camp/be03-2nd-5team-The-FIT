@@ -19,4 +19,5 @@ public class TrainerResDto {
     private String role;
     private String profileImage;
     private String phoneNumber;
+    private String delYn;
 }
