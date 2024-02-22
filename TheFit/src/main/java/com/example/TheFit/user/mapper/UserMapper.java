@@ -48,7 +48,9 @@ public interface UserMapper {
         memberResDto.email( member.getEmail() );
         memberResDto.cmHeight( member.getCmHeight() );
         memberResDto.kgWeight( member.getKgWeight() );
-        memberResDto.trainerId( member.getTrainer().getId() );
+        if(member.getTrainer()!=null){
+            memberResDto.trainerId( member.getTrainer().getId() );
+        }
         if ( member.getGender() != null ) {
             memberResDto.gender( member.getGender().name() );
         }
