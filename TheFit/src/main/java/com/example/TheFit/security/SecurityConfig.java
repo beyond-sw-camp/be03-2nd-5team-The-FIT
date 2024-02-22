@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                     .antMatchers("/member/create","/dologin",
                             "/trainer/create","/reCreateAccessToken",
-                            "/auth/google/callback", "/trainer/list")
+                            "/auth/google/callback", "/trainer/list","/notifications/**")
                     .permitAll()
                 .anyRequest().authenticated()
                 .and().oauth2Login()
