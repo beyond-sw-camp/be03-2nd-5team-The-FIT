@@ -8,6 +8,7 @@ import com.example.TheFit.feedback.dietfeedback.dto.DietFeedBackReqDto;
 import com.example.TheFit.feedback.dietfeedback.dto.DietFeedBackResDto;
 import com.example.TheFit.feedback.dietfeedback.repository.DietFeedBackRepository;
 import com.example.TheFit.diet.repository.DietRepository;
+import com.example.TheFit.feedback.workoutfeedback.domain.WorkOutFeedBack;
 import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class DietFeedBackService {
         List<DietFeedBack> dietFeedBacks = dietFeedBackRepository.findAll();
         List<DietFeedBackResDto> dietFeedBackResDtoList = new ArrayList<>();
         for(DietFeedBack dietFeedBack : dietFeedBacks){
-            dietFeedBackResDtoList.add(feedBackMapper.toDto(dietFeedBack.trainer.getName(),dietFeedBack));
+            dietFeedBackResDtoList.add(feedBackMapper.toDto(dietFeedBack));
         }
         return dietFeedBackResDtoList;
     }
@@ -65,13 +66,10 @@ public class DietFeedBackService {
         dietFeedBackRepository.deleteById(id);
     }
 
-    public DietFeedBackResDto findFeedBack() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Trainer trainer = trainerRepository.findByEmail(authentication.getName()).orElseThrow(
-                () -> new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER)
+    public DietFeedBackResDto findFeedback(String date) {
+        DietFeedBack dietFeedBack= dietFeedBackRepository.findByUploadDate(date).orElseThrow(
+                ()-> new TheFitBizException(ErrorCode.NOT_FOUND_DIET_FEEDBACK)
         );
-        DietFeedBack dietFeedBack = dietFeedBackRepository.findByTrainerId(trainer.getId()).orElseThrow(
-                ()->new TheFitBizException(ErrorCode.NOT_FOUND_DIET_FEEDBACK));
-        return feedBackMapper.toDto(trainer.name,dietFeedBack);
+        return feedBackMapper.toDto(dietFeedBack);
     }
 }

@@ -31,13 +31,13 @@ public interface FeedBackMapper {
                 .build();
     }
 
-    default DietFeedBackResDto toDto(String trainerName,DietFeedBack dietFeedBack){
+    default DietFeedBackResDto toDto(DietFeedBack dietFeedBack){
         if ( dietFeedBack == null ) {
             return null;
         }
 
         return DietFeedBackResDto.builder()
-                .trainerName(trainerName)
+                .trainerName(dietFeedBack.getTrainer().name)
                 .uploadDate(dietFeedBack.getUploadDate())
                 .trainerId(dietFeedBack.getTrainer().getId())
                 .id( dietFeedBack.getId() )

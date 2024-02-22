@@ -58,6 +58,7 @@ public class DietController {
         Diet diet = dietService.update(id, dietReqDto);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success update",diet.getId()),HttpStatus.OK);
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<TheFitResponse> delete(@PathVariable Long id){
         dietService.delete(id);
