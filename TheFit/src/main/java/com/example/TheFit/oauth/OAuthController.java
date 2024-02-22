@@ -61,14 +61,14 @@ public class OAuthController {
         Boolean memberExists = memberRepository.findByEmail(googleUser.getEmail()).isPresent();
         Boolean trainerExists = trainerRepository.findByEmail(googleUser.getEmail()).isPresent();
         if (!memberExists && !trainerExists) {
-            String signupUrl = "http://localhost:8081/signupoauth/?email=" + googleUser.getEmail();
+            String signupUrl = "http://thefitvue.s3-website.ap-northeast-2.amazonaws.com/signupoauth/?email=" + googleUser.getEmail();
             return new RedirectView(signupUrl);
         }
         String role = oAuthService.findRole(googleUser.getEmail());
         String accessToken = tokenService.createAccessToken(googleUser.email, googleUser.getName(), role);
         String refreshToken = tokenService.createRefreshToken(googleUser.email);
         String email = googleUser.email;
-        String loginUrl = "http://localhost:8081/loginSuccess/?accessToken=" + accessToken
+        String loginUrl = "http://thefitvue.s3-website.ap-northeast-2.amazonaws.com/loginSuccess/?accessToken=" + accessToken
                 + "&refreshToken=" + refreshToken
                 + "&role=" + role
                 + "&email=" + email;
