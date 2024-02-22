@@ -58,7 +58,6 @@ public class DietService {
             throw new TheFitBizException(ErrorCode.S3_SERVER_ERROR);
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.getName());
         Member member = memberRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
         Diet diet = dietMapper.toEntity(member,fileUrl,dietReqDto);
