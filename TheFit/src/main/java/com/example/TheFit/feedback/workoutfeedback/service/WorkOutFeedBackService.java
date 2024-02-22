@@ -12,6 +12,8 @@ import com.example.TheFit.feedback.workoutfeedback.dto.WorkOutFeedBackResDto;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
 import com.example.TheFit.workoutlist.repository.WorkOutListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,21 +26,18 @@ public class WorkOutFeedBackService {
 
     private final WorkOutFeedBackRepository workOutFeedBackRepository;
     private final FeedBackMapper feedBackMapper = FeedBackMapper.INSTANCE;
-    private final WorkOutListRepository workOutListRepository;
     private final TrainerRepository trainerRepository;
 
     @Autowired
     public WorkOutFeedBackService(WorkOutFeedBackRepository workOutFeedBackRepository, WorkOutListRepository workOutListRepository, TrainerRepository trainerRepository) {
         this.workOutFeedBackRepository = workOutFeedBackRepository;
-        this.workOutListRepository = workOutListRepository;
         this.trainerRepository = trainerRepository;
     }
     public WorkOutFeedBack create(WorkOutFeedBackReqDto workOutFeedBackReqDto) {
-        WorkOutList workOutList = workOutListRepository.findById(workOutFeedBackReqDto.getWorkOutListId())
-                .orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUTLIST));
-        Trainer trainer = trainerRepository.findById(workOutFeedBackReqDto.getTrainerId())
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Trainer trainer = trainerRepository.findByEmail(authentication.getName())
                 .orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
-        WorkOutFeedBack workOutFeedback = feedBackMapper.toEntity(workOutList,trainer,workOutFeedBackReqDto);
+        WorkOutFeedBack workOutFeedback = feedBackMapper.toEntity(trainer,workOutFeedBackReqDto);
         return workOutFeedBackRepository.save(workOutFeedback);
     }
     public List<WorkOutFeedBackResDto> findAll() {
@@ -57,5 +56,12 @@ public class WorkOutFeedBackService {
     }
     public void delete(Long id) {
         workOutFeedBackRepository.deleteById(id);
+    }
+
+    public WorkOutFeedBackResDto findFeedback(String date) {
+        WorkOutFeedBack workOutFeedBack= workOutFeedBackRepository.findByUploadDate(date).orElseThrow(
+                ()-> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUT_FEEDBACK)
+        );
+        return feedBackMapper.toDto(workOutFeedBack);
     }
 }

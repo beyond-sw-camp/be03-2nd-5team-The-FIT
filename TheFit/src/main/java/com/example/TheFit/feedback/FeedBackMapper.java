@@ -47,15 +47,15 @@ public interface FeedBackMapper {
                 .build();
     }
 
-    default WorkOutFeedBack toEntity(WorkOutList workOutList,Trainer trainer,WorkOutFeedBackReqDto dto){
+    default WorkOutFeedBack toEntity(Trainer trainer,WorkOutFeedBackReqDto dto){
         if ( dto == null ) {
             return null;
         }
         return WorkOutFeedBack.builder()
-                .workOutList(workOutList)
                 .trainer(trainer)
                 .feedBack( dto.getFeedBack() )
                 .rating( dto.getRating() )
+                .uploadDate(dto.getUploadDate())
                 .build();
     }
 
@@ -64,9 +64,9 @@ public interface FeedBackMapper {
             return null;
         }
         return WorkOutFeedBackResDto.builder()
-                .workOutListId(workOutFeedBack.getWorkOutList().getId())
                 .trainerId(workOutFeedBack.getTrainer().getId())
-                .id( workOutFeedBack.getId() )
+                .id(workOutFeedBack.getId())
+                .uploadDate(workOutFeedBack.getUploadDate())
                 .feedBack( workOutFeedBack.getFeedBack() )
                 .rating( workOutFeedBack.getRating() )
                 .build();
