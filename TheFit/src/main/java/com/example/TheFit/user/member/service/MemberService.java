@@ -81,12 +81,24 @@ public class MemberService {
                 .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }
-    public Member update(Long id, MemberReqDto memberReqDto) throws TheFitBizException{
-        Member member = memberRepository.findById(id)
+    public Member update(MemberReqDto memberReqDto) throws TheFitBizException{
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Member member = memberRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER));
+        String fileName =memberReqDto.getProfileImage().getOriginalFilename();
+        String fileUrl = null;
+        try {
+            ObjectMetadata metadata= new ObjectMetadata();
+            metadata.setContentType(memberReqDto.getProfileImage().getContentType());
+            metadata.setContentLength(memberReqDto.getProfileImage().getSize());
+            amazonS3Client.putObject(bucket,fileName,memberReqDto.getProfileImage().getInputStream(),metadata);
+            fileUrl = amazonS3Client.getUrl(bucket,fileName).toString();
+        } catch (IOException e) {
+            throw new TheFitBizException(ErrorCode.S3_SERVER_ERROR);
+        }
         Trainer trainer = trainerRepository.findById(member.getTrainer().getId())
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
-        member.update(memberReqDto,trainer);
+        member.update(memberReqDto,trainer,fileUrl);
         return member;
     }
 

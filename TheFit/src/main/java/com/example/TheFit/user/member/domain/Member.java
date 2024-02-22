@@ -20,12 +20,12 @@ public class Member extends User {
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
-    public void update(MemberReqDto memberReqDto,Trainer trainer) {
+    public void update(MemberReqDto memberReqDto,Trainer trainer,String url) {
         this.name = memberReqDto.getName();
         this.password = memberReqDto.getPassword();
         this.cmHeight = memberReqDto.getCmHeight();
         this.kgWeight = memberReqDto.getKgWeight();
-        this.profileImage = memberReqDto.getProfileImage();
+        this.profileImage = url;
         this.phoneNumber = memberReqDto.getPhoneNumber();
         this.trainer = trainer;
     }
