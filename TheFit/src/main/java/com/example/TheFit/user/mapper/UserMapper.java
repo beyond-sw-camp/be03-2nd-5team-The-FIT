@@ -52,7 +52,6 @@ public interface UserMapper {
         if(member.getTrainer()!=null){
             memberResDto.trainerId( member.getTrainer().getId() );
         }
-
         if ( member.getGender() != null ) {
             memberResDto.gender( member.getGender().name() );
         }

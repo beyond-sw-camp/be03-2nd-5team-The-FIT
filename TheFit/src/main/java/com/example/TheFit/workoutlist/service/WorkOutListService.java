@@ -2,6 +2,8 @@ package com.example.TheFit.workoutlist.service;
 
 import com.example.TheFit.common.ErrorCode;
 import com.example.TheFit.common.TheFitBizException;
+import com.example.TheFit.diet.domain.Diet;
+import com.example.TheFit.diet.dto.DietResDto;
 import com.example.TheFit.user.member.domain.Member;
 import com.example.TheFit.user.member.repository.MemberRepository;
 import com.example.TheFit.workoutlist.domain.WorkOutList;
@@ -12,6 +14,8 @@ import com.example.TheFit.workoutlist.repository.WorkOutListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,5 +49,16 @@ public class WorkOutListService {
             workOutListResDtos.add(workOutListMapper.toDto(workOutList));
         }
         return workOutListResDtos;
+    }
+
+    public WorkOutListResDto findByMemberEmailAndWorkOutDate(String email, String inputDate) {
+        Long memberId = memberRepository.findByEmail(email).orElseThrow(
+                () -> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER)
+        ).getId();
+        LocalDate date = LocalDate.parse(inputDate, DateTimeFormatter.ISO_LOCAL_DATE);
+        List<WorkOutList> workOutLists = workOutListRepository.findByMemberIdAndWorkOutDate(memberId, date)
+                .orElseThrow(()-> new TheFitBizException(ErrorCode.NOT_FOUND_WORKOUTLIST));
+        return workOutListMapper.toDto(workOutLists.get(0));
+
     }
 }
