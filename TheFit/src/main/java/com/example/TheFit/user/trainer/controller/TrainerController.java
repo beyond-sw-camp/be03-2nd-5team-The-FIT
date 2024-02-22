@@ -52,4 +52,10 @@ public class TrainerController {
         trainerService.delete(id);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success delete",null),HttpStatus.OK);
     }
+
+    @GetMapping("/myinfo")
+    public ResponseEntity<TheFitResponse> myInfo(){
+        TrainerResDto trainerResDto = trainerService.findMyInfo();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",trainerResDto),HttpStatus.OK);
+    }
 }

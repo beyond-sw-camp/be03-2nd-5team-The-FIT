@@ -98,4 +98,10 @@ public class TrainerService {
         );
         return userMapper.toDto(member.getTrainer());
     }
+
+    public TrainerResDto findMyInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Trainer trainer = trainerRepository.findByEmail(authentication.getName()).orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
+        return userMapper.toDto(trainer);
+    }
 }
