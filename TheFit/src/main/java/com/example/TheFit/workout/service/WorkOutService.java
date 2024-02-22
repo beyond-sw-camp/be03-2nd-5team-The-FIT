@@ -80,7 +80,7 @@ public class WorkOutService {
         for (WorkOutList workOutList : workOutLists) {
             for (WorkOut workOut : workOuts) {
                 if (workOutList.getId().equals(workOut.getWorkOutList().getId())) {
-                    TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(workOut.getWorkOutList().getId())
+                    TotalWorkOuts totalWorkOuts = totalWorkOutsRepository.findById(workOut.getTotalWorkOuts().getId())
                             .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TOTALWORKOUT));
                     WorkOutUsingMemberResDto workOutUsingMemberResDto = workOutMapper.toDtoUsingMember(workOut);
                     workOutUsingMemberResDto.setWorkOutDate(workOutList.getWorkOutDate());
