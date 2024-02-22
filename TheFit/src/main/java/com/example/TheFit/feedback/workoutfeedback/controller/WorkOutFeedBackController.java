@@ -38,6 +38,12 @@ public class WorkOutFeedBackController {
         WorkOutFeedBack workOutFeedBack = workOutFeedBackService.update(id, workOutFeedBackReqDto);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success update",workOutFeedBack.getId()),HttpStatus.OK);
     }
+    @GetMapping("/find")
+    public ResponseEntity<TheFitResponse> find(@RequestParam(value ="date") String date){
+        System.out.println(date);
+        WorkOutFeedBackResDto workOutFeedBackResDto = workOutFeedBackService.findFeedback(date);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",workOutFeedBackResDto),HttpStatus.OK);
+    }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<TheFitResponse> delete(@PathVariable Long id) {
         workOutFeedBackService.delete(id);

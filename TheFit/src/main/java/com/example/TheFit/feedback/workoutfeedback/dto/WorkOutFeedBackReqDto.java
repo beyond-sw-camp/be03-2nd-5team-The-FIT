@@ -7,8 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WorkOutFeedBackReqDto {
-    private Long workOutListId;
-    private Long trainerId;
     private String feedBack;
     private String rating;
+    private String uploadDate;
 }

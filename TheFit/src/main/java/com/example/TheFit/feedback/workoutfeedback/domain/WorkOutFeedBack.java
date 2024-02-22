@@ -19,10 +19,7 @@ public class WorkOutFeedBack extends FeedBack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "workOutList_id")
-    private WorkOutList workOutList;
-
+    private String uploadDate;
     public void update(WorkOutFeedBackReqDto workOutFeedBackReqDto) {
         this.feedBack = workOutFeedBackReqDto.getFeedBack();
         this.rating = workOutFeedBackReqDto.getRating();
