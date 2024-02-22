@@ -8,6 +8,7 @@ import com.example.TheFit.user.dto.UserIdPassword;
 import com.example.TheFit.user.entity.Role;
 import com.example.TheFit.user.mapper.UserMapper;
 import com.example.TheFit.user.member.domain.Member;
+import com.example.TheFit.user.member.dto.MemberResDto;
 import com.example.TheFit.user.member.repository.MemberRepository;
 import com.example.TheFit.user.repo.UserRepository;
 import com.example.TheFit.user.trainer.domain.Trainer;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,5 +105,16 @@ public class TrainerService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Trainer trainer = trainerRepository.findByEmail(authentication.getName()).orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
         return userMapper.toDto(trainer);
+    }
+
+    public List<MemberResDto> findMyMembers() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Trainer trainer = trainerRepository.findByEmail(authentication.getName()).orElseThrow(()->new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
+        List<Member> members = memberRepository.findAllByTrainerId(trainer.getId());
+        List<MemberResDto> memberResDtos = new ArrayList<>();
+        for(Member member :members){
+            memberResDtos.add(userMapper.toDto(member));
+        }
+        return memberResDtos;
     }
 }
