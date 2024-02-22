@@ -17,4 +17,5 @@ public class MemberResDto{
     private String role;
     private String profileImage;
     private String phoneNumber;
+    public String delYn;
 }

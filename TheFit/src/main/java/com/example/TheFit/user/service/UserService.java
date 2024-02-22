@@ -17,6 +17,9 @@ public class UserService {
 
     public UserIdPassword login(UserLoginRequestDto userLoginRequestDto) {
         UserIdPassword userIdPassword = userRepository.findByEmail(userLoginRequestDto.getEmail()).orElseThrow(()->new TheFitBizException(ErrorCode.INCORRECT_ID));
+        if(userIdPassword.delYn.equals("Y")){
+            throw new TheFitBizException(ErrorCode.LEAVE_MEMBER);
+        }
         if(!userIdPassword.getPassword().equals(userLoginRequestDto.getPassword())){
             throw new TheFitBizException(ErrorCode.INCORRECT_PASSWORD);
         }

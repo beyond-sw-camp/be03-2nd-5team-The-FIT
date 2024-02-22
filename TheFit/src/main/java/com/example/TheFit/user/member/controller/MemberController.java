@@ -25,7 +25,7 @@ public class MemberController {
         this.memberService = memberService;
     }
     @PostMapping("/create")
-    public ResponseEntity<TheFitResponse> create(@Valid @RequestBody MemberReqDto memberReqDto){
+    public ResponseEntity<TheFitResponse> create(@Valid @ModelAttribute MemberReqDto memberReqDto){
         Member member = memberService.create(memberReqDto);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",member.getId()),HttpStatus.CREATED);
     }
@@ -34,9 +34,9 @@ public class MemberController {
         List<MemberResDto> memberResDtos =  memberService.findAll();
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success check",memberResDtos),HttpStatus.CREATED);
     }
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<TheFitResponse> update(@PathVariable Long id, @Valid @RequestBody MemberReqDto memberReqDto) {
-        Member member = memberService.update(id, memberReqDto);
+    @PatchMapping("/update")
+    public ResponseEntity<TheFitResponse> update(@Valid @ModelAttribute MemberReqDto memberReqDto) {
+        Member member = memberService.update(memberReqDto);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success update",member.getId()),HttpStatus.CREATED);
     }
     @GetMapping("/my/info")
