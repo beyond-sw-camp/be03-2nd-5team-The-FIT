@@ -44,7 +44,7 @@ public class MemberController {
         MemberResDto memberResDto = memberService.findMyInfo();
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success check",memberResDto),HttpStatus.OK);
     }
-    @DeleteMapping("/member/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<TheFitResponse> delete(@Valid @PathVariable Long id) {
         memberService.delete(id);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success delete",null),HttpStatus.OK);
