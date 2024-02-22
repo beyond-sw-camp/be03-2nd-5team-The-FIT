@@ -24,15 +24,21 @@ public class TrainerController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TheFitResponse> create(@Valid @RequestBody TrainerReqDto trainerReqDto) {
+    public ResponseEntity<TheFitResponse> create(@Valid @ModelAttribute TrainerReqDto trainerReqDto) {
         Trainer trainer = trainerService.create(trainerReqDto);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success create",trainer.getId()),HttpStatus.CREATED);
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<TheFitResponse> find() {
+        TrainerResDto trainer= trainerService.findTrainer();
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success find",trainer),HttpStatus.OK);
     }
 
     @GetMapping("/list")
     public ResponseEntity<TheFitResponse> trainers() {
         List<TrainerResDto> trainerResDtos = trainerService.findAll();
-        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success check",trainerResDtos),HttpStatus.CREATED);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.OK,"success check",trainerResDtos),HttpStatus.OK);
     }
 
     @PatchMapping("/update/{id}")

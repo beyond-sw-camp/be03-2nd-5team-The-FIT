@@ -4,11 +4,11 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.TheFit.common.ErrorCode;
 import com.example.TheFit.common.TheFitBizException;
-import com.example.TheFit.diet.domain.Diet;
 import com.example.TheFit.user.dto.UserIdPassword;
 import com.example.TheFit.user.entity.Role;
 import com.example.TheFit.user.mapper.UserMapper;
 import com.example.TheFit.user.member.domain.Member;
+import com.example.TheFit.user.member.repository.MemberRepository;
 import com.example.TheFit.user.repo.UserRepository;
 import com.example.TheFit.user.trainer.domain.Trainer;
 import com.example.TheFit.user.trainer.dto.TrainerReqDto;
@@ -17,11 +17,11 @@ import com.example.TheFit.user.trainer.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,12 +33,14 @@ public class TrainerService {
     private final UserMapper userMapper = UserMapper.INSTANCE;
     private final UserRepository userRepository;
     private final AmazonS3Client amazonS3Client;
+    private final MemberRepository memberRepository;
 
     @Autowired
-    public TrainerService(TrainerRepository trainerRepository, UserRepository userRepository, AmazonS3Client amazonS3Client) {
+    public TrainerService(TrainerRepository trainerRepository, UserRepository userRepository, AmazonS3Client amazonS3Client, MemberRepository memberRepository) {
         this.trainerRepository = trainerRepository;
         this.userRepository = userRepository;
         this.amazonS3Client = amazonS3Client;
+        this.memberRepository = memberRepository;
     }
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -55,8 +57,7 @@ public class TrainerService {
             metadata.setContentLength(trainerReqDto.getProfileImage().getSize());
             amazonS3Client.putObject(bucket,fileName,trainerReqDto.getProfileImage().getInputStream(),metadata);
             fileUrl = amazonS3Client.getUrl(bucket,fileName).toString();
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             throw new TheFitBizException(ErrorCode.S3_SERVER_ERROR);
         }
         Trainer trainer = userMapper.toEntity(fileUrl,trainerReqDto);
@@ -82,5 +83,19 @@ public class TrainerService {
         Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER));
         trainer.delete();
+    }
+
+    public TrainerResDto findTrainer() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getAuthorities().contains((new SimpleGrantedAuthority("ROLE_TRAINER")))){
+            Trainer trainer = trainerRepository.findByEmail(authentication.getName()).orElseThrow(
+                    ()->new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER)
+            );
+            return userMapper.toDto(trainer);
+        }
+        Member member = memberRepository.findByEmail(authentication.getName()).orElseThrow(
+                ()->new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER)
+        );
+        return userMapper.toDto(member.getTrainer());
     }
 }
