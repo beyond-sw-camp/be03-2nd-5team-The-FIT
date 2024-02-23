@@ -86,6 +86,8 @@ The FIT은 트레이너와 트레이니(회원)가 상호작용하는 플랫폼�
 
 ## :muscle: DB아키텍처
 
+<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20DB%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90.png?raw=true">
+
 ## :muscle: API설계
 <img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20API%EC%84%A4%EA%B3%84.png?raw=true">
 
