@@ -8,7 +8,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
-                .allowedOrigins("http://thefitvue.s3-website.ap-northeast-2.amazonaws.com") //vue의 URL
+                .allowedOrigins("http://localhost:8081") //vue의 URL
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .allowCredentials(true);
