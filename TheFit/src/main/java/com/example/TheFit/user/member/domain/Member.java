@@ -29,6 +29,9 @@ public class Member extends User {
         this.phoneNumber = memberReqDto.getPhoneNumber();
         this.trainer = trainer;
     }
+    public void updateTrainer(Trainer trainer){
+        this.trainer = trainer;
+    }
 
     public void delete() {
         this.delYn = "Y";

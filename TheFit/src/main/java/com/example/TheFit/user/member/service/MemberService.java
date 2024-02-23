@@ -124,4 +124,17 @@ public class MemberService {
         Trainer trainer = member.getTrainer();
         return userMapper.toDto(trainer);
     }
+
+    @Transactional
+    public Member updateMyTrainer(Long trainerId) {
+        Authentication authentication =SecurityContextHolder.getContext().getAuthentication();
+        Member member = memberRepository.findByEmail(authentication.getName()).orElseThrow(
+                ()-> new TheFitBizException(ErrorCode.NOT_FOUND_MEMBER)
+                );
+        Trainer trainer = trainerRepository.findById(trainerId).orElseThrow(
+                ()->new TheFitBizException(ErrorCode.NOT_FOUND_TRAINER)
+                );
+        member.updateTrainer(trainer);
+        return member;
+    }
 }

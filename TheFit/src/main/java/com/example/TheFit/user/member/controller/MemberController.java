@@ -39,6 +39,14 @@ public class MemberController {
         Member member = memberService.update(memberReqDto);
         return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success update",member.getId()),HttpStatus.CREATED);
     }
+
+    @PatchMapping("/update/mytrainer/{trainerId}")
+    public ResponseEntity<TheFitResponse> updateMyTrainer(@Valid @PathVariable Long trainerId) {
+        System.out.println(trainerId);
+        Member member = memberService.updateMyTrainer(trainerId);
+        return new ResponseEntity<>(new TheFitResponse(HttpStatus.CREATED,"success update",member.getId()),HttpStatus.CREATED);
+    }
+
     @GetMapping("/my/info")
     public ResponseEntity<TheFitResponse> myInfo(){
         MemberResDto memberResDto = memberService.findMyInfo();
