@@ -6,7 +6,7 @@ spring:
           google:
             client-id: 625185374022-79lf2b3q4m7214nvj5jo5g6pm1icl9na.apps.googleusercontent.com
             client-secret: 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
-            redirect-uri: http://3.34.156.188:8080/auth/google/callback
+            redirect-uri: http://ec2-3-34-156-188.ap-northeast-2.compute.amazonaws.com/
   redis:
     host: localhost
     port: 6379
