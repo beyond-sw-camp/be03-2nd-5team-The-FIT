@@ -1,3 +1,5 @@
+# :runner: The FIT
+
 ## :muscle: 프로젝트 소개
 >  :sparkles: Stay CONNECTED! Stay FIT!
 
