@@ -1,5 +1,3 @@
-![image](https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/assets/123349044/e337efe9-285a-4d67-8f0a-87789dbb780f)# :weight_lifting:The-FIT:weight_lifting:
-
 ## :muscle: 프로젝트 소개
 >  :sparkles: Stay CONNECTED! Stay FIT!
 
