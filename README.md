@@ -89,6 +89,76 @@ The FIT은 트레이너와 트레이니(회원)가 상호작용하는 플랫폼�
 ## :muscle: API설계
 <img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20API%EC%84%A4%EA%B3%84.png?raw=true">
 
+## :muscle: 중점 기술 명세
+<details>
+<summary>
+<b>Refreh Token</b>
+</summary>
+  
+  ## Refreh Token 구현 방법 2가지
+1. JWT 형태의 Refresh Token
+    1. 토큰 자체에 데이터를 담을 수 있습니다.
+    2. 데이터베이스에 별도로 액세스하지 않아도 된다는 점이 있고 따라 서버의 부하가 상대적으로 적습니다.
+    3. Refresh Token 을 서버에서 제어할 수 없다는 단점
+    4. Refresh Token 을 탈취당한 상황에서 토큰을 별달리 무효화 시키는 방법이 없습니다
+2. JWT 형태가 아닌 Refresh Token
+    1. 그 토큰을 사용자와 매핑되도록 데이터베이스에 저장
+    2. Refresh Token 사용시 데이터베이스에 액세스
+    3. 강제로 로그아웃 시키거나, 차단할 수 있게되고 또한 Refresh Token이 탈취되었을 경우 그 즉시 무효화시킬 수 있습니다.
+    4. 
+## 구현 방식
+1. Access Token
+    1. jwt 토큰 발급 : 페이 로더에 이메일과 유저의 role 담음
+2. Refresh Token
+    1. jwt 형태가 아닌 형태로 구현
+    2. 유저에 관한 특정 정보를 페이로더에 담지 않음
+    3. jwt로 형태로 구현하는 이유는 logged된 유저의 정보를 DB에 조회하지 않기 위함
+    4. 한번 사용된 Refresh Token은 새로 발급 (RTR 방식)
+    5. 발급된 RT와 AT를 모두 탈취 당했을 경우 서버에서 이를 알 수 있다.
+3. Redis
+    1. Key : R.T VS A.T
+    2. A.T의 경우 (A.T : R.T)
+    3. 그외 사용자의 정보(unique한)로 맵핑 할 경우 ( email : R.T)
+</details>
+
+<details>
+<summary>
+<b>OAuth</b>
+</summary>
+  
+  ## 기본 개념
+  - 권한 부여 승인을 위해 자체 생성한 Authorization Code를 전달하는 방식
+  - 클라이언트가 사용자를 대신하여 특정 자원에 접근을 요청할 때 사용
+  - Refresh Token의 사용이 가능한 방식
+  - 
+## 유저에서 권한 서버까지
+1. 유저는 권한 부여 승인 요청
+2. 이후 클라이언트는 권한 서버 (구글)에서 제공하는 로그인 페이지를 브라우저를 띄움
+3. 이 페이지를 통해 사용자가 로그인을 하면 권한 서버는 권한 부여 승인 코드 요청 시 전달받은 redirect_url로 Authorization Code를 전달
+4. Authorization Code 는 권한 서버에서 제공하는 API를 통해 Access Token 으로 교환
+  
+</details>
+<details>
+<summary>
+<b>MapStruct </b>
+</summary>
+  
+## MapStruct 사용 이유
+> MapStruct는 Java bean 유형 간의 매핑 구현을 단순화하는 코드 생성기로, 다음과 같은 이점을 제공합니다:
+1. 컴파일 시점에 코드를 생성하여 런타임에서 안정성을 보장합니다.
+2. 다른 매핑 라이브러리보다 압도적으로 속도가 빠릅니다.
+3. 반복되는 객체 매핑에서 발생할 수 있는 오류를 줄이며, 구현 코드를 자동으로 만들어주기 때문에 사용이 쉽습니다.
+
+## 매핑 인터페이스 정의
+> 엔티티와 DTO 간 매핑을 위한 인터페이스를 생성합니다. MapStruct는 이 인터페이스를 구현하는 클래스를 자동으로 생성합니다.
+> 
+## 서비스 또는 컨트롤러에서 매핑 사용
+Service 또는 Controller에서 Mapper 인스턴스를 사용하여 DTO와 엔티티 간의 변환을 수행합니다. 필드가 다른 경우 매핑을 하기 위해선 다음과 같이 @Mapping을 사용해서 명시해줘야 합니다.
+매핑하려는 모든 컬럼들이 같다면 별도의 어노테이션으로 표시할 필요가 없지만, 만약 지정해야 하는 경우가 있다면 예시처럼 @Mapping을 이용하여 source에는 매핑값을 가지고 올 대상, target에는 매핑할 대상을 각각 작성해줍니다.
+ource="trainer.id"와 같이 점(.)을 사용하는 이유는, 복합 객체 내부의 특정 필드를 지정하기 위함입니다.
+> 즉, trainer 객체의 id 필드를 대상 객체의 trainerId 필드와 매핑하겠다는 의미입니다.
+>  이렇게 되면 구현체는 자동으로 생성됩니다.
+
 ## :muscle: 데모 영상
 <details>
 <summary>
