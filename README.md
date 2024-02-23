@@ -70,6 +70,7 @@ The FIT은 트레이너와 트레이니(회원)가 상호작용하는 플랫폼�
 
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/slack-purple?style=for-the-badge&logo=slack&logoColor=white">
+<img src="https://img.shields.io/badge/jira-navy?style=for-the-badge&logo=jira&logoColor=white">
 </details>
 <br>
   
@@ -80,7 +81,7 @@ The FIT은 트레이너와 트레이니(회원)가 상호작용하는 플랫폼�
 
 <img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20%EB%85%BC%EB%A6%AC%EC%A0%81%20ERD.png?raw=true">
 
-## :muscle: DB아키텍처
+## :muscle: 배포 아키텍처
 
 <img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20DB%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90.png?raw=true">
 
