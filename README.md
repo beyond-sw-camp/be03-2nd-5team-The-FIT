@@ -64,9 +64,7 @@ The FIT은 트레이너와 트레이니(회원)가 상호작용하는 플랫폼�
 
 <img src="https://img.shields.io/badge/amazonaws-navy?style=for-the-badge&logo=amazonaws&logoColor=white">
 <img src="https://img.shields.io/badge/amazonec2-skyblue?style=for-the-badge&logo=amazonec2&logoColor=white">
-<img src="https://img.shields.io/badge/amazonrds-02303A?style=for-the-badge&logo=amazonrds&logoColor=white">
 <img src="https://img.shields.io/badge/amazons3-orange?style=for-the-badge&logo=amazons3&logoColor=white">
-<img src="https://img.shields.io/badge/amazonaws-yellow?style=for-the-badge&logo=amazonaws&logoColor=white">
 
 <h3>COMMUNICATION</h3>
 
@@ -76,18 +74,18 @@ The FIT은 트레이너와 트레이니(회원)가 상호작용하는 플랫폼�
 <br>
   
 ## :muscle: 요구사항명세서
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%20%EB%AA%85%EC%84%B8%EC%84%9C.png?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%20%EB%AA%85%EC%84%B8%EC%84%9C.png?raw=true">
 
 ## :muscle: ERD
 
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20%EB%85%BC%EB%A6%AC%EC%A0%81%20ERD.png?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20%EB%85%BC%EB%A6%AC%EC%A0%81%20ERD.png?raw=true">
 
 ## :muscle: DB아키텍처
 
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20DB%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90.png?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20DB%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90.png?raw=true">
 
 ## :muscle: API설계
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20API%EC%84%A4%EA%B3%84.png?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20API%EC%84%A4%EA%B3%84.png?raw=true">
 
 ## :muscle: 중점 기술 명세
 <details>
@@ -151,81 +149,83 @@ The FIT은 트레이너와 트레이니(회원)가 상호작용하는 플랫폼�
 
 ## 매핑 인터페이스 정의
 > 엔티티와 DTO 간 매핑을 위한 인터페이스를 생성합니다. MapStruct는 이 인터페이스를 구현하는 클래스를 자동으로 생성합니다.
-> 
+
 ## 서비스 또는 컨트롤러에서 매핑 사용
 Service 또는 Controller에서 Mapper 인스턴스를 사용하여 DTO와 엔티티 간의 변환을 수행합니다. 필드가 다른 경우 매핑을 하기 위해선 다음과 같이 @Mapping을 사용해서 명시해줘야 합니다.
 매핑하려는 모든 컬럼들이 같다면 별도의 어노테이션으로 표시할 필요가 없지만, 만약 지정해야 하는 경우가 있다면 예시처럼 @Mapping을 이용하여 source에는 매핑값을 가지고 올 대상, target에는 매핑할 대상을 각각 작성해줍니다.
 ource="trainer.id"와 같이 점(.)을 사용하는 이유는, 복합 객체 내부의 특정 필드를 지정하기 위함입니다.
 > 즉, trainer 객체의 id 필드를 대상 객체의 trainerId 필드와 매핑하겠다는 의미입니다.
->  이렇게 되면 구현체는 자동으로 생성됩니다.
+> 이렇게 되면 구현체는 자동으로 생성됩니다.
+</details>
 
 ## :muscle: 데모 영상
+
 <details>
 <summary>
 <b>구글 로그인</b>
 </summary>
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/%E1%84%83%E1%85%A6%E1%84%86%E1%85%A9%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC/0.%20%E1%84%80%E1%85%AE%E1%84%80%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A9%E1%84%80%E1%85%B3%E1%84%8B%E1%85%B5%E1%86%AB.gif?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/%EB%8D%B0%EB%AA%A8%20%EC%98%81%EC%83%81/0.%20%EA%B5%AC%EA%B8%80%EB%A1%9C%EA%B7%B8%EC%9D%B8.gif?raw=true">
 </details>
 
 <details>
 <summary>
 <b>트레이너로 회원가입</b>
 </summary>
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/%E1%84%83%E1%85%A6%E1%84%86%E1%85%A9%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC/1.%20trainer%20%E1%84%92%E1%85%AC%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%80%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8.gif?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/%EB%8D%B0%EB%AA%A8%20%EC%98%81%EC%83%81/1.%20trainer%20%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif?raw=true">
 </details>
 
 <details>
 <summary>
 <b>트레이니로 회원가입</b>
 </summary>
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/%E1%84%83%E1%85%A6%E1%84%86%E1%85%A9%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC/2.%20member%20%E1%84%92%E1%85%AC%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%80%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8.gif?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/%EB%8D%B0%EB%AA%A8%20%EC%98%81%EC%83%81/2.%20member%20%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif?raw=true">
 </details>
 
 <details>
 <summary>
 <b>관리자로 전체 회원 / 운동 목록 관리</b>
 </summary>
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/%E1%84%83%E1%85%A6%E1%84%86%E1%85%A9%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC/3.%20admin%20%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A6%E1%84%92%E1%85%AC%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%80%E1%85%AA%E1%86%AB%E1%84%85%E1%85%B5,%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%83%E1%85%A9%E1%86%BC%E1%84%86%E1%85%A9%E1%86%A8%E1%84%85%E1%85%A9%E1%86%A8%E1%84%80%E1%85%AA%E1%86%AB%E1%84%85%E1%85%B5.gif?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/%EB%8D%B0%EB%AA%A8%20%EC%98%81%EC%83%81/3.%20admin%20%EC%A0%84%EC%B2%B4%ED%9A%8C%EC%9B%90%EA%B4%80%EB%A6%AC,%20%EC%9A%B4%EB%8F%99%EB%AA%A9%EB%A1%9D%EA%B4%80%EB%A6%AC.gif?raw=true">
 </details>
 
 <details>
 <summary>
 <b>트레이너 로그인 / 마이페이지 / 로그아웃</b>
 </summary>
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/%E1%84%83%E1%85%A6%E1%84%86%E1%85%A9%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC/4.%20trainer%20%E1%84%85%E1%85%A9%E1%84%80%E1%85%B3%E1%84%8B%E1%85%B5%E1%86%AB,%20%E1%84%82%E1%85%A2%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9,%20%E1%84%85%E1%85%A9%E1%84%80%E1%85%B3%E1%84%8B%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%BA.gif?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/%EB%8D%B0%EB%AA%A8%20%EC%98%81%EC%83%81/4.%20trainer%20%EB%A1%9C%EA%B7%B8%EC%9D%B8,%20%EB%82%B4%EC%A0%95%EB%B3%B4,%20%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83.gif?raw=true">
 </details>
 
 <details>
 <summary>
 <b>트레이니 로그인 / 마이페이지 / 로그아웃</b>
 </summary>
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/%E1%84%83%E1%85%A6%E1%84%86%E1%85%A9%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC/5.%20member%20%E1%84%85%E1%85%A9%E1%84%80%E1%85%B3%E1%84%8B%E1%85%B5%E1%86%AB,%20%E1%84%82%E1%85%A2%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9,%20%E1%84%85%E1%85%A9%E1%84%80%E1%85%B3%E1%84%8B%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%BA.gif?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/%EB%8D%B0%EB%AA%A8%20%EC%98%81%EC%83%81/5.%20member%20%EB%A1%9C%EA%B7%B8%EC%9D%B8,%20%EB%82%B4%EC%A0%95%EB%B3%B4,%20%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83.gif?raw=true">
 </details>
 
 <details>
 <summary>
 <b>트레이니의 내 담당 트레이너 보기 / 트레이너 변경</b>
 </summary>
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/%E1%84%83%E1%85%A6%E1%84%86%E1%85%A9%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC/6.%20member%20%E1%84%90%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%82%E1%85%A5%E1%84%87%E1%85%A9%E1%84%80%E1%85%B5%20%E1%84%86%E1%85%B5%E1%86%BE%20%E1%84%90%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%82%E1%85%A5%20%E1%84%89%E1%85%AE%E1%84%8C%E1%85%A5%E1%86%BC.gif?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/%EB%8D%B0%EB%AA%A8%20%EC%98%81%EC%83%81/6.%20member%20%ED%8A%B8%EB%A0%88%EC%9D%B4%EB%84%88%EB%B3%B4%EA%B8%B0%20%EB%B0%8F%20%ED%8A%B8%EB%A0%88%EC%9D%B4%EB%84%88%20%EC%88%98%EC%A0%95.gif?raw=true">
 </details>
 
 <details>
 <summary>
 <b>트레이너의 운동 할당</b>
 </summary>
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/%E1%84%83%E1%85%A6%E1%84%86%E1%85%A9%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC/7.%20trainer%20%E1%84%90%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%82%E1%85%B5%E1%84%8B%E1%85%A6%E1%84%80%E1%85%A6%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%83%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%AF%E1%84%83%E1%85%A1%E1%86%BC.gif?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/%EB%8D%B0%EB%AA%A8%20%EC%98%81%EC%83%81/7.%20trainer%20%ED%8A%B8%EB%A0%88%EC%9D%B4%EB%8B%88%EC%97%90%EA%B2%8C%20%EC%9A%B4%EB%8F%99%ED%95%A0%EB%8B%B9.gif?raw=true">
 </details>
 
 <details>
 <summary>
 <b>트레이니의 운동 기록 등록</b>
 </summary>
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/%E1%84%83%E1%85%A6%E1%84%86%E1%85%A9%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC/8.%20member%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%83%E1%85%A9%E1%86%BC%E1%84%83%E1%85%B3%E1%86%BC%E1%84%85%E1%85%A9%E1%86%A8.gif?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/%EB%8D%B0%EB%AA%A8%20%EC%98%81%EC%83%81/8.%20member%20%EC%9A%B4%EB%8F%99%EB%93%B1%EB%A1%9D.gif?raw=true">
 </details>
 
 <details>
 <summary>
 <b>트레이니의 식단 기록 등록</b>
 </summary>
-<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/%E1%84%83%E1%85%A6%E1%84%86%E1%85%A9%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC/9.%20member%20%E1%84%89%E1%85%B5%E1%86%A8%E1%84%83%E1%85%A1%E1%86%AB%20%E1%84%83%E1%85%B3%E1%86%BC%E1%84%85%E1%85%A9%E1%86%A8.gif?raw=true">
+<img src="https://github.com/beyond-sw-camp/be03-2nd-5team-The-FIT/blob/dev/%EB%8D%B0%EB%AA%A8%20%EC%98%81%EC%83%81/9.%20member%20%EC%8B%9D%EB%8B%A8%20%EB%93%B1%EB%A1%9D.gif?raw=true">
 </details>
