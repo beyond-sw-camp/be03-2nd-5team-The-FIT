@@ -77,13 +77,16 @@ The FIT은 트레이너와 트레이니(회원)가 상호작용하는 플랫폼�
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/slack-purple?style=for-the-badge&logo=slack&logoColor=white">
 
-## :muscle: 요구사항정의서 (기능명세)
-
+## :muscle: 요구사항명세서
+<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%20%EB%AA%85%EC%84%B8%EC%84%9C.png?raw=true">
 
 ## :muscle: ERD
 
+<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20%EB%85%BC%EB%A6%AC%EC%A0%81%20ERD.png?raw=true">
+
 ## :muscle: DB아키텍처
 
-## :muscle: API설계 및 중점기술명세
+## :muscle: API설계
+<img src="https://github.com/beyond-sw-camp-spring-project-The-fit/The-fit/blob/docs/The%20FIT%20%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C/The%20FIT%20API%EC%84%A4%EA%B3%84.png?raw=true">
 
 ## :muscle: 테스트결과
