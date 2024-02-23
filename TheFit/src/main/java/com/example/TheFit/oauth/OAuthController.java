@@ -51,6 +51,7 @@ public class OAuthController {
 
     @GetMapping("/auth/google/callback")
     public RedirectView successGoogleLogin(@RequestParam("code") String accessCode) throws ParseException, JsonProcessingException {
+        System.out.println("SUCESS!!!!");
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(oAuthService.getGoogleAccessToken(accessCode).getBody());
         String idToken = (String) jsonObject.get("id_token");
@@ -60,8 +61,10 @@ public class OAuthController {
         oAuthMemberInfo.put("name", googleUser.getName());
         Boolean memberExists = memberRepository.findByEmail(googleUser.getEmail()).isPresent();
         Boolean trainerExists = trainerRepository.findByEmail(googleUser.getEmail()).isPresent();
+        System.out.println(idToken);
         if (!memberExists && !trainerExists) {
             String signupUrl = "http://thefitvue.s3-website.ap-northeast-2.amazonaws.com/signupoauth/?email=" + googleUser.getEmail();
+            System.out.println(signupUrl);
             return new RedirectView(signupUrl);
         }
         String role = oAuthService.findRole(googleUser.getEmail());
